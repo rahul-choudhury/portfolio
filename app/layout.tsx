@@ -14,6 +14,8 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Rahul Choudhury",
+  description:
+    "Frontend Developer creating beautiful, functional web applications with React, TypeScript, and modern web technologies.",
 };
 
 export default function RootLayout({
