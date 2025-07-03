@@ -37,11 +37,19 @@ const PROJECTS = [
     tech: ["Next.js", "Typescript", "Tailwind CSS", "shadcn/ui"],
     year: "2025",
   },
+  {
+    title: "create-next-ignite",
+    description:
+      "An opinionated dev + deploy kit distributed via NPM for Next.js projcts.",
+    link: "https://github.com/rahul-choudhury/create-next-ignite",
+    tech: ["Javascript", "NPM"],
+    year: "2025",
+  },
 ];
 
-// const EXPERIENCE_IN_YEARS = Math.floor(
-//   (Date.now() - +new Date("2023-07-03")) / (1000 * 60 * 60 * 24 * 365.25),
-// );
+const EXPERIENCE_IN_YEARS = Math.floor(
+  (Date.now() - +new Date("2023-07-03")) / (1000 * 60 * 60 * 24 * 365.25),
+);
 
 const FADE_UP_VARIANTS: MotionProps["variants"] = {
   hidden: { opacity: 0, y: 15 },
@@ -183,8 +191,9 @@ export default function Home() {
                 {...FADE_IN_UP}
                 transition={{ ...FADE_IN_UP.transition, delay: 0.1 }}
               >
-                I&apos;m a frontend developer with 2+ years of experience
-                building web applications. I specialize in React and TypeScript.
+                I&apos;m a frontend developer with {EXPERIENCE_IN_YEARS}+ years
+                of experience building web applications. I specialize in React
+                and TypeScript.
               </motion.p>
               <motion.p
                 className="text-lg leading-relaxed text-gray-700"
