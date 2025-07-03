@@ -37,14 +37,14 @@ const PROJECTS = [
     tech: ["Next.js", "Typescript", "Tailwind CSS", "shadcn/ui"],
     year: "2025",
   },
-  {
-    title: "create-next-ignite",
-    description:
-      "An opinionated dev + deploy kit distributed via NPM for Next.js projcts.",
-    link: "https://github.com/rahul-choudhury/create-next-ignite",
-    tech: ["Javascript", "NPM"],
-    year: "2025",
-  },
+  // {
+  //   title: "create-next-ignite",
+  //   description:
+  //     "An opinionated dev + deploy kit distributed via NPM for Next.js projcts.",
+  //   link: "https://github.com/rahul-choudhury/create-next-ignite",
+  //   tech: ["Javascript", "NPM"],
+  //   year: "2025",
+  // },
 ];
 
 const EXPERIENCE_IN_YEARS = Math.floor(
