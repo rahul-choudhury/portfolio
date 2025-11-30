@@ -163,8 +163,7 @@ export default function Home() {
                   className="max-w-xl"
                 >
                   <p className="font-mono text-lg leading-tight tracking-tight uppercase md:text-xl">
-                    Crafting digital experiences with strict code and structural
-                    design. Building at{" "}
+                    Building products at{" "}
                     <span className="underline decoration-2">GrowthPanda</span>.
                   </p>
                 </motion.div>
@@ -216,9 +215,9 @@ export default function Home() {
                 <div>
                   <p className="mb-6 text-base leading-relaxed">
                     I believe in writing clean, maintainable code and creating
-                    user experiences that are both beautiful and functional.
-                    When I&apos;m not coding, I like to ride my horsie in Red
-                    Dead Redemption 2.
+                    user interfaces that are both functional and tasteful. When
+                    I&apos;m not coding, I like to ride my horsie in Red Dead
+                    Redemption 2.
                   </p>
                 </div>
                 <div>
@@ -238,6 +237,21 @@ export default function Home() {
                 </div>
               </div>
             </div>
+          </div>
+        </section>
+
+        {/* Quote Section */}
+        <section className="border-b-2 border-black bg-black text-[var(--color-hover-text)]">
+          <div className="p-6 md:p-12">
+            <blockquote className="text-center">
+              <p className="mb-4 font-mono text-lg leading-relaxed italic md:text-2xl">
+                &ldquo;Is there a better description of a cube than that of its
+                construction?&rdquo;
+              </p>
+              <cite className="font-mono text-sm tracking-widest uppercase opacity-60">
+                ~ László Tóth (The Brutalist)
+              </cite>
+            </blockquote>
           </div>
         </section>
 
