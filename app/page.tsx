@@ -312,6 +312,9 @@ export default function Home() {
               <h2 className="mb-4 font-mono text-sm tracking-widest uppercase">
                 [03] Contact
               </h2>
+              <div className="sticky top-32 hidden text-8xl font-black opacity-10 md:block">
+                CNT
+              </div>
             </div>
             <div className="flex min-h-[50vh] flex-col justify-center p-6 md:col-span-8 md:p-12">
               <p className="mb-8 font-mono text-lg uppercase">
