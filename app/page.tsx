@@ -34,7 +34,7 @@ const PROJECTS = [
   {
     title: "BOOKMARKS",
     description: "A simple and minimal link manager.",
-    link: "https://github.com/rahul-choudhury/bookmarks",
+    link: "https://bookmarks.rchoudhury.dev",
     tech: [
       "NEXT.JS",
       "TYPESCRIPT",
