@@ -63,13 +63,13 @@ export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-[var(--color-background)] font-sans text-black selection:bg-black selection:text-[var(--color-selection-text)]">
+    <div className="min-h-screen bg-(--color-background) font-sans text-black selection:bg-black selection:text-(--color-selection-text)">
       {/* Header */}
-      <header className="fixed top-0 right-0 left-0 z-50 border-b-2 border-black bg-[var(--color-background)]">
+      <header className="fixed top-0 right-0 left-0 z-50 border-b-2 border-black bg-(--color-background)">
         <div className="flex h-16 items-center justify-between px-4 md:h-20 md:px-12">
           <Link
             href="/"
-            className="-ml-2 px-2 font-mono text-xl font-bold tracking-tighter uppercase transition-colors hover:bg-black hover:text-[var(--color-hover-text)] md:text-2xl"
+            className="-ml-2 px-2 font-mono text-xl font-bold tracking-tighter uppercase transition-colors hover:bg-black hover:text-(--color-hover-text) md:text-2xl"
           >
             Rahul Choudhury
           </Link>
@@ -108,7 +108,7 @@ export default function Home() {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="fixed inset-0 z-40 bg-[var(--color-background)] pt-20"
+            className="fixed inset-0 z-40 bg-(--color-background) pt-20"
           >
             <nav className="flex flex-col items-center gap-8 p-8">
               <Link
@@ -147,7 +147,7 @@ export default function Home() {
                   initial={{ opacity: 0, y: 50 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, ease: "circOut" }}
-                  className="text-6xl leading-[0.85] font-black tracking-tighter break-words uppercase md:text-9xl"
+                  className="text-6xl leading-[0.85] font-black tracking-tighter wrap-break-word uppercase md:text-9xl"
                 >
                   Frontend
                   <br />
@@ -228,7 +228,7 @@ export default function Home() {
                     {SKILLS.map((tech) => (
                       <span
                         key={tech}
-                        className="cursor-default border-2 border-black px-2 py-1 text-xs font-bold transition-colors hover:bg-black hover:text-[var(--color-hover-text)]"
+                        className="cursor-default border-2 border-black px-2 py-1 text-xs font-bold transition-colors hover:bg-black hover:text-(--color-hover-text)"
                       >
                         {tech}
                       </span>
@@ -241,7 +241,7 @@ export default function Home() {
         </section>
 
         {/* Quote Section */}
-        <section className="border-b-2 border-black bg-black text-[var(--color-hover-text)]">
+        <section className="border-b-2 border-black bg-black text-(--color-hover-text)">
           <div className="p-6 md:p-12">
             <blockquote className="text-center">
               <p className="mb-4 font-mono text-lg leading-relaxed italic md:text-2xl">
@@ -273,7 +273,7 @@ export default function Home() {
                   href={project.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group relative block border-b-2 border-black p-6 transition-colors duration-300 last:border-b-0 hover:bg-black hover:text-[var(--color-hover-text)] md:p-12"
+                  className="group relative block border-b-2 border-black p-6 transition-colors duration-300 last:border-b-0 hover:bg-black hover:text-(--color-hover-text) md:p-12"
                 >
                   <div className="mb-4 flex flex-col items-start justify-between gap-4 md:flex-row md:items-baseline">
                     <h3 className="text-3xl font-black tracking-tighter uppercase md:text-5xl">
@@ -333,7 +333,7 @@ export default function Home() {
         </section>
 
         {/* Footer */}
-        <footer className="border-t-2 border-black bg-black p-6 text-[var(--color-footer-text)] md:p-12">
+        <footer className="border-t-2 border-black bg-black p-6 text-(--color-footer-text) md:p-12">
           <div className="flex flex-col items-start justify-between gap-4 md:flex-row md:items-center">
             <div className="font-mono text-xs tracking-widest uppercase">
               &copy; {new Date().getFullYear()} Rahul Choudhury.
@@ -365,7 +365,7 @@ function SocialLink({
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className="flex size-12 items-center justify-center border-2 border-black transition-colors hover:bg-black hover:text-[var(--color-hover-text)]"
+      className="flex size-12 items-center justify-center border-2 border-black transition-colors hover:bg-black hover:text-(--color-hover-text)"
       aria-label={label}
     >
       {icon}
