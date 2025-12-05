@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+@theme inline {
+  --font-sans: var(--font-space-grotesk);
+  --font-mono: var(--font-space-mono);
+}
+
 :root {
   --color-background: #d4d4d4;
   --color-footer-text: #d4d4d4;
@@ -36,3 +41,4 @@ html {
 ::-webkit-scrollbar-thumb:hover {
   background: #333;
 }
+
