@@ -25,13 +25,6 @@ const SKILLS = [
 
 const PROJECTS = [
   {
-    title: "NOW SCREENING",
-    description: "A chrome extension that bridges Letterboxd & Bookmyshow.",
-    link: "https://github.com/rahul-choudhury/now-screening",
-    tech: ["JAVASCRIPT", "GO", "POSTGRESQL"],
-    year: "2025",
-  },
-  {
     title: "BOOKMARKS",
     description: "A simple and minimal link manager.",
     link: "https://bookmarks.rchoudhury.dev",
@@ -43,6 +36,13 @@ const PROJECTS = [
       "DRIZZLE",
       "BETTER AUTH",
     ],
+    year: "2025",
+  },
+  {
+    title: "NOW SCREENING",
+    description: "A chrome extension that bridges Letterboxd & Bookmyshow.",
+    link: "https://github.com/rahul-choudhury/now-screening",
+    tech: ["JAVASCRIPT", "GO", "POSTGRESQL"],
     year: "2025",
   },
   {
