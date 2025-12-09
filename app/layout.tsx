@@ -14,6 +14,7 @@ const spaceMono = Space_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://rchoudhury.dev"),
   title: "Rahul Choudhury",
   description:
     "Frontend Developer creating beautiful, functional web applications with React, TypeScript, and modern web technologies.",
