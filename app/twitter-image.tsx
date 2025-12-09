@@ -28,7 +28,6 @@ export default async function Image() {
         alignItems: "flex-start",
         justifyContent: "space-between",
         padding: "48px",
-        border: "12px solid black",
         fontFamily: "SpaceMono",
         color: "black",
       }}
