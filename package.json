@@ -10,23 +10,23 @@
   },
   "dependencies": {
     "@phosphor-icons/react": "^2.1.10",
-    "motion": "^12.23.25",
-    "next": "16.0.7",
-    "react": "19.2.1",
-    "react-dom": "19.2.1"
+    "motion": "^12.23.26",
+    "next": "^16.0.10",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3"
   },
   "devDependencies": {
-    "@next/eslint-plugin-next": "16.0.7",
-    "@tailwindcss/postcss": "^4.1.17",
-    "@types/node": "^20.19.25",
+    "@next/eslint-plugin-next": "^16.0.10",
+    "@tailwindcss/postcss": "^4.1.18",
+    "@types/node": "^24.10.3",
     "@types/react": "19.2.7",
     "@types/react-dom": "19.2.3",
     "eslint": "^9.39.1",
-    "eslint-config-next": "16.0.7",
-    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-config-next": "^16.0.10",
+    "eslint-plugin-react-hooks": "^7.0.1",
     "prettier": "^3.7.4",
-    "prettier-plugin-tailwindcss": "^0.6.14",
-    "tailwindcss": "^4.1.17",
+    "prettier-plugin-tailwindcss": "^0.7.2",
+    "tailwindcss": "^4.1.18",
     "typescript": "^5.9.3"
   },
   "pnpm": {
