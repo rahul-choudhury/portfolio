@@ -92,6 +92,14 @@ export default function Home() {
             >
               [03] Contact
             </Link>
+            <Link
+              href="https://destructure.in"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="decoration-2 underline-offset-4 hover:underline"
+            >
+              [04] Blog
+            </Link>
           </nav>
           <button
             className="font-mono text-sm font-bold md:hidden"
@@ -131,6 +139,14 @@ export default function Home() {
                 onClick={() => setIsMenuOpen(false)}
               >
                 [03] Contact
+              </Link>
+              <Link
+                href="https://destructure.in"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-mono text-2xl font-bold tracking-widest uppercase hover:underline"
+              >
+                [04] Blog
               </Link>
             </nav>
           </motion.div>
