@@ -96,9 +96,10 @@ export default function Home() {
               href="https://destructure.in"
               target="_blank"
               rel="noopener noreferrer"
-              className="decoration-2 underline-offset-4 hover:underline"
+              className="flex items-center gap-1 decoration-2 underline-offset-4 hover:underline"
             >
               [04] Blog
+              <ArrowUpRightIcon className="size-3" weight="bold" />
             </Link>
           </nav>
           <button
@@ -144,9 +145,10 @@ export default function Home() {
                 href="https://destructure.in"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="font-mono text-2xl font-bold tracking-widest uppercase hover:underline"
+                className="flex items-center gap-2 font-mono text-2xl font-bold tracking-widest uppercase hover:underline"
               >
                 [04] Blog
+                <ArrowUpRightIcon className="size-4" weight="bold" />
               </Link>
             </nav>
           </motion.div>
