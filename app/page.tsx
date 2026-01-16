@@ -291,7 +291,7 @@ export default function Home() {
                   href={project.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group relative block border-b-2 border-black p-6 transition-colors duration-300 last:border-b-0 hover:bg-black hover:text-(--color-hover-text) md:p-12"
+                  className="group relative block border-b-2 border-l-0 border-black p-6 transition-all duration-300 last:border-b-0 hover:border-l-8 md:p-12"
                 >
                   <div className="mb-4 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-baseline">
                     <h3 className="text-3xl font-black tracking-tighter uppercase md:text-5xl">
@@ -301,7 +301,7 @@ export default function Home() {
                       {project.year}
                     </span>
                   </div>
-                  <p className="mb-6 max-w-xl font-mono text-sm group-hover:text-gray-300 md:text-lg">
+                  <p className="mb-6 max-w-xl font-mono text-sm md:text-lg">
                     {project.description}
                   </p>
                   <div className="flex flex-wrap gap-2">
