@@ -66,7 +66,7 @@ export default function Home() {
     <div className="min-h-screen bg-(--color-background) font-sans text-black selection:bg-black selection:text-(--color-selection-text)">
       {/* Header */}
       <header className="fixed top-0 right-0 left-0 z-50 border-b-2 border-black bg-(--color-background)">
-        <div className="mx-auto flex h-16 max-w-[1920px] items-center justify-between px-4 md:h-20 md:px-12">
+        <div className="mx-auto flex h-16 max-w-480 items-center justify-between px-4 md:h-20 md:px-12">
           <Link
             href="/"
             className="-ml-2 px-2 font-mono text-xl font-bold tracking-tighter uppercase transition-colors hover:bg-black hover:text-(--color-hover-text) md:text-2xl"
@@ -155,7 +155,7 @@ export default function Home() {
         )}
       </AnimatePresence>
 
-      <main className="relative z-10 mx-4 min-h-screen max-w-[1824px] border-r-2 border-l-2 border-black pt-20 md:mx-12 md:pt-24 2xl:mx-auto">
+      <main className="relative z-10 mx-4 min-h-screen max-w-456 border-r-2 border-l-2 border-black pt-20 md:mx-12 md:pt-24 2xl:mx-auto">
         {/* Hero Section */}
         <section className="border-b-2 border-black">
           <div className="grid min-h-[80vh] grid-cols-1 md:grid-cols-12">
@@ -314,7 +314,7 @@ export default function Home() {
                       </span>
                     ))}
                   </div>
-                  <div className="absolute top-6 right-6 opacity-0 transition-opacity group-hover:opacity-100">
+                  <div className="absolute top-6 right-6 lg:opacity-0 lg:transition-opacity lg:group-hover:opacity-100">
                     <ArrowUpRightIcon className="size-8" />
                   </div>
                 </Link>
