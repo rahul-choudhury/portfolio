@@ -10,21 +10,21 @@
   },
   "dependencies": {
     "@phosphor-icons/react": "^2.1.10",
-    "motion": "^12.24.8",
-    "next": "^16.1.1",
-    "react": "^19.2.3",
-    "react-dom": "^19.2.3"
+    "motion": "^12.29.2",
+    "next": "^16.1.5",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4"
   },
   "devDependencies": {
-    "@next/eslint-plugin-next": "^16.1.1",
+    "@next/eslint-plugin-next": "^16.1.5",
     "@tailwindcss/postcss": "^4.1.18",
-    "@types/node": "^24.10.4",
+    "@types/node": "^24.10.9",
     "@types/react": "19.2.7",
     "@types/react-dom": "19.2.3",
     "eslint": "^9.39.2",
-    "eslint-config-next": "^16.1.1",
+    "eslint-config-next": "^16.1.5",
     "eslint-plugin-react-hooks": "^7.0.1",
-    "prettier": "^3.7.4",
+    "prettier": "^3.8.1",
     "prettier-plugin-tailwindcss": "^0.7.2",
     "tailwindcss": "^4.1.18",
     "typescript": "^5.9.3"
