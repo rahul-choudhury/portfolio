@@ -161,37 +161,22 @@ export default function Home() {
           <div className="grid min-h-[80vh] grid-cols-1 md:grid-cols-12">
             <div className="flex flex-col justify-between p-6 md:col-span-12 md:p-12">
               <div className="space-y-2">
-                <motion.h1
-                  initial={{ opacity: 0, y: 50 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, ease: "circOut" }}
-                  className="text-6xl leading-[0.85] font-black tracking-tighter wrap-break-word uppercase lg:text-9xl"
-                >
+                <h1 className="text-6xl leading-[0.85] font-black tracking-tighter wrap-break-word uppercase lg:text-9xl">
                   Frontend
                   <br />
                   Developer
-                </motion.h1>
+                </h1>
               </div>
 
               <div className="mt-12 flex flex-col justify-between gap-8 lg:flex-row lg:items-end">
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.5, duration: 0.8 }}
-                  className="max-w-xl"
-                >
+                <div className="max-w-xl">
                   <p className="font-mono text-lg leading-tight tracking-tight uppercase md:text-xl">
                     Building products at{" "}
                     <span className="underline decoration-2">GrowthPanda</span>.
                   </p>
-                </motion.div>
+                </div>
 
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.7, duration: 0.8 }}
-                  className="flex gap-4"
-                >
+                <div className="flex gap-4">
                   <SocialLink
                     href="https://github.com/rahul-choudhury"
                     label="GH"
@@ -207,7 +192,7 @@ export default function Home() {
                     label="Resume"
                     icon={<FilePdfIcon className="size-6" />}
                   />
-                </motion.div>
+                </div>
               </div>
             </div>
           </div>
