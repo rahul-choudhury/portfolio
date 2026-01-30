@@ -1,10 +1,11 @@
-"use client";
-
 import Link from "next/link";
-import { ArrowUpRightIcon, ArrowDownIcon } from "@phosphor-icons/react/ssr";
 
-import { motion, AnimatePresence } from "motion/react";
-import { useState } from "react";
+import { ExternalLink } from "@/components/external-link";
+import { SectionHeader } from "@/components/section-header";
+import { SkillBadge } from "@/components/skill-badge";
+import { ProjectCard } from "@/components/project-card";
+import { MobileNav } from "@/components/mobile-nav";
+import { BackToTop } from "@/components/back-to-top";
 
 const SKILLS = [
   "JAVASCRIPT",
@@ -54,8 +55,6 @@ const EXPERIENCE_IN_YEARS = Math.floor(
 );
 
 export default function Home() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-
   return (
     <div className="min-h-screen bg-(--color-background) font-sans text-black selection:bg-black selection:text-(--color-selection-text)">
       {/* Header */}
@@ -86,71 +85,11 @@ export default function Home() {
             >
               [03] Contact
             </Link>
-            <Link
-              href="https://destructure.in"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group flex items-center gap-1 decoration-2 underline-offset-4 hover:underline"
-            >
-              [04] Blog
-              <ArrowUpRightIcon
-                className="size-3 translate-y-1 opacity-0 transition-all duration-200 group-hover:translate-y-0 group-hover:opacity-100"
-                weight="bold"
-              />
-            </Link>
+            <ExternalLink href="https://destructure.in" label="[04] Blog" />
           </nav>
-          <button
-            className="font-mono text-sm font-bold lg:hidden"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-          >
-            {isMenuOpen ? "CLOSE" : "MENU"}
-          </button>
+          <MobileNav />
         </div>
       </header>
-
-      <AnimatePresence>
-        {isMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            className="fixed inset-0 z-40 bg-(--color-background) pt-20"
-          >
-            <nav className="flex flex-col items-center gap-8 p-8">
-              <Link
-                href="#about"
-                className="font-mono text-2xl font-bold tracking-widest uppercase hover:underline"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                [01] About
-              </Link>
-              <Link
-                href="#work"
-                className="font-mono text-2xl font-bold tracking-widest uppercase hover:underline"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                [02] Work
-              </Link>
-              <Link
-                href="#contact"
-                className="font-mono text-2xl font-bold tracking-widest uppercase hover:underline"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                [03] Contact
-              </Link>
-              <Link
-                href="https://destructure.in"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 font-mono text-2xl font-bold tracking-widest uppercase hover:underline"
-              >
-                [04] Blog
-                <ArrowUpRightIcon className="size-4" weight="bold" />
-              </Link>
-            </nav>
-          </motion.div>
-        )}
-      </AnimatePresence>
 
       <main className="relative z-10 mx-4 min-h-screen max-w-456 border-r-2 border-l-2 border-black pt-20 md:mx-12 md:pt-24 2xl:mx-auto">
         {/* Hero Section */}
@@ -174,42 +113,15 @@ export default function Home() {
                 </div>
 
                 <nav className="flex items-center gap-4 font-mono text-sm tracking-widest uppercase">
-                  <Link
+                  <ExternalLink
                     href="https://github.com/rahul-choudhury"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group flex items-center gap-1 decoration-2 underline-offset-4 hover:underline"
-                  >
-                    Github
-                    <ArrowUpRightIcon
-                      className="size-3 translate-y-1 opacity-0 transition-all duration-200 group-hover:translate-y-0 group-hover:opacity-100"
-                      weight="bold"
-                    />
-                  </Link>
-                  <Link
+                    label="Github"
+                  />
+                  <ExternalLink
                     href="https://www.linkedin.com/in/rahul-choudhury-51460b314"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group flex items-center gap-1 decoration-2 underline-offset-4 hover:underline"
-                  >
-                    LinkedIn
-                    <ArrowUpRightIcon
-                      className="size-3 translate-y-1 opacity-0 transition-all duration-200 group-hover:translate-y-0 group-hover:opacity-100"
-                      weight="bold"
-                    />
-                  </Link>
-                  <Link
-                    href="/resume.pdf"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group flex items-center gap-1 decoration-2 underline-offset-4 hover:underline"
-                  >
-                    Resume
-                    <ArrowUpRightIcon
-                      className="size-3 translate-y-1 opacity-0 transition-all duration-200 group-hover:translate-y-0 group-hover:opacity-100"
-                      weight="bold"
-                    />
-                  </Link>
+                    label="LinkedIn"
+                  />
+                  <ExternalLink href="/resume.pdf" label="Resume" />
                 </nav>
               </div>
             </div>
@@ -219,14 +131,7 @@ export default function Home() {
         {/* About Section */}
         <section id="about" className="border-b-2 border-black">
           <div className="grid grid-cols-1 lg:grid-cols-12">
-            <div className="border-b-2 border-black p-6 lg:col-span-4 lg:border-r-2 lg:border-b-0 lg:p-12">
-              <h2 className="mb-4 font-mono text-sm tracking-widest uppercase">
-                [01] About
-              </h2>
-              <div className="sticky top-32 hidden text-8xl font-black text-transparent [-webkit-text-stroke:2px_black] lg:block">
-                ABT
-              </div>
-            </div>
+            <SectionHeader number="01" title="About" abbreviation="ABT" />
             <div className="p-6 lg:col-span-8 lg:p-12">
               <p className="mb-12 text-2xl leading-tight font-bold tracking-tight uppercase md:text-4xl">
                 I&apos;m a frontend developer with {EXPERIENCE_IN_YEARS}+ years
@@ -246,13 +151,8 @@ export default function Home() {
                     Tech Stack
                   </h3>
                   <div className="flex flex-wrap gap-2">
-                    {SKILLS.map((tech) => (
-                      <span
-                        key={tech}
-                        className="cursor-default border-2 border-black px-2 py-1 text-xs font-bold transition-colors hover:bg-black hover:text-(--color-hover-text)"
-                      >
-                        {tech}
-                      </span>
+                    {SKILLS.map((skill) => (
+                      <SkillBadge key={skill} label={skill} />
                     ))}
                   </div>
                 </div>
@@ -270,7 +170,7 @@ export default function Home() {
                 construction?&rdquo;
               </p>
               <cite className="font-mono text-sm tracking-widest uppercase opacity-60">
-                ~ László Tóth (The Brutalist)
+                ~ Laszlo Toth (The Brutalist)
               </cite>
             </blockquote>
           </div>
@@ -279,48 +179,14 @@ export default function Home() {
         {/* Work Section */}
         <section id="work" className="border-b-2 border-black">
           <div className="grid grid-cols-1 lg:grid-cols-12">
-            <div className="border-b-2 border-black p-6 lg:col-span-4 lg:border-r-2 lg:border-b-0 lg:p-12">
-              <h2 className="mb-4 font-mono text-sm tracking-widest uppercase">
-                [02] Selected Work
-              </h2>
-              <div className="sticky top-32 hidden text-8xl font-black text-transparent [-webkit-text-stroke:2px_black] lg:block">
-                WRK
-              </div>
-            </div>
+            <SectionHeader
+              number="02"
+              title="Selected Work"
+              abbreviation="WRK"
+            />
             <div className="lg:col-span-8">
               {PROJECTS.map((project) => (
-                <Link
-                  key={project.title}
-                  href={project.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group relative block border-b-2 border-black p-6 transition-all duration-300 last:border-b-0 hover:shadow-[inset_8px_0_0_0_black] md:p-12"
-                >
-                  <div className="mb-4 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-baseline">
-                    <h3 className="text-3xl font-black tracking-tighter uppercase md:text-5xl">
-                      {project.title}
-                    </h3>
-                    <span className="rounded-full border-2 border-current px-2 py-0.5 font-mono text-sm md:text-base">
-                      {project.year}
-                    </span>
-                  </div>
-                  <p className="mb-6 max-w-xl font-mono text-sm md:text-lg">
-                    {project.description}
-                  </p>
-                  <div className="flex flex-wrap gap-2">
-                    {project.tech.map((tech) => (
-                      <span
-                        key={tech}
-                        className="font-mono text-xs tracking-wider uppercase opacity-60"
-                      >
-                        / {tech}
-                      </span>
-                    ))}
-                  </div>
-                  <div className="absolute top-6 right-6 translate-y-2 opacity-0 transition-all duration-200 group-hover:translate-y-0 group-hover:opacity-100 lg:translate-y-2 lg:opacity-0">
-                    <ArrowUpRightIcon className="size-8" />
-                  </div>
-                </Link>
+                <ProjectCard key={project.title} {...project} />
               ))}
             </div>
           </div>
@@ -329,14 +195,7 @@ export default function Home() {
         {/* Contact Section */}
         <section id="contact">
           <div className="grid grid-cols-1 lg:grid-cols-12">
-            <div className="border-b-2 border-black p-6 lg:col-span-4 lg:border-r-2 lg:border-b-0 lg:p-12">
-              <h2 className="mb-4 font-mono text-sm tracking-widest uppercase">
-                [03] Contact
-              </h2>
-              <div className="sticky top-32 hidden text-8xl font-black text-transparent [-webkit-text-stroke:2px_black] lg:block">
-                CNT
-              </div>
-            </div>
+            <SectionHeader number="03" title="Contact" abbreviation="CNT" />
             <div className="flex min-h-[50vh] flex-col justify-center p-6 lg:col-span-8 lg:p-12">
               <p className="mb-8 font-mono text-lg uppercase">
                 Interesting opportunities?
@@ -359,12 +218,7 @@ export default function Home() {
             <div className="font-mono text-xs tracking-widest uppercase">
               &copy; {new Date().getFullYear()} Rahul Choudhury.
             </div>
-            <button
-              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-              className="flex items-center gap-1 font-mono text-xs tracking-widest uppercase decoration-1 underline-offset-4 hover:underline"
-            >
-              Back to Top <ArrowDownIcon className="size-3 rotate-180" />
-            </button>
+            <BackToTop />
           </div>
         </footer>
       </main>
