@@ -10,7 +10,6 @@
     "analyze": "next experimental-analyze"
   },
   "dependencies": {
-    "@phosphor-icons/react": "^2.1.10",
     "next": "^16.1.5",
     "react": "^19.2.4",
     "react-dom": "^19.2.4"

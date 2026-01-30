@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowUpRightIcon } from "@phosphor-icons/react/ssr";
+import { ArrowUpRight } from "./icons";
 
 type ProjectCardProps = {
   title: string;
@@ -45,7 +45,7 @@ export function ProjectCard({
         ))}
       </div>
       <div className="absolute top-6 right-6 translate-y-2 opacity-0 transition-all duration-200 group-hover:translate-y-0 group-hover:opacity-100 lg:translate-y-2 lg:opacity-0">
-        <ArrowUpRightIcon className="size-8" />
+        <ArrowUpRight className="size-8" strokeWidth={16} />
       </div>
     </Link>
   );

@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowDownIcon } from "@phosphor-icons/react/ssr";
+import { ArrowUp } from "./icons";
 
 export function BackToTop() {
   return (
@@ -8,7 +8,8 @@ export function BackToTop() {
       onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
       className="flex items-center gap-1 font-mono text-xs tracking-widest uppercase decoration-1 underline-offset-4 hover:underline"
     >
-      Back to Top <ArrowDownIcon className="size-3 rotate-180" />
+      Back to Top
+      <ArrowUp className="size-3" />
     </button>
   );
 }

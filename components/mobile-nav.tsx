@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowUpRightIcon } from "@phosphor-icons/react/ssr";
 import { useState } from "react";
+import { ArrowUpRight } from "./icons";
 
 const NAV_LINKS = [
   { href: "#about", label: "[01] About" },
@@ -52,7 +52,7 @@ export function MobileNav() {
             className="flex items-center gap-2 font-mono text-2xl font-bold tracking-widest uppercase hover:underline"
           >
             [04] Blog
-            <ArrowUpRightIcon className="size-4" weight="bold" />
+            <ArrowUpRight className="size-4" />
           </Link>
         </nav>
       </div>
