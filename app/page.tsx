@@ -1,13 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import {
-  GithubLogoIcon,
-  ArrowUpRightIcon,
-  LinkedinLogoIcon,
-  ArrowDownIcon,
-  FilePdfIcon,
-} from "@phosphor-icons/react/ssr";
+import { ArrowUpRightIcon, ArrowDownIcon } from "@phosphor-icons/react/ssr";
 
 import { motion, AnimatePresence } from "motion/react";
 import { useState } from "react";
@@ -96,10 +90,13 @@ export default function Home() {
               href="https://destructure.in"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-1 decoration-2 underline-offset-4 hover:underline"
+              className="group flex items-center gap-1 decoration-2 underline-offset-4 hover:underline"
             >
               [04] Blog
-              <ArrowUpRightIcon className="size-3" weight="bold" />
+              <ArrowUpRightIcon
+                className="size-3 translate-y-1 opacity-0 transition-all duration-200 group-hover:translate-y-0 group-hover:opacity-100"
+                weight="bold"
+              />
             </Link>
           </nav>
           <button
@@ -176,23 +173,44 @@ export default function Home() {
                   </p>
                 </div>
 
-                <div className="flex gap-4">
-                  <SocialLink
+                <nav className="flex items-center gap-4 font-mono text-sm tracking-widest uppercase">
+                  <Link
                     href="https://github.com/rahul-choudhury"
-                    label="GH"
-                    icon={<GithubLogoIcon className="size-6" />}
-                  />
-                  <SocialLink
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group flex items-center gap-1 decoration-2 underline-offset-4 hover:underline"
+                  >
+                    Github
+                    <ArrowUpRightIcon
+                      className="size-3 translate-y-1 opacity-0 transition-all duration-200 group-hover:translate-y-0 group-hover:opacity-100"
+                      weight="bold"
+                    />
+                  </Link>
+                  <Link
                     href="https://www.linkedin.com/in/rahul-choudhury-51460b314"
-                    label="LI"
-                    icon={<LinkedinLogoIcon className="size-6" />}
-                  />
-                  <SocialLink
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group flex items-center gap-1 decoration-2 underline-offset-4 hover:underline"
+                  >
+                    LinkedIn
+                    <ArrowUpRightIcon
+                      className="size-3 translate-y-1 opacity-0 transition-all duration-200 group-hover:translate-y-0 group-hover:opacity-100"
+                      weight="bold"
+                    />
+                  </Link>
+                  <Link
                     href="/resume.pdf"
-                    label="Resume"
-                    icon={<FilePdfIcon className="size-6" />}
-                  />
-                </div>
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group flex items-center gap-1 decoration-2 underline-offset-4 hover:underline"
+                  >
+                    Resume
+                    <ArrowUpRightIcon
+                      className="size-3 translate-y-1 opacity-0 transition-all duration-200 group-hover:translate-y-0 group-hover:opacity-100"
+                      weight="bold"
+                    />
+                  </Link>
+                </nav>
               </div>
             </div>
           </div>
@@ -299,7 +317,7 @@ export default function Home() {
                       </span>
                     ))}
                   </div>
-                  <div className="absolute top-6 right-6 lg:opacity-0 lg:transition-opacity lg:group-hover:opacity-100">
+                  <div className="absolute top-6 right-6 translate-y-2 opacity-0 transition-all duration-200 group-hover:translate-y-0 group-hover:opacity-100 lg:translate-y-2 lg:opacity-0">
                     <ArrowUpRightIcon className="size-8" />
                   </div>
                 </Link>
@@ -351,27 +369,5 @@ export default function Home() {
         </footer>
       </main>
     </div>
-  );
-}
-
-function SocialLink({
-  href,
-  label,
-  icon,
-}: {
-  href: string;
-  label: string;
-  icon: React.ReactNode;
-}) {
-  return (
-    <Link
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="flex size-12 items-center justify-center border-2 border-black transition-colors hover:bg-black hover:text-(--color-hover-text)"
-      aria-label={label}
-    >
-      {icon}
-    </Link>
   );
 }
