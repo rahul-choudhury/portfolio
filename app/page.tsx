@@ -223,7 +223,7 @@ export default function Home() {
               <h2 className="mb-4 font-mono text-sm tracking-widest uppercase">
                 [01] About
               </h2>
-              <div className="sticky top-32 hidden text-8xl font-black opacity-10 lg:block">
+              <div className="sticky top-32 hidden text-8xl font-black text-transparent [-webkit-text-stroke:2px_black] lg:block">
                 ABT
               </div>
             </div>
@@ -283,7 +283,7 @@ export default function Home() {
               <h2 className="mb-4 font-mono text-sm tracking-widest uppercase">
                 [02] Selected Work
               </h2>
-              <div className="sticky top-32 hidden text-8xl font-black opacity-10 lg:block">
+              <div className="sticky top-32 hidden text-8xl font-black text-transparent [-webkit-text-stroke:2px_black] lg:block">
                 WRK
               </div>
             </div>
@@ -294,7 +294,7 @@ export default function Home() {
                   href={project.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group relative block border-b-2 border-l-0 border-black p-6 transition-all duration-300 last:border-b-0 hover:border-l-8 md:p-12"
+                  className="group relative block border-b-2 border-black p-6 transition-all duration-300 last:border-b-0 hover:shadow-[inset_8px_0_0_0_black] md:p-12"
                 >
                   <div className="mb-4 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-baseline">
                     <h3 className="text-3xl font-black tracking-tighter uppercase md:text-5xl">
@@ -333,7 +333,7 @@ export default function Home() {
               <h2 className="mb-4 font-mono text-sm tracking-widest uppercase">
                 [03] Contact
               </h2>
-              <div className="sticky top-32 hidden text-8xl font-black opacity-10 lg:block">
+              <div className="sticky top-32 hidden text-8xl font-black text-transparent [-webkit-text-stroke:2px_black] lg:block">
                 CNT
               </div>
             </div>
