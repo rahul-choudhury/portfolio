@@ -264,7 +264,7 @@ export default function Home() {
         {/* Quote Section */}
         <section className="border-b-2 border-black bg-black text-(--color-hover-text)">
           <div className="p-6 md:p-12">
-            <blockquote className="text-center">
+            <blockquote className="text-center selection:bg-white selection:text-black">
               <p className="mb-4 font-mono text-lg leading-relaxed italic md:text-2xl">
                 &ldquo;Is there a better description of a cube than that of its
                 construction?&rdquo;
