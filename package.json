@@ -6,11 +6,11 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "analyze": "next experimental-analyze"
   },
   "dependencies": {
     "@phosphor-icons/react": "^2.1.10",
-    "motion": "^12.29.2",
     "next": "^16.1.5",
     "react": "^19.2.4",
     "react-dom": "^19.2.4"
@@ -28,11 +28,5 @@
     "prettier-plugin-tailwindcss": "^0.7.2",
     "tailwindcss": "^4.1.18",
     "typescript": "^5.9.3"
-  },
-  "pnpm": {
-    "overrides": {
-      "@types/react": "19.2.7",
-      "@types/react-dom": "19.2.3"
-    }
   }
 }
