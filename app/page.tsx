@@ -69,7 +69,7 @@ export default function Home() {
         <div className="mx-auto flex h-16 max-w-480 items-center justify-between px-4 md:h-20 md:px-12">
           <Link
             href="/"
-            className="-ml-2 px-2 font-mono text-xl font-bold tracking-tighter uppercase transition-colors hover:bg-black hover:text-(--color-hover-text) md:text-2xl"
+            className="bg-black px-2 font-mono text-xl font-bold tracking-tighter text-(--color-hover-text) uppercase transition-colors md:text-2xl"
           >
             Rahul Choudhury
           </Link>
