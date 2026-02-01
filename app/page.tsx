@@ -20,6 +20,14 @@ const SKILLS = [
 
 const PROJECTS = [
   {
+    title: "REACT EXTRAS",
+    description:
+      "A CLI tool that automates the setup of deployment, linting, and editor configuration for React applications.",
+    link: "https://github.com/rahul-choudhury/react-extras",
+    tech: ["TYPESCRIPT", "CLI", "NODE.JS"],
+    year: "2026",
+  },
+  {
     title: "BOOKMARKS",
     description: "A simple and minimal link manager.",
     link: "https://bookmarks.rchoudhury.dev",
