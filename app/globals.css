@@ -10,6 +10,9 @@
   --color-footer-text: #d4d4d4;
   --color-selection-text: #d4d4d4;
   --color-hover-text: #d4d4d4;
+
+  /* Text colors that replace transparency */
+  --color-text-muted: #737373;
 }
 
 html {
@@ -41,4 +44,3 @@ html {
 ::-webkit-scrollbar-thumb:hover {
   background: #333;
 }
-

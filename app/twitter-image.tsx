@@ -75,7 +75,9 @@ export default async function Image() {
           alignItems: "flex-end",
         }}
       >
-        <div style={{ fontSize: 24, opacity: 0.6, textTransform: "uppercase" }}>
+        <div
+          style={{ fontSize: 24, color: "#737373", textTransform: "uppercase" }}
+        >
           Building Products at Growth Panda
         </div>
         <div style={{ fontSize: 24, textDecoration: "underline" }}>

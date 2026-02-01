@@ -38,7 +38,7 @@ export function ProjectCard({
         {tech.map((t) => (
           <span
             key={t}
-            className="font-mono text-xs tracking-wider uppercase opacity-60"
+            className="font-mono text-xs tracking-wider text-(--color-text-muted) uppercase"
           >
             / {t}
           </span>

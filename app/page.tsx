@@ -169,7 +169,7 @@ export default function Home() {
                 &ldquo;Is there a better description of a cube than that of its
                 construction?&rdquo;
               </p>
-              <cite className="font-mono text-sm tracking-widest uppercase opacity-60">
+              <cite className="font-mono text-sm tracking-widest text-(--color-text-muted) uppercase">
                 ~ Laszlo Toth (The Brutalist)
               </cite>
             </blockquote>
