@@ -6,6 +6,7 @@ import { SkillBadge } from "@/components/skill-badge";
 import { ProjectCard } from "@/components/project-card";
 import { MobileNav } from "@/components/mobile-nav";
 import { BackToTop } from "@/components/back-to-top";
+import { Reveal, Stagger, StaggerItem } from "@/components/motion-reveal";
 
 const SKILLS = [
   "JAVASCRIPT",
@@ -105,32 +106,41 @@ export default function Home() {
           <div className="grid min-h-[80vh] grid-cols-1 md:grid-cols-12">
             <div className="flex flex-col justify-between p-6 md:col-span-12 md:p-12">
               <div className="space-y-2">
-                <h1 className="text-6xl leading-[0.85] font-black tracking-tighter wrap-break-word uppercase lg:text-9xl">
-                  Frontend
-                  <br />
-                  Developer
-                </h1>
+                <Reveal inView={false} y={28}>
+                  <h1 className="text-6xl leading-[0.85] font-black tracking-tighter wrap-break-word uppercase lg:text-9xl">
+                    Frontend
+                    <br />
+                    Developer
+                  </h1>
+                </Reveal>
               </div>
 
               <div className="mt-12 flex flex-col justify-between gap-8 lg:flex-row lg:items-end">
-                <div className="max-w-xl">
-                  <p className="font-mono text-lg leading-tight tracking-tight uppercase md:text-xl">
-                    Building products at{" "}
-                    <span className="underline decoration-2">GrowthPanda</span>.
-                  </p>
-                </div>
+                <Reveal inView={false} delay={0.05}>
+                  <div className="max-w-xl">
+                    <p className="font-mono text-lg leading-tight tracking-tight uppercase md:text-xl">
+                      Building products at{" "}
+                      <span className="underline decoration-2">
+                        GrowthPanda
+                      </span>
+                      .
+                    </p>
+                  </div>
+                </Reveal>
 
-                <nav className="flex items-center gap-4 font-mono text-sm tracking-widest uppercase">
-                  <ExternalLink
-                    href="https://github.com/rahul-choudhury"
-                    label="Github"
-                  />
-                  <ExternalLink
-                    href="https://www.linkedin.com/in/rahul-choudhury-51460b314"
-                    label="LinkedIn"
-                  />
-                  <ExternalLink href="/resume.pdf" label="Resume" />
-                </nav>
+                <Reveal inView={false} delay={0.1}>
+                  <nav className="flex items-center gap-4 font-mono text-sm tracking-widest uppercase">
+                    <ExternalLink
+                      href="https://github.com/rahul-choudhury"
+                      label="Github"
+                    />
+                    <ExternalLink
+                      href="https://www.linkedin.com/in/rahul-choudhury-51460b314"
+                      label="LinkedIn"
+                    />
+                    <ExternalLink href="/resume.pdf" label="Resume" />
+                  </nav>
+                </Reveal>
               </div>
             </div>
           </div>
@@ -141,30 +151,38 @@ export default function Home() {
           <div className="grid grid-cols-1 lg:grid-cols-12">
             <SectionHeader number="01" title="About" abbreviation="ABT" />
             <div className="p-6 lg:col-span-8 lg:p-12">
-              <p className="mb-12 text-2xl leading-tight font-bold tracking-tight uppercase md:text-4xl">
-                I&apos;m a frontend developer with {EXPERIENCE_IN_YEARS}+ years
-                of experience. I specialize in React and TypeScript.
-              </p>
-              <div className="grid grid-cols-1 gap-12 font-mono md:grid-cols-2">
-                <div>
-                  <p className="mb-6 text-base leading-relaxed">
-                    I believe in writing clean, maintainable code and creating
-                    user interfaces that are both functional and tasteful. When
-                    I&apos;m not coding, I like to ride my horsie in Red Dead
-                    Redemption 2.
-                  </p>
-                </div>
-                <div>
-                  <h3 className="mb-4 border-b-2 border-black pb-2 font-bold uppercase">
-                    Tech Stack
-                  </h3>
-                  <div className="flex flex-wrap gap-2">
-                    {SKILLS.map((skill) => (
-                      <SkillBadge key={skill} label={skill} />
-                    ))}
+              <Reveal>
+                <p className="mb-12 text-2xl leading-tight font-bold tracking-tight uppercase md:text-4xl">
+                  I&apos;m a frontend developer with {EXPERIENCE_IN_YEARS}+ years
+                  of experience. I specialize in React and TypeScript.
+                </p>
+              </Reveal>
+              <Stagger className="grid grid-cols-1 gap-12 font-mono md:grid-cols-2">
+                <StaggerItem>
+                  <div>
+                    <p className="mb-6 text-base leading-relaxed">
+                      I believe in writing clean, maintainable code and creating
+                      user interfaces that are both functional and tasteful.
+                      When I&apos;m not coding, I like to ride my horsie in Red
+                      Dead Redemption 2.
+                    </p>
                   </div>
-                </div>
-              </div>
+                </StaggerItem>
+                <StaggerItem>
+                  <div>
+                    <h3 className="mb-4 border-b-2 border-black pb-2 font-bold uppercase">
+                      Tech Stack
+                    </h3>
+                    <Stagger className="flex flex-wrap gap-2" stagger={0.06}>
+                      {SKILLS.map((skill) => (
+                        <StaggerItem key={skill}>
+                          <SkillBadge label={skill} />
+                        </StaggerItem>
+                      ))}
+                    </Stagger>
+                  </div>
+                </StaggerItem>
+              </Stagger>
             </div>
           </div>
         </section>
@@ -172,15 +190,17 @@ export default function Home() {
         {/* Quote Section */}
         <section className="border-b-2 border-black bg-black text-(--color-hover-text)">
           <div className="p-6 md:p-12">
-            <blockquote className="text-center selection:bg-white selection:text-black">
-              <p className="mb-4 font-mono text-lg leading-relaxed italic md:text-2xl">
-                &ldquo;Is there a better description of a cube than that of its
-                construction?&rdquo;
-              </p>
-              <cite className="font-mono text-sm tracking-widest text-(--color-text-muted) uppercase">
-                ~ Laszlo Toth (The Brutalist)
-              </cite>
-            </blockquote>
+            <Reveal>
+              <blockquote className="text-center selection:bg-white selection:text-black">
+                <p className="mb-4 font-mono text-lg leading-relaxed italic md:text-2xl">
+                  &ldquo;Is there a better description of a cube than that of
+                  its construction?&rdquo;
+                </p>
+                <cite className="font-mono text-sm tracking-widest text-(--color-text-muted) uppercase">
+                  ~ Laszlo Toth (The Brutalist)
+                </cite>
+              </blockquote>
+            </Reveal>
           </div>
         </section>
 
@@ -192,11 +212,13 @@ export default function Home() {
               title="Selected Work"
               abbreviation="WRK"
             />
-            <div className="lg:col-span-8">
+            <Stagger className="lg:col-span-8">
               {PROJECTS.map((project) => (
-                <ProjectCard key={project.title} {...project} />
+                <StaggerItem key={project.title}>
+                  <ProjectCard {...project} />
+                </StaggerItem>
               ))}
-            </div>
+            </Stagger>
           </div>
         </section>
 
@@ -205,17 +227,21 @@ export default function Home() {
           <div className="grid grid-cols-1 lg:grid-cols-12">
             <SectionHeader number="03" title="Contact" abbreviation="CNT" />
             <div className="flex min-h-[50vh] flex-col justify-center p-6 lg:col-span-8 lg:p-12">
-              <p className="mb-8 font-mono text-lg uppercase">
-                Interesting opportunities?
-              </p>
-              <Link
-                href="mailto:rchoudhury63@gmail.com"
-                className="text-4xl font-black tracking-tighter break-all uppercase decoration-4 underline-offset-8 hover:underline md:text-6xl lg:text-7xl"
-              >
-                rchoudhury63
-                <br />
-                @gmail.com
-              </Link>
+              <Reveal>
+                <p className="mb-8 font-mono text-lg uppercase">
+                  Interesting opportunities?
+                </p>
+              </Reveal>
+              <Reveal delay={0.05}>
+                <Link
+                  href="mailto:rchoudhury63@gmail.com"
+                  className="text-4xl font-black tracking-tighter break-all uppercase decoration-4 underline-offset-8 hover:underline md:text-6xl lg:text-7xl"
+                >
+                  rchoudhury63
+                  <br />
+                  @gmail.com
+                </Link>
+              </Reveal>
             </div>
           </div>
         </section>
