@@ -150,9 +150,12 @@ export default function Home() {
             </div>
           </Reveal>
 
-          <Stagger className="grid gap-6 md:grid-cols-2" stagger={0.1}>
+          <Stagger
+            className="grid auto-rows-fr gap-6 md:grid-cols-2"
+            stagger={0.1}
+          >
             {PROJECTS.map((project) => (
-              <StaggerItem key={project.title}>
+              <StaggerItem key={project.title} className="h-full">
                 <ProjectCard {...project} />
               </StaggerItem>
             ))}
