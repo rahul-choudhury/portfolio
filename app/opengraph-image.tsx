@@ -20,69 +20,81 @@ export default async function Image() {
   return new ImageResponse(
     <div
       style={{
-        background: "#d4d4d4",
+        background: "#fafafa",
         width: "100%",
         height: "100%",
         display: "flex",
         flexDirection: "column",
-        alignItems: "flex-start",
         justifyContent: "space-between",
-        padding: "48px",
+        padding: "80px",
         fontFamily: "SpaceMono",
-        color: "black",
+        color: "#171717",
       }}
     >
       <div
         style={{
           display: "flex",
-          justifyContent: "space-between",
-          width: "100%",
+          flexDirection: "column",
+          gap: "12px",
         }}
       >
         <div
           style={{
-            fontSize: 24,
-            letterSpacing: "0.1em",
-            textTransform: "uppercase",
+            fontFamily: "SpaceGrotesk",
+            fontSize: 96,
+            fontWeight: 500,
+            lineHeight: 1,
+            letterSpacing: "-0.03em",
+            color: "#171717",
           }}
         >
           Rahul Choudhury
         </div>
+
+        <div
+          style={{
+            fontSize: 24,
+            color: "#737373",
+            letterSpacing: "0.02em",
+            marginTop: "8px",
+          }}
+        >
+          Frontend Developer
+        </div>
       </div>
 
       <div
         style={{
           display: "flex",
-          flexDirection: "column",
-          fontFamily: "SpaceGrotesk",
-          fontSize: 128,
-          fontWeight: 700,
-          lineHeight: 0.85,
-          letterSpacing: "-0.05em",
-          textTransform: "uppercase",
-          gap: "10px",
-        }}
-      >
-        <span>Frontend</span>
-        <span>Developer</span>
-      </div>
-
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
           width: "100%",
+          justifyContent: "space-between",
           alignItems: "flex-end",
         }}
       >
         <div
-          style={{ fontSize: 24, color: "#737373", textTransform: "uppercase" }}
+          style={{
+            fontSize: 18,
+            color: "#a3a3a3",
+            letterSpacing: "0.02em",
+          }}
         >
-          Building Products at Growth Panda
-        </div>
-        <div style={{ fontSize: 24, textDecoration: "underline" }}>
           rchoudhury.dev
         </div>
+
+        <svg
+          width="160"
+          height="160"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="#e5e5e5"
+          strokeWidth="1"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <line x1="12" y1="3" x2="12" y2="21" />
+          <line x1="4.2" y1="7.5" x2="19.8" y2="16.5" />
+          <line x1="4.2" y1="16.5" x2="19.8" y2="7.5" />
+        </svg>
       </div>
     </div>,
     {
@@ -92,7 +104,7 @@ export default async function Image() {
           name: "SpaceGrotesk",
           data: spaceGroteskBold,
           style: "normal",
-          weight: 700,
+          weight: 500,
         },
         {
           name: "SpaceMono",
