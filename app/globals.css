@@ -74,5 +74,8 @@ html {
 /* Smooth transitions for interactive elements */
 a,
 button {
-  transition: all 0.2s var(--ease-out-quad);
+  transition:
+    color 0.2s var(--ease-out-quad),
+    border-color 0.2s var(--ease-out-quad),
+    opacity 0.2s var(--ease-out-quad);
 }
