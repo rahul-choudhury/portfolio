@@ -16,11 +16,11 @@ type RevealProps = {
   y?: number;
 };
 
-const brutalEase: Easing = [0.23, 1, 0.32, 1]; // --ease-out-quint
+const easeOutQuint: Easing = [0.23, 1, 0.32, 1];
 
 const baseTransition = {
   duration: 0.55,
-  ease: brutalEase,
+  ease: easeOutQuint,
 };
 
 export function Reveal({
