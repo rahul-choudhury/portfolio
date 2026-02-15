@@ -57,10 +57,6 @@ const PROJECTS = [
   },
 ];
 
-const EXPERIENCE_IN_YEARS = Math.floor(
-  (Date.now() - +new Date("2023-07-03")) / (1000 * 60 * 60 * 24 * 365.25),
-);
-
 export default function Home() {
   return (
     <div className="min-h-screen bg-bg font-sans text-text">
@@ -92,8 +88,7 @@ export default function Home() {
 
           <Reveal inView={false} delay={0.1}>
             <h1 className="max-w-4xl text-4xl leading-[1.1] font-medium tracking-tight text-text md:text-6xl lg:text-7xl">
-              {EXPERIENCE_IN_YEARS}+ years building what designers draw and
-              users need
+              Building what designers draw and users need
             </h1>
           </Reveal>
 
