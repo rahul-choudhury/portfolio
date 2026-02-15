@@ -21,31 +21,32 @@ export function ProjectCard({
       href={link}
       target="_blank"
       rel="noopener noreferrer"
-      className="group relative block border-b-2 border-black p-6 transition-all duration-300 last:border-b-0 hover:shadow-[inset_8px_0_0_0_black] md:p-12"
+      className="group block rounded-lg border border-[#e5e5e5] bg-white p-6 transition-all duration-300 hover:border-[#d4d4d4] hover:shadow-sm md:p-8"
     >
-      <div className="mb-4 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-baseline">
-        <h3 className="text-3xl font-black tracking-tighter uppercase md:text-5xl">
-          {title}
-        </h3>
-        <span className="rounded-full border-2 border-current px-2 py-0.5 font-mono text-sm md:text-base">
-          {year}
-        </span>
+      <div className="mb-4 flex items-start justify-between">
+        <div className="flex items-baseline gap-3">
+          <h3 className="text-xl font-medium tracking-tight text-[#171717]">
+            {title}
+          </h3>
+          <span className="font-mono text-xs text-[#737373]">{year}</span>
+        </div>
+
+        <ArrowUpRight
+          className="size-5 text-[#d4d4d4] transition-colors group-hover:text-[#171717]"
+          strokeWidth={1.5}
+        />
       </div>
-      <p className="mb-6 max-w-xl font-mono text-sm md:text-lg">
+
+      <p className="mb-6 text-sm leading-relaxed text-[#525252]">
         {description}
       </p>
+
       <div className="flex flex-wrap gap-2">
         {tech.map((t) => (
-          <span
-            key={t}
-            className="font-mono text-xs tracking-wider text-(--color-text-muted) uppercase"
-          >
-            / {t}
+          <span key={t} className="font-mono text-xs text-[#a3a3a3]">
+            {t}
           </span>
         ))}
-      </div>
-      <div className="absolute top-6 right-6 translate-y-2 opacity-0 transition-all duration-200 group-hover:translate-y-0 group-hover:opacity-100 lg:translate-y-2 lg:opacity-0">
-        <ArrowUpRight className="size-8" strokeWidth={16} />
       </div>
     </Link>
   );

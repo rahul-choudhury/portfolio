@@ -2,21 +2,13 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import {
-  AnimatePresence,
-  motion,
-  type Easing,
-  useReducedMotion,
-} from "motion/react";
-import { ArrowUpRight } from "./icons";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 
 const NAV_LINKS = [
-  { href: "#about", label: "[01] About" },
-  { href: "#work", label: "[02] Work" },
-  { href: "#contact", label: "[03] Contact" },
+  { href: "#work", label: "Work" },
+  { href: "#about", label: "About" },
+  { href: "#contact", label: "Contact" },
 ];
-
-const brutalEase: Easing = [0.2, 0.6, 0.2, 1];
 
 export function MobileNav() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -32,26 +24,26 @@ export function MobileNav() {
   return (
     <>
       <button
-        className="relative z-50 font-mono text-sm font-bold lg:hidden"
+        className="relative z-50 text-sm text-[#525252] md:hidden"
         onClick={() => setIsMenuOpen((prev) => !prev)}
       >
-        {isMenuOpen ? "CLOSE" : "MENU"}
+        {isMenuOpen ? "Close" : "Menu"}
       </button>
 
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
-            className="fixed inset-0 z-40 bg-(--color-background) pt-20"
+            className="fixed inset-0 z-40 bg-[#fafafa] pt-24"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{
-              duration: reduceMotion ? 0 : 0.25,
-              ease: brutalEase,
+              duration: reduceMotion ? 0 : 0.2,
+              ease: [0.22, 1, 0.36, 1],
             }}
           >
             <motion.nav
-              className="flex flex-col items-center gap-8 p-8"
+              className="flex flex-col gap-6 p-8"
               initial="hidden"
               animate="show"
               exit="hidden"
@@ -67,19 +59,19 @@ export function MobileNav() {
                 <motion.div
                   key={href}
                   variants={{
-                    hidden: { opacity: 0, y: 20 },
+                    hidden: { opacity: 0, y: 10 },
                     show: {
                       opacity: 1,
                       y: 0,
                       transition: reduceMotion
                         ? { duration: 0 }
-                        : { duration: 0.35, ease: brutalEase },
+                        : { duration: 0.3, ease: [0.22, 1, 0.36, 1] },
                     },
                   }}
                 >
                   <Link
                     href={href}
-                    className="font-mono text-2xl font-bold tracking-widest uppercase hover:underline"
+                    className="text-3xl font-medium tracking-tight text-[#171717]"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     {label}
@@ -88,13 +80,13 @@ export function MobileNav() {
               ))}
               <motion.div
                 variants={{
-                  hidden: { opacity: 0, y: 20 },
+                  hidden: { opacity: 0, y: 10 },
                   show: {
                     opacity: 1,
                     y: 0,
                     transition: reduceMotion
                       ? { duration: 0 }
-                      : { duration: 0.35, ease: brutalEase },
+                      : { duration: 0.3, ease: [0.22, 1, 0.36, 1] },
                   },
                 }}
               >
@@ -102,11 +94,26 @@ export function MobileNav() {
                   href="https://destructure.in"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 font-mono text-2xl font-bold tracking-widest uppercase hover:underline"
+                  className="text-3xl font-medium tracking-tight text-[#171717]"
+                  onClick={() => setIsMenuOpen(false)}
                 >
-                  [04] Blog
-                  <ArrowUpRight className="size-4" />
+                  Blog
                 </Link>
+              </motion.div>
+
+              <motion.div
+                className="mt-8 border-t border-[#e5e5e5] pt-8"
+                variants={{
+                  hidden: { opacity: 0 },
+                  show: {
+                    opacity: 1,
+                    transition: reduceMotion
+                      ? { duration: 0 }
+                      : { duration: 0.3, delay: 0.1 },
+                  },
+                }}
+              >
+                <p className="text-sm text-[#737373]">rchoudhury63@gmail.com</p>
               </motion.div>
             </motion.nav>
           </motion.div>

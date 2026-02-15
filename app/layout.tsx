@@ -15,9 +15,15 @@ const spaceMono = Space_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://rchoudhury.dev"),
-  title: "Rahul Choudhury",
+  title: "Rahul Choudhury — Frontend Developer",
   description:
-    "Frontend Developer creating beautiful, functional web applications with React, TypeScript, and modern web technologies.",
+    "Frontend Developer creating clean, performant web applications with React, TypeScript, and modern technologies.",
+  openGraph: {
+    title: "Rahul Choudhury — Frontend Developer",
+    description:
+      "Frontend Developer creating clean, performant web applications with React, TypeScript, and modern technologies.",
+    type: "website",
+  },
 };
 
 export default function RootLayout({
@@ -28,7 +34,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${spaceGrotesk.variable} ${spaceMono.variable} bg-(--color-background) text-black antialiased`}
+        className={`${spaceGrotesk.variable} ${spaceMono.variable} bg-[#fafafa] text-[#171717] antialiased`}
       >
         {children}
       </body>
