@@ -14,11 +14,6 @@
   --color-border-hover: #d4d4d4;
 }
 
-:root {
-  --color-background: #fafafa;
-  --color-foreground: #171717;
-}
-
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 6rem;
@@ -40,18 +35,18 @@ html {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #d4d4d4;
+  background: var(--color-border-hover);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #a3a3a3;
+  background: var(--color-text-muted);
 }
 
 /* Selection styling */
 ::selection {
-  background: #171717;
-  color: #fafafa;
+  background: var(--color-text);
+  color: var(--color-bg);
 }
 
 /* Smooth transitions for interactive elements */

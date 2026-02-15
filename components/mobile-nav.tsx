@@ -23,7 +23,7 @@ export function MobileNav() {
   return (
     <>
       <button
-        className="relative z-50 text-sm text-[#525252] md:hidden"
+        className="relative z-50 text-sm text-text-secondary md:hidden"
         onClick={() => setIsMenuOpen((prev) => !prev)}
       >
         {isMenuOpen ? "Close" : "Menu"}
@@ -32,7 +32,7 @@ export function MobileNav() {
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
-            className="fixed inset-0 z-40 bg-[#fafafa] pt-24"
+            className="fixed inset-0 z-40 bg-bg pt-24"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -70,7 +70,7 @@ export function MobileNav() {
                 >
                   <Link
                     href={href}
-                    className="text-3xl font-medium tracking-tight text-[#171717]"
+                    className="text-3xl font-medium tracking-tight text-text"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     {label}
@@ -93,7 +93,7 @@ export function MobileNav() {
                   href="https://destructure.in"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-3xl font-medium tracking-tight text-[#171717]"
+                  className="text-3xl font-medium tracking-tight text-text"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   Blog
@@ -101,7 +101,7 @@ export function MobileNav() {
               </motion.div>
 
               <motion.div
-                className="mt-8 border-t border-[#e5e5e5] pt-8"
+                className="mt-8 border-t border-border pt-8"
                 variants={{
                   hidden: { opacity: 0 },
                   show: {
@@ -112,7 +112,9 @@ export function MobileNav() {
                   },
                 }}
               >
-                <p className="text-sm text-[#737373]">rchoudhury63@gmail.com</p>
+                <p className="text-sm text-text-muted">
+                  rchoudhury63@gmail.com
+                </p>
               </motion.div>
             </motion.nav>
           </motion.div>

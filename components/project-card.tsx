@@ -21,29 +21,29 @@ export function ProjectCard({
       href={link}
       target="_blank"
       rel="noopener noreferrer"
-      className="group block rounded-lg border border-[#e5e5e5] bg-white p-6 transition-all duration-300 hover:border-[#d4d4d4] hover:shadow-sm md:p-8"
+      className="group block rounded-lg border border-border bg-white p-6 transition-all duration-300 hover:border-border-hover hover:shadow-sm md:p-8"
     >
       <div className="mb-4 flex items-start justify-between">
         <div className="flex items-baseline gap-3">
-          <h3 className="text-xl font-medium tracking-tight text-[#171717]">
+          <h3 className="text-xl font-medium tracking-tight text-text">
             {title}
           </h3>
-          <span className="font-mono text-xs text-[#737373]">{year}</span>
+          <span className="font-mono text-xs text-text-muted">{year}</span>
         </div>
 
         <ArrowUpRight
-          className="size-5 text-[#d4d4d4] transition-colors group-hover:text-[#171717]"
+          className="size-5 text-border-hover transition-colors group-hover:text-text"
           strokeWidth={1.5}
         />
       </div>
 
-      <p className="mb-6 text-sm leading-relaxed text-[#525252]">
+      <p className="mb-6 text-sm leading-relaxed text-text-secondary">
         {description}
       </p>
 
       <div className="flex flex-wrap gap-2">
         {tech.map((t) => (
-          <span key={t} className="font-mono text-xs text-[#a3a3a3]">
+          <span key={t} className="font-mono text-xs text-text-muted">
             {t}
           </span>
         ))}

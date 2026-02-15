@@ -3,7 +3,6 @@ import Link from "next/link";
 import { Reveal, Stagger, StaggerItem } from "@/components/motion-reveal";
 import { ProjectCard } from "@/components/project-card";
 import { ExternalLink } from "@/components/external-link";
-import { MobileNav } from "@/components/mobile-nav";
 
 const SKILLS = [
   "JavaScript",
@@ -64,32 +63,21 @@ const EXPERIENCE_IN_YEARS = Math.floor(
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-[#fafafa] font-sans text-[#171717]">
+    <div className="min-h-screen bg-bg font-sans text-text">
       {/* Navigation */}
-      <header className="fixed top-0 right-0 left-0 z-50 bg-[#fafafa]/80 backdrop-blur-md">
+      <header className="fixed top-0 right-0 left-0 z-50 bg-bg/80 backdrop-blur-md">
         <div className="mx-auto flex h-20 max-w-6xl items-center justify-between px-6 md:h-24 md:px-12">
           <Link href="/" className="text-lg font-medium tracking-tight">
             Rahul Choudhury
           </Link>
 
-          <nav className="hidden items-center gap-8 text-sm md:flex">
-            <Link href="#work" className="text-[#525252] hover:text-[#171717]">
-              Work
-            </Link>
-            <Link
-              href="#contact"
-              className="text-[#525252] hover:text-[#171717]"
-            >
-              Contact
-            </Link>
+          <nav className="flex items-center gap-8 text-sm">
             <ExternalLink
               href="https://destructure.in"
               label="Blog"
-              className="text-[#525252] hover:text-[#171717]"
+              className="text-text-secondary hover:text-text"
             />
           </nav>
-
-          <MobileNav />
         </div>
       </header>
 
@@ -97,13 +85,13 @@ export default function Home() {
         {/* Hero Section */}
         <section className="flex min-h-[60vh] flex-col justify-center py-16 md:py-24">
           <Reveal inView={false}>
-            <p className="mb-6 font-mono text-sm text-[#737373]">
+            <p className="mb-6 font-mono text-sm text-text-muted">
               Frontend Developer at GrowthPanda
             </p>
           </Reveal>
 
           <Reveal inView={false} delay={0.1}>
-            <h1 className="max-w-4xl text-4xl leading-[1.1] font-medium tracking-tight text-[#171717] md:text-6xl lg:text-7xl">
+            <h1 className="max-w-4xl text-4xl leading-[1.1] font-medium tracking-tight text-text md:text-6xl lg:text-7xl">
               {EXPERIENCE_IN_YEARS}+ years building what designers draw and
               users need
             </h1>
@@ -114,17 +102,17 @@ export default function Home() {
               <ExternalLink
                 href="https://github.com/rahul-choudhury"
                 label="GitHub"
-                className="text-[#525252] hover:text-[#171717]"
+                className="text-text-secondary hover:text-text"
               />
               <ExternalLink
                 href="https://www.linkedin.com/in/rahul-choudhury-51460b314"
                 label="LinkedIn"
-                className="text-[#525252] hover:text-[#171717]"
+                className="text-text-secondary hover:text-text"
               />
               <ExternalLink
                 href="/resume.pdf"
                 label="Resume"
-                className="text-[#525252] hover:text-[#171717]"
+                className="text-text-secondary hover:text-text"
               />
             </div>
           </Reveal>
@@ -133,7 +121,7 @@ export default function Home() {
         {/* Skills Section */}
         <section className="py-12 md:py-16">
           <Reveal>
-            <h2 className="mb-8 text-sm font-medium text-[#737373]">
+            <h2 className="mb-8 text-sm font-medium text-text-muted">
               Technologies
             </h2>
           </Reveal>
@@ -141,7 +129,7 @@ export default function Home() {
           <Stagger className="flex flex-wrap gap-3" stagger={0.03}>
             {SKILLS.map((skill) => (
               <StaggerItem key={skill}>
-                <span className="inline-flex items-center rounded-full border border-[#e5e5e5] bg-white px-3 py-1 text-sm text-[#525252] transition-colors hover:border-[#d4d4d4] hover:text-[#171717]">
+                <span className="inline-flex items-center rounded-full border border-border bg-white px-3 py-1 text-sm text-text-secondary transition-colors hover:border-border-hover hover:text-text">
                   {skill}
                 </span>
               </StaggerItem>
@@ -153,10 +141,10 @@ export default function Home() {
         <section id="work" className="py-16 md:py-24">
           <Reveal>
             <div className="mb-12 flex items-baseline justify-between">
-              <h2 className="text-sm font-medium text-[#737373]">
+              <h2 className="text-sm font-medium text-text-muted">
                 Selected Work
               </h2>
-              <span className="font-mono text-sm text-[#737373]">
+              <span className="font-mono text-sm text-text-muted">
                 2025 — 2026
               </span>
             </div>
@@ -174,7 +162,7 @@ export default function Home() {
         {/* Contact Section */}
         <section id="contact" className="py-16 md:py-24">
           <Reveal>
-            <p className="mb-6 text-lg text-[#525252]">
+            <p className="mb-6 text-lg text-text-secondary">
               Good projects need good developers. Here&apos;s my email.
             </p>
           </Reveal>
@@ -182,7 +170,7 @@ export default function Home() {
           <Reveal delay={0.1}>
             <Link
               href="mailto:rchoudhury63@gmail.com"
-              className="inline-flex items-center gap-2 text-lg font-medium text-[#171717] underline decoration-[#e5e5e5] underline-offset-4 hover:decoration-[#171717]"
+              className="inline-flex items-center gap-2 text-lg font-medium text-text underline decoration-border underline-offset-4 hover:decoration-text"
             >
               rchoudhury63@gmail.com
             </Link>
