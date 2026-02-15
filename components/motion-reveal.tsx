@@ -1,12 +1,8 @@
 "use client";
 
 import type { ReactNode } from "react";
-import {
-  motion,
-  type MotionProps,
-  type Easing,
-  useReducedMotion,
-} from "motion/react";
+import { motion, type MotionProps, useReducedMotion } from "motion/react";
+import { animation } from "@/lib/tokens";
 
 type RevealProps = {
   children: ReactNode;
@@ -16,11 +12,9 @@ type RevealProps = {
   y?: number;
 };
 
-const brutalEase: Easing = [0.22, 1, 0.36, 1];
-
 const baseTransition = {
-  duration: 0.55,
-  ease: brutalEase,
+  duration: animation.duration.slow,
+  ease: animation.easing.brutal,
 };
 
 export function Reveal({
@@ -28,7 +22,7 @@ export function Reveal({
   className,
   delay = 0,
   inView = true,
-  y = 16,
+  y = animation.offset.small,
 }: RevealProps) {
   const reduceMotion = useReducedMotion();
 
@@ -73,7 +67,7 @@ const containerVariants = (delayChildren: number, stagger: number) => ({
 });
 
 const itemVariants = {
-  hidden: { opacity: 0, y: 18 },
+  hidden: { opacity: 0, y: animation.offset.medium },
   show: {
     opacity: 1,
     y: 0,
@@ -84,8 +78,8 @@ const itemVariants = {
 export function Stagger({
   children,
   className,
-  delayChildren = 0.05,
-  stagger = 0.08,
+  delayChildren = animation.duration.fast,
+  stagger = animation.duration.normal,
 }: StaggerProps) {
   const reduceMotion = useReducedMotion();
 
