@@ -15,10 +15,7 @@ export function ExternalLink({ href, label, className }: ExternalLinkProps) {
       className={`group inline-flex items-center gap-1 ${className ?? ""}`}
     >
       <span>{label}</span>
-      <ArrowUpRight
-        className="size-3 text-[#d4d4d4] transition-colors group-hover:text-current"
-        strokeWidth={1.5}
-      />
+      <ArrowUpRight className="size-3 translate-y-2 text-[#d4d4d4] opacity-0 transition-all group-hover:translate-y-0 group-hover:text-current group-hover:opacity-100" />
     </a>
   );
 }

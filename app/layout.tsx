@@ -15,11 +15,11 @@ const spaceMono = Space_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://rchoudhury.dev"),
-  title: "Rahul Choudhury — Frontend Developer",
+  title: "Rahul Choudhury",
   description:
     "Frontend Developer creating clean, performant web applications with React, TypeScript, and modern technologies.",
   openGraph: {
-    title: "Rahul Choudhury — Frontend Developer",
+    title: "Rahul Choudhury",
     description:
       "Frontend Developer creating clean, performant web applications with React, TypeScript, and modern technologies.",
     type: "website",

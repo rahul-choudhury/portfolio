@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { ArrowUpRight } from "./icons";
 
 type ProjectCardProps = {
   title: string;
@@ -30,11 +29,6 @@ export function ProjectCard({
           </h3>
           <span className="font-mono text-xs text-text-muted">{year}</span>
         </div>
-
-        <ArrowUpRight
-          className="size-5 text-border-hover transition-colors group-hover:text-text"
-          strokeWidth={1.5}
-        />
       </div>
 
       <p className="mb-6 flex-1 text-sm leading-relaxed text-text-secondary">
