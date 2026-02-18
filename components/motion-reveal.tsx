@@ -1,12 +1,5 @@
-"use client";
-
 import type { ReactNode } from "react";
-import {
-  motion,
-  type MotionProps,
-  type Easing,
-  useReducedMotion,
-} from "motion/react";
+import * as motion from "motion/react-client";
 
 type RevealProps = {
   children: ReactNode;
@@ -16,7 +9,7 @@ type RevealProps = {
   y?: number;
 };
 
-const easeOutQuint: Easing = [0.23, 1, 0.32, 1];
+const easeOutQuint = [0.23, 1, 0.32, 1] as const;
 
 const baseTransition = {
   duration: 0.55,
@@ -30,20 +23,10 @@ export function Reveal({
   inView = true,
   y = 16,
 }: RevealProps) {
-  const reduceMotion = useReducedMotion();
-
-  if (reduceMotion) {
-    return <div className={className}>{children}</div>;
-  }
-
-  const motionProps: MotionProps = {
-    initial: { opacity: 0, y },
-    transition: { ...baseTransition, delay },
-  };
-
   return (
     <motion.div
-      {...motionProps}
+      initial={{ opacity: 0, y }}
+      transition={{ ...baseTransition, delay }}
       className={className}
       {...(inView
         ? {
@@ -87,12 +70,6 @@ export function Stagger({
   delayChildren = 0.05,
   stagger = 0.08,
 }: StaggerProps) {
-  const reduceMotion = useReducedMotion();
-
-  if (reduceMotion) {
-    return <div className={className}>{children}</div>;
-  }
-
   return (
     <motion.div
       className={className}
@@ -112,12 +89,6 @@ type StaggerItemProps = {
 };
 
 export function StaggerItem({ children, className }: StaggerItemProps) {
-  const reduceMotion = useReducedMotion();
-
-  if (reduceMotion) {
-    return <div className={className}>{children}</div>;
-  }
-
   return (
     <motion.div className={className} variants={itemVariants}>
       {children}
