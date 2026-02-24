@@ -6,11 +6,10 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint .",
+    "lint": "biome check",
+    "format": "biome format --write",
     "typecheck": "tsc --noEmit",
-    "analyze": "next experimental-analyze",
-    "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "analyze": "next experimental-analyze"
   },
   "dependencies": {
     "motion": "^12.32.0",
@@ -19,16 +18,11 @@
     "react-dom": "^19.2.4"
   },
   "devDependencies": {
-    "@next/eslint-plugin-next": "^16.1.6",
+    "@biomejs/biome": "^2.4.4",
     "@tailwindcss/postcss": "^4.1.18",
     "@types/node": "^24.10.9",
     "@types/react": "19.2.7",
     "@types/react-dom": "19.2.3",
-    "eslint": "^9.39.2",
-    "eslint-config-next": "^16.1.6",
-    "eslint-plugin-react-hooks": "^7.0.1",
-    "prettier": "^3.8.1",
-    "prettier-plugin-tailwindcss": "^0.7.2",
     "tailwindcss": "^4.1.18",
     "typescript": "^5.9.3"
   }
