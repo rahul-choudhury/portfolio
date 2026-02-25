@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ExternalLink } from "@/components/external-link";
 import { Reveal, Stagger, StaggerItem } from "@/components/motion-reveal";
 import { ProjectCard } from "@/components/project-card";
+import { getAllBlogPosts } from "@/lib/blogs";
 
 const SKILLS = [
   "JavaScript",
@@ -56,124 +57,138 @@ const PROJECTS = [
   },
 ];
 
-export default function Home() {
+export default async function Home() {
+  const blogPosts = getAllBlogPosts();
+  const totalBlogs = blogPosts.length;
+
   return (
-    <div className="min-h-screen bg-bg font-sans text-text">
-      {/* Navigation */}
-      <header className="fixed top-0 right-0 left-0 z-50 bg-bg/80 backdrop-blur-md">
-        <div className="mx-auto flex h-20 max-w-6xl items-center justify-between px-6 md:h-24 md:px-12">
-          <Link href="/" className="text-lg font-medium tracking-tight">
+    <>
+      {/* Hero Section */}
+      <section className="flex flex-col justify-center">
+        <Reveal inView={false}>
+          <h1 className="max-w-4xl text-5xl leading-[1.1] font-medium tracking-tight text-text md:text-6xl lg:text-7xl">
             Rahul Choudhury
-          </Link>
+          </h1>
+        </Reveal>
 
-          <nav className="flex items-center gap-8 text-sm">
-            <ExternalLink
-              href="https://destructure.in"
-              label="Blog"
-              className="text-text-secondary hover:text-text"
-            />
-          </nav>
-        </div>
-      </header>
+        <Reveal inView={false} delay={0.1}>
+          <p className="mt-6 max-w-2xl text-lg text-text-secondary md:text-xl">
+            Building what designers draw and users need
+          </p>
+        </Reveal>
 
-      <main className="mx-auto max-w-6xl px-6 pt-20 md:px-12 md:pt-24">
-        {/* Hero Section */}
-        <section className="flex min-h-[60vh] flex-col justify-center py-16 md:py-24">
-          <Reveal inView={false}>
-            <p className="mb-6 font-mono text-sm text-text-muted">
-              Frontend Developer at GrowthPanda
-            </p>
-          </Reveal>
+        <Reveal inView={false} delay={0.15}>
+          <div className="mt-6 flex items-center gap-6 text-sm">
+            <ExternalLink href="https://github.com/rahul-choudhury">
+              GitHub
+            </ExternalLink>
+            <ExternalLink href="https://www.linkedin.com/in/rahul-choudhury-51460b314">
+              LinkedIn
+            </ExternalLink>
+            <ExternalLink href="/resume.pdf">Resumè</ExternalLink>
+          </div>
+        </Reveal>
+      </section>
 
-          <Reveal inView={false} delay={0.1}>
-            <h1 className="max-w-4xl text-4xl leading-[1.1] font-medium tracking-tight text-text md:text-6xl lg:text-7xl">
-              Building what designers draw and users need
-            </h1>
-          </Reveal>
+      {/* Skills Section */}
+      <section className="mt-12 md:mt-16">
+        <Reveal>
+          <h2 className="mb-6 text-sm font-medium text-text-muted">
+            Technologies
+          </h2>
+        </Reveal>
 
-          <Reveal inView={false} delay={0.2}>
-            <div className="mt-12 flex items-center gap-6 text-sm">
-              <ExternalLink
-                href="https://github.com/rahul-choudhury"
-                label="GitHub"
-                className="text-text-secondary hover:text-text"
-              />
-              <ExternalLink
-                href="https://www.linkedin.com/in/rahul-choudhury-51460b314"
-                label="LinkedIn"
-                className="text-text-secondary hover:text-text"
-              />
-              <ExternalLink
-                href="/resume.pdf"
-                label="Resume"
-                className="text-text-secondary hover:text-text"
-              />
-            </div>
-          </Reveal>
-        </section>
-
-        {/* Skills Section */}
-        <section className="py-12 md:py-16">
-          <Reveal>
-            <h2 className="mb-8 text-sm font-medium text-text-muted">
-              Technologies
-            </h2>
-          </Reveal>
-
-          <Stagger className="flex flex-wrap gap-3" stagger={0.03}>
-            {SKILLS.map((skill) => (
-              <StaggerItem key={skill}>
-                <span className="inline-flex items-center rounded-full border border-border bg-white px-3 py-1 text-sm text-text-secondary transition-colors hover:border-border-hover hover:text-text">
-                  {skill}
-                </span>
-              </StaggerItem>
-            ))}
-          </Stagger>
-        </section>
-
-        {/* Work Section */}
-        <section id="work" className="py-16 md:py-24">
-          <Reveal>
-            <div className="mb-12 flex items-baseline justify-between">
-              <h2 className="text-sm font-medium text-text-muted">
-                Selected Work
-              </h2>
-              <span className="font-mono text-sm text-text-muted">
-                2025 — 2026
+        <Stagger className="flex flex-wrap gap-3" stagger={0.03}>
+          {SKILLS.map((skill) => (
+            <StaggerItem key={skill}>
+              <span className="inline-flex items-center rounded-full border border-border bg-white px-3 py-1 text-sm text-text-secondary transition-colors hover:border-border-hover hover:text-text">
+                {skill}
               </span>
-            </div>
-          </Reveal>
+            </StaggerItem>
+          ))}
+        </Stagger>
+      </section>
 
-          <Stagger
-            className="grid auto-rows-fr gap-6 md:grid-cols-2"
-            stagger={0.1}
+      {/* Blog Section */}
+      <section className="mt-16 md:mt-20">
+        <Reveal>
+          <div className="mb-8 flex items-baseline justify-between">
+            <h2 className="text-sm font-medium text-text-muted">Blogs</h2>
+            <span className="font-mono text-sm text-text-muted">
+              {totalBlogs} {totalBlogs === 1 ? "post" : "posts"}
+            </span>
+          </div>
+        </Reveal>
+
+        <Stagger className="flex flex-col gap-4" stagger={0.1}>
+          {blogPosts.map((post) => (
+            <StaggerItem key={post.slug}>
+              <Link
+                href={`/blog/${post.slug}`}
+                className="group flex items-start justify-between gap-4 border-b border-border py-4 transition-colors hover:border-border-hover"
+              >
+                <div className="flex flex-col gap-1">
+                  <h3 className="font-medium text-text transition-colors group-hover:text-text-secondary">
+                    {post.title}
+                  </h3>
+                  {post.description && (
+                    <p className="text-sm text-text-secondary">
+                      {post.description}
+                    </p>
+                  )}
+                </div>
+                {post.date && (
+                  <span className="shrink-0 font-mono text-sm text-text-muted">
+                    {new Date(post.date).toLocaleDateString("en-US", {
+                      year: "numeric",
+                      month: "short",
+                      day: "numeric",
+                    })}
+                  </span>
+                )}
+              </Link>
+            </StaggerItem>
+          ))}
+        </Stagger>
+      </section>
+
+      {/* Work Section */}
+      <section className="mt-16 md:mt-20">
+        <Reveal>
+          <h2 className=" mb-8 text-sm font-medium text-text-muted">
+            Selected Work
+          </h2>
+        </Reveal>
+
+        <Stagger
+          className="grid auto-rows-fr gap-6 md:grid-cols-2"
+          stagger={0.1}
+        >
+          {PROJECTS.map((project) => (
+            <StaggerItem key={project.title} className="h-full">
+              <ProjectCard {...project} />
+            </StaggerItem>
+          ))}
+        </Stagger>
+      </section>
+
+      {/* Contact Section */}
+      <section className="mt-16 md:mt-20 ">
+        <Reveal>
+          <p className="mb-6 text-lg text-text-secondary">
+            Good projects need good developers. Here&apos;s my email.
+          </p>
+        </Reveal>
+
+        <Reveal delay={0.1}>
+          <Link
+            href="mailto:rchoudhury63@gmail.com"
+            className="inline-flex items-center gap-2 text-lg font-medium text-text underline decoration-border underline-offset-4 hover:decoration-text"
           >
-            {PROJECTS.map((project) => (
-              <StaggerItem key={project.title} className="h-full">
-                <ProjectCard {...project} />
-              </StaggerItem>
-            ))}
-          </Stagger>
-        </section>
-
-        {/* Contact Section */}
-        <section id="contact" className="py-16 md:py-24">
-          <Reveal>
-            <p className="mb-6 text-lg text-text-secondary">
-              Good projects need good developers. Here&apos;s my email.
-            </p>
-          </Reveal>
-
-          <Reveal delay={0.1}>
-            <Link
-              href="mailto:rchoudhury63@gmail.com"
-              className="inline-flex items-center gap-2 text-lg font-medium text-text underline decoration-border underline-offset-4 hover:decoration-text"
-            >
-              rchoudhury63@gmail.com
-            </Link>
-          </Reveal>
-        </section>
-      </main>
-    </div>
+            rchoudhury63@gmail.com
+          </Link>
+        </Reveal>
+      </section>
+    </>
   );
 }

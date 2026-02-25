@@ -34,9 +34,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${spaceGrotesk.variable} ${spaceMono.variable} bg-bg text-text antialiased`}
+        className={`${spaceGrotesk.className} ${spaceMono.variable} antialiased`}
       >
-        {children}
+        <main className="mx-auto max-w-4xl px-6 md:px-12 pt-12 md:pt-16 pb-16 md:pb-20">
+          {children}
+        </main>
       </body>
     </html>
   );

@@ -20,7 +20,7 @@ export function ProjectCard({
       href={link}
       target="_blank"
       rel="noopener noreferrer"
-      className="group flex h-full flex-col rounded-lg border border-border bg-white p-6 transition-all duration-300 hover:border-border-hover hover:shadow-sm md:p-8"
+      className="group flex h-full flex-col rounded-lg border border-border bg-white p-6 transition-[color,box-shadow] duration-300 hover:border-border-hover hover:shadow-sm md:p-8"
     >
       <div className="mb-4 flex items-start justify-between">
         <div className="flex items-baseline gap-3">
