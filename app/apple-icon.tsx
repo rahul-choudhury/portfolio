@@ -21,6 +21,7 @@ export default function Icon() {
       }}
     >
       <svg
+        aria-hidden="true"
         width="80"
         height="80"
         viewBox="0 0 24 24"

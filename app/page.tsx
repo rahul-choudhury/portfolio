@@ -1,8 +1,7 @@
 import Link from "next/link";
-
+import { ExternalLink } from "@/components/external-link";
 import { Reveal, Stagger, StaggerItem } from "@/components/motion-reveal";
 import { ProjectCard } from "@/components/project-card";
-import { ExternalLink } from "@/components/external-link";
 
 const SKILLS = [
   "JavaScript",

@@ -1,6 +1,6 @@
-import { ImageResponse } from "next/og";
-import { join } from "node:path";
 import { readFile } from "node:fs/promises";
+import { join } from "node:path";
+import { ImageResponse } from "next/og";
 
 export const alt = "Rahul Choudhury - Frontend Developer";
 export const size = {
@@ -82,6 +82,7 @@ export default async function Image() {
         </div>
 
         <svg
+          aria-hidden="true"
           width="160"
           height="160"
           viewBox="0 0 24 24"

@@ -5,6 +5,7 @@ type IconProps = {
 export function ArrowUpRight({ className }: IconProps) {
   return (
     <svg
+      aria-hidden="true"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 256 256"
       className={className}
