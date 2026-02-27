@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ExternalLink } from "@/components/external-link";
-import { Reveal, Stagger, StaggerItem } from "@/components/motion-reveal";
+import { Reveal } from "@/components/motion-reveal";
 import { ProjectCard } from "@/components/project-card";
 import { getAllBlogPosts } from "@/lib/blogs";
 
@@ -65,19 +65,19 @@ export default async function Home() {
     <>
       {/* Hero Section */}
       <section className="flex flex-col justify-center">
-        <Reveal inView={false}>
+        <Reveal>
           <h1 className="max-w-4xl text-5xl leading-[1.1] font-medium tracking-tight text-text md:text-6xl lg:text-7xl">
             Rahul Choudhury
           </h1>
         </Reveal>
 
-        <Reveal inView={false} delay={0.1}>
+        <Reveal>
           <p className="mt-6 max-w-2xl text-lg text-text-secondary md:text-xl">
             Building what designers draw and users need
           </p>
         </Reveal>
 
-        <Reveal inView={false} delay={0.15}>
+        <Reveal>
           <div className="mt-6 flex items-center gap-6 text-sm">
             <ExternalLink href="https://github.com/rahul-choudhury">
               GitHub
@@ -92,26 +92,29 @@ export default async function Home() {
 
       {/* Skills Section */}
       <section className="mt-12 md:mt-16">
-        <Reveal>
+        <Reveal delay={0.1}>
           <h2 className="mb-6 text-sm font-medium text-text-muted">
             Technologies
           </h2>
         </Reveal>
 
-        <Stagger className="flex flex-wrap gap-3" stagger={0.03}>
-          {SKILLS.map((skill) => (
-            <StaggerItem key={skill}>
-              <span className="inline-flex items-center rounded-full border border-border bg-white px-3 py-1 text-sm text-text-secondary transition-colors hover:border-border-hover hover:text-text">
+        <Reveal delay={0.15}>
+          <div className="flex flex-wrap gap-3">
+            {SKILLS.map((skill) => (
+              <span
+                key={skill}
+                className="inline-flex items-center border border-border bg-white px-3 py-1 text-sm text-text-secondary transition-colors hover:border-border-hover hover:text-text"
+              >
                 {skill}
               </span>
-            </StaggerItem>
-          ))}
-        </Stagger>
+            ))}
+          </div>
+        </Reveal>
       </section>
 
       {/* Blog Section */}
       <section className="mt-16 md:mt-20">
-        <Reveal>
+        <Reveal delay={0.1}>
           <div className="mb-8 flex items-baseline justify-between">
             <h2 className="text-sm font-medium text-text-muted">Blogs</h2>
             <span className="font-mono text-sm text-text-muted">
@@ -120,10 +123,11 @@ export default async function Home() {
           </div>
         </Reveal>
 
-        <Stagger className="flex flex-col gap-4" stagger={0.1}>
-          {blogPosts.map((post) => (
-            <StaggerItem key={post.slug}>
+        <Reveal delay={0.15}>
+          <div className="flex flex-col gap-4">
+            {blogPosts.map((post) => (
               <Link
+                key={post.slug}
                 href={`/blog/${post.slug}`}
                 className="group flex items-start justify-between gap-4 border-b border-border py-4 transition-colors hover:border-border-hover"
               >
@@ -147,29 +151,28 @@ export default async function Home() {
                   </span>
                 )}
               </Link>
-            </StaggerItem>
-          ))}
-        </Stagger>
+            ))}
+          </div>
+        </Reveal>
       </section>
 
       {/* Work Section */}
       <section className="mt-16 md:mt-20">
-        <Reveal>
+        <Reveal delay={0.1}>
           <h2 className=" mb-8 text-sm font-medium text-text-muted">
             Selected Work
           </h2>
         </Reveal>
 
-        <Stagger
-          className="grid auto-rows-fr gap-6 md:grid-cols-2"
-          stagger={0.1}
-        >
-          {PROJECTS.map((project) => (
-            <StaggerItem key={project.title} className="h-full">
-              <ProjectCard {...project} />
-            </StaggerItem>
-          ))}
-        </Stagger>
+        <Reveal delay={0.15}>
+          <div className="grid auto-rows-fr gap-6 md:grid-cols-2">
+            {PROJECTS.map((project) => (
+              <div key={project.title} className="h-full">
+                <ProjectCard {...project} />
+              </div>
+            ))}
+          </div>
+        </Reveal>
       </section>
 
       {/* Contact Section */}

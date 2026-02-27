@@ -6,7 +6,6 @@ type RevealProps = {
   className?: string;
   delay?: number;
   inView?: boolean;
-  y?: number;
 };
 
 const easeOutQuint = [0.23, 1, 0.32, 1] as const;
@@ -21,76 +20,19 @@ export function Reveal({
   className,
   delay = 0,
   inView = true,
-  y = 16,
 }: RevealProps) {
   return (
     <motion.div
-      initial={inView ? { opacity: 0, y } : { opacity: 0 }}
+      initial={{ opacity: 0, filter: "blur(4px)" }}
       transition={{ ...baseTransition, delay }}
       className={className}
       {...(inView
         ? {
-            whileInView: { opacity: 1, y: 0 },
+            whileInView: { opacity: 1, filter: "blur(0px)" },
             viewport: { once: true, amount: 0.35 },
           }
-        : { animate: { opacity: 1 } })}
+        : { animate: { opacity: 1, filter: "blur(0px)" } })}
     >
-      {children}
-    </motion.div>
-  );
-}
-
-type StaggerProps = {
-  children: ReactNode;
-  className?: string;
-  delayChildren?: number;
-  stagger?: number;
-};
-
-const containerVariants = (delayChildren: number, stagger: number) => ({
-  hidden: { opacity: 1 },
-  show: {
-    opacity: 1,
-    transition: { delayChildren, staggerChildren: stagger },
-  },
-});
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 18 },
-  show: {
-    opacity: 1,
-    y: 0,
-    transition: baseTransition,
-  },
-};
-
-export function Stagger({
-  children,
-  className,
-  delayChildren = 0.05,
-  stagger = 0.08,
-}: StaggerProps) {
-  return (
-    <motion.div
-      className={className}
-      variants={containerVariants(delayChildren, stagger)}
-      initial="hidden"
-      whileInView="show"
-      viewport={{ once: true, amount: 0.25 }}
-    >
-      {children}
-    </motion.div>
-  );
-}
-
-type StaggerItemProps = {
-  children: ReactNode;
-  className?: string;
-};
-
-export function StaggerItem({ children, className }: StaggerItemProps) {
-  return (
-    <motion.div className={className} variants={itemVariants}>
       {children}
     </motion.div>
   );

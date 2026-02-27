@@ -5,8 +5,9 @@ import { MDXRemote } from "next-mdx-remote/rsc";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypePrettyCode from "rehype-pretty-code";
 import rehypeSlug from "rehype-slug";
-import { getBlogPost, getBlogSlugs } from "@/lib/blogs";
+import { Reveal } from "@/components/motion-reveal";
 import { VideoPlayer } from "@/components/video-player";
+import { getBlogPost, getBlogSlugs } from "@/lib/blogs";
 
 type Params = Promise<{ slug: string }>;
 
@@ -16,7 +17,9 @@ export function generateStaticParams() {
 
 export async function generateMetadata({
   params,
-}: { params: Params }): Promise<Metadata> {
+}: {
+  params: Params;
+}): Promise<Metadata> {
   const { slug } = await params;
 
   try {
@@ -31,16 +34,13 @@ export async function generateMetadata({
         publishedTime: metadata.date,
         url: `/blog/${slug}`,
       },
-
     };
   } catch {
     return {};
   }
 }
 
-export default async function BlogPostPage({
-  params,
-}: { params: Params }) {
+export default async function BlogPostPage({ params }: { params: Params }) {
   const { slug } = await params;
 
   try {
@@ -49,66 +49,76 @@ export default async function BlogPostPage({
     return (
       <article>
         <header className="mb-12">
-          <Link
-            href="/"
-            className="mb-8 inline-flex items-center gap-1.5 text-sm text-text-muted transition-colors hover:text-text"
-          >
-            <span aria-hidden="true">&larr;</span>
-            Back
-          </Link>
+          <Reveal inView={false}>
+            <Link
+              href="/"
+              className="mb-8 inline-flex items-center gap-1.5 text-sm text-text-muted transition-colors hover:text-text"
+            >
+              <span aria-hidden="true">&larr;</span>
+              Back
+            </Link>
+          </Reveal>
 
-          <h1 className="text-3xl font-medium tracking-tight text-text md:text-4xl">
-            {metadata.title}
-          </h1>
+          <Reveal inView={false} delay={0.1}>
+            <h1 className="text-3xl font-medium tracking-tight text-text md:text-4xl">
+              {metadata.title}
+            </h1>
+          </Reveal>
 
           {metadata.date && (
-            <time className="mt-3 block font-mono text-sm text-text-muted">
-              {new Date(metadata.date).toLocaleDateString("en-US", {
-                year: "numeric",
-                month: "long",
-                day: "numeric",
-              })}
-            </time>
+            <Reveal inView={false} delay={0.15}>
+              <time className="mt-3 block font-mono text-sm text-text-muted">
+                {new Date(metadata.date).toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })}
+              </time>
+            </Reveal>
           )}
 
           {metadata.description && (
-            <p className="mt-4 text-lg text-text-secondary">
-              {metadata.description}
-            </p>
+            <Reveal inView={false} delay={0.2}>
+              <p className="mt-4 text-lg text-text-secondary">
+                {metadata.description}
+              </p>
+            </Reveal>
           )}
         </header>
 
-        <div className="prose">
-          <MDXRemote
-            source={content}
-            components={{ VideoPlayer }}
-            options={{
-              mdxOptions: {
-                rehypePlugins: [
-                  rehypeSlug,
-                  [
-                    rehypeAutolinkHeadings,
-                    {
-                      behavior: "append",
-                      properties: { className: "heading-anchor" },
-                      content: {
-                        type: "text",
-                        value: "#",
+        <Reveal inView={false} delay={0.25}>
+          <div className="prose">
+            <MDXRemote
+              source={content}
+              components={{ VideoPlayer }}
+              options={{
+                mdxOptions: {
+                  rehypePlugins: [
+                    rehypeSlug,
+                    [
+                      rehypeAutolinkHeadings,
+                      {
+                        behavior: "append",
+                        properties: { className: "heading-anchor" },
+                        content: {
+                          type: "text",
+                          value: "#",
+                        },
                       },
-                    },
+                    ],
+                    [
+                      rehypePrettyCode,
+                      {
+                        theme: "github-light-default",
+                        keepBackground: false,
+                      },
+                    ],
                   ],
-                  [
-                    rehypePrettyCode,
-                    {
-                      theme: "github-light-default",
-                      keepBackground: false,
-                    },
-                  ],
-                ],
-              },
-            }}
-          />
-        </div>
+                },
+              }}
+            />
+          </div>
+        </Reveal>
       </article>
     );
   } catch {

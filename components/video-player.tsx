@@ -55,7 +55,7 @@ export function VideoPlayer({
   };
 
   return (
-    <div className="group relative my-6 overflow-hidden rounded-lg">
+    <div className="group relative my-6 overflow-hidden">
       <video
         ref={ref}
         src={src}
@@ -79,7 +79,7 @@ export function VideoPlayer({
       >
         <div
           className={cn(
-            "absolute top-1/2 left-1/2 flex h-16 w-16 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-black/40 text-white/90 opacity-0 transition-opacity group-hover:opacity-100",
+            "absolute top-1/2 left-1/2 flex h-16 w-16 -translate-x-1/2 -translate-y-1/2 items-center justify-center bg-black/40 text-white/90 opacity-0 transition-opacity group-hover:opacity-100",
             !isPlaying && "opacity-100",
           )}
         >
