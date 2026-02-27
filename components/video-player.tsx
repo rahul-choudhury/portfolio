@@ -5,6 +5,20 @@ import { useRef, useState, type VideoHTMLAttributes } from "react";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { cn } from "@/lib/utils";
 
+function extractVideoDimensions(src: string) {
+  try {
+    const url = new URL(src);
+    const width = url.searchParams.get("width");
+    const height = url.searchParams.get("height");
+    return {
+      width: width ? Number(width) : undefined,
+      height: height ? Number(height) : undefined,
+    };
+  } catch {
+    return {};
+  }
+}
+
 const iconVariants: Variants = {
   initial: { scale: 0.8, opacity: 0 },
   animate: { scale: 1, opacity: 1, transition: { duration: 0.15 } },
@@ -19,6 +33,8 @@ export function VideoPlayer({
   const [isPlaying, setIsPlaying] = useState(false);
   const ref = useRef<HTMLVideoElement>(null);
   const notDesktop = useMediaQuery("(max-width: 1023px)");
+  const { width, height } =
+    typeof src === "string" ? extractVideoDimensions(src) : {};
 
   const handleVideoPlayback = () => {
     const video = ref.current;
@@ -43,6 +59,8 @@ export function VideoPlayer({
       <video
         ref={ref}
         src={src}
+        width={width}
+        height={height}
         muted
         loop
         playsInline
