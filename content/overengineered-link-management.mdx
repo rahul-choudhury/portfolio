@@ -7,7 +7,7 @@ slug: "overengineered-link-management"
 As engineers, we like to over-engineer simple stuff to justify our degrees. So, I thought about documenting all my over-engineered solutions as a series of blogs, starting with my personal link management tool. It's very simple on the surface. Paste your link into the universal input, press enter and it gets saved to a PostgreSQL database. You can search using its name or the actual link, update the label or delete them. Why the need to over-engineer this or even build it in the first place? Well, to answer the second question first: I browser-hop like the average Linux distro hopper out there. Browser specific "Reading List" feature won't work for me. Moreover, [Pocket has been discontinued](https://support.mozilla.org/en-US/kb/future-of-pocket). Finally, to answer the first question: Where's the fun in that?
 
 Before I start, here's a short video of me demoing the basic set of features:
-<VideoPlayer  src="https://api.destructure.in/media/screen-recording-2026-01-05-at-00176776191293517017.webm" width="2880" height="1736" />
+<VideoPlayer src="https://yxgrzrtmgxrw1bng.public.blob.vercel-storage.com/bookmarks-demo.webm" width="2880" height="1736" />
 
 ## The universal input
 This universal input is configured as search-first. You search via title/link. If it doesn't find anything and your typed value is a link, you are prompted to press "Enter" to save it into the database. Link determination is done via a simple regex pattern matching. The search is done via direct matching with title or link. I might consider modifying this to use a fuzzy search.
