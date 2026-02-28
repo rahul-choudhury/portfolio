@@ -1,7 +1,9 @@
 "use client";
 
-import { AnimatePresence, motion, type Variants } from "motion/react";
-import { useRef, useState, type VideoHTMLAttributes } from "react";
+import { Slider } from "@base-ui/react/slider";
+import { Maximize, Minimize, Pause, Play } from "lucide-react";
+import { AnimatePresence, motion } from "motion/react";
+import { useEffect, useRef, useState, type VideoHTMLAttributes } from "react";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { cn } from "@/lib/utils";
 
@@ -19,11 +21,11 @@ function extractVideoDimensions(src: string) {
   }
 }
 
-const iconVariants: Variants = {
-  initial: { scale: 0.8, opacity: 0 },
-  animate: { scale: 1, opacity: 1, transition: { duration: 0.15 } },
-  exit: { scale: 0.8, opacity: 0, transition: { duration: 0.15 } },
-};
+function formatTime(seconds: number) {
+  const mins = Math.floor(seconds / 60);
+  const secs = Math.floor(seconds % 60);
+  return `${mins}:${secs.toString().padStart(2, "0")}`;
+}
 
 export function VideoPlayer({
   className,
@@ -31,33 +33,70 @@ export function VideoPlayer({
   ...props
 }: VideoHTMLAttributes<HTMLVideoElement>) {
   const [isPlaying, setIsPlaying] = useState(false);
-  const ref = useRef<HTMLVideoElement>(null);
-  const notDesktop = useMediaQuery("(max-width: 1023px)");
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
+  const [isSeeking, setIsSeeking] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const [isHovering, setIsHovering] = useState(false);
+
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const isFullscreenTransitioning = useRef(false);
+  const isMobile = useMediaQuery("(max-width: 1023px)");
+
   const { width, height } =
     typeof src === "string" ? extractVideoDimensions(src) : {};
 
-  const handleVideoPlayback = () => {
-    const video = ref.current;
+  const controlsVisible = !isPlaying || isMobile || isHovering;
+
+  const handlePlayback = () => {
+    const video = videoRef.current;
     if (!video) return;
+    if (video.paused) video.play();
+    else video.pause();
+  };
 
-    if (video.paused) {
-      video.play();
+  const handleSeek = (value: number) => {
+    const video = videoRef.current;
+    if (!video) return;
+    setIsSeeking(true);
+    setCurrentTime(value);
+    video.currentTime = value;
+  };
+
+  const toggleFullscreen = () => {
+    const container = containerRef.current;
+    if (!container) return;
+    isFullscreenTransitioning.current = true;
+    if (document.fullscreenElement) {
+      document.exitFullscreen();
     } else {
-      video.pause();
+      container.requestFullscreen();
     }
   };
 
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>) => {
-    if (event.key === " " || event.key === "Enter") {
-      event.preventDefault();
-      handleVideoPlayback();
-    }
-  };
+  useEffect(() => {
+    const onChange = () => {
+      setIsFullscreen(!!document.fullscreenElement);
+      isFullscreenTransitioning.current = false;
+      setIsHovering(containerRef.current?.matches(":hover") ?? false);
+    };
+    document.addEventListener("fullscreenchange", onChange);
+    return () => document.removeEventListener("fullscreenchange", onChange);
+  }, []);
 
   return (
-    <div className="group relative my-6 overflow-hidden">
+    <section
+      ref={containerRef}
+      aria-label="Video player"
+      className="relative my-6 overflow-hidden bg-black"
+      onMouseEnter={() => setIsHovering(true)}
+      onMouseLeave={() => {
+        if (!isFullscreenTransitioning.current) setIsHovering(false);
+      }}
+    >
       <video
-        ref={ref}
+        ref={videoRef}
         src={src}
         width={width}
         height={height}
@@ -65,89 +104,116 @@ export function VideoPlayer({
         loop
         playsInline
         preload="auto"
-        className={cn("mx-auto", className)}
-        {...props}
+        className={cn("mx-auto block", className)}
         onPlay={() => setIsPlaying(true)}
         onPause={() => setIsPlaying(false)}
+        onTimeUpdate={(e) => {
+          if (!isSeeking) setCurrentTime(e.currentTarget.currentTime);
+        }}
+        onLoadedMetadata={(e) => setDuration(e.currentTarget.duration)}
+        {...props}
       />
+
+      {/* Click overlay for play/pause */}
       <button
         type="button"
         aria-label={isPlaying ? "Pause Video" : "Play Video"}
-        className="focus-visible:ring-ring absolute inset-0 cursor-pointer border-none focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
-        onClick={handleVideoPlayback}
-        onKeyDown={handleKeyDown}
+        className="absolute inset-0 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+        onClick={handlePlayback}
+        onKeyDown={(e) => {
+          if (e.key === " " || e.key === "Enter") {
+            e.preventDefault();
+            handlePlayback();
+          }
+        }}
+      />
+
+      {/* Controls bar */}
+      <motion.div
+        initial={false}
+        animate={controlsVisible ? "visible" : "hidden"}
+        variants={{
+          visible: {
+            y: 0,
+            opacity: 1,
+            transition: { duration: 0.25, ease: [0.165, 0.84, 0.44, 1] },
+          },
+          hidden: {
+            y: "100%",
+            opacity: 1,
+            transition: { duration: 0.25, ease: [0.165, 0.84, 0.44, 1] },
+          },
+        }}
+        className="absolute bottom-0 left-0 right-0 p-2.5"
       >
-        <div
-          className={cn(
-            "absolute top-1/2 left-1/2 flex h-16 w-16 -translate-x-1/2 -translate-y-1/2 items-center justify-center bg-black/40 text-white/90 opacity-0 transition-opacity group-hover:opacity-100",
-            !isPlaying && "opacity-100",
-          )}
-        >
-          {notDesktop ? (
-            <svg
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              width="28"
-              height="28"
-              viewBox="0 0 24 24"
-              fill="none"
-            >
-              <path
-                d="M7.65703 2.27884C6.49076 1.57201 5 2.41169 5 3.77543V20.2247C5 21.5884 6.49076 22.4281 7.65703 21.7213L21.2276 13.4966C22.3516 12.8155 22.3516 11.1846 21.2276 10.5035L7.65703 2.27884Z"
-                fill="currentColor"
-                strokeWidth="1"
-              />
-            </svg>
-          ) : (
+        {/* Controls box */}
+        <div className="flex items-center gap-3 rounded-lg border border-white/10 bg-black/40 px-3 py-2.5 shadow-lg backdrop-blur-md">
+          {/* Play/Pause */}
+          <button
+            type="button"
+            aria-label={isPlaying ? "Pause" : "Play"}
+            className="flex shrink-0 cursor-pointer items-center justify-center text-white/90 transition-colors hover:text-white"
+            onClick={handlePlayback}
+          >
             <AnimatePresence mode="wait" initial={false}>
-              {!isPlaying ? (
-                <motion.svg
-                  aria-hidden="true"
-                  key="play"
-                  variants={iconVariants}
-                  initial="initial"
-                  animate="animate"
-                  exit="exit"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="28"
-                  height="28"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                >
-                  <path
-                    d="M7.65703 2.27884C6.49076 1.57201 5 2.41169 5 3.77543V20.2247C5 21.5884 6.49076 22.4281 7.65703 21.7213L21.2276 13.4966C22.3516 12.8155 22.3516 11.1846 21.2276 10.5035L7.65703 2.27884Z"
-                    fill="currentColor"
-                    strokeWidth="1"
-                  />
-                </motion.svg>
-              ) : (
-                <motion.svg
-                  aria-hidden="true"
+              {isPlaying ? (
+                <motion.div
                   key="pause"
-                  variants={iconVariants}
-                  initial="initial"
-                  animate="animate"
-                  exit="exit"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="28"
-                  height="28"
-                  viewBox="0 0 24 24"
-                  fill="none"
+                  initial={{ scale: 0.8, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  exit={{ scale: 0.8, opacity: 0 }}
+                  transition={{ duration: 0.15 }}
                 >
-                  <path
-                    d="M5.75 3C4.7835 3 4 3.7835 4 4.75V19.25C4 20.2165 4.7835 21 5.75 21H8.25C9.2165 21 10 20.2165 10 19.25V4.75C10 3.7835 9.2165 3 8.25 3H5.75Z"
-                    fill="currentColor"
-                  />
-                  <path
-                    d="M15.75 3C14.7835 3 14 3.7835 14 4.75V19.25C14 20.2165 14.7835 21 15.75 21H18.25C19.2165 21 20 20.2165 20 19.25V4.75C20 3.7835 19.2165 3 18.25 3H15.75Z"
-                    fill="currentColor"
-                  />
-                </motion.svg>
+                  <Pause size={18} fill="currentColor" />
+                </motion.div>
+              ) : (
+                <motion.div
+                  key="play"
+                  initial={{ scale: 0.8, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  exit={{ scale: 0.8, opacity: 0 }}
+                  transition={{ duration: 0.15 }}
+                >
+                  <Play size={18} fill="currentColor" />
+                </motion.div>
               )}
             </AnimatePresence>
-          )}
+          </button>
+
+          {/* Time */}
+          <span className="shrink-0 select-none font-mono text-xs text-white/70 tabular-nums">
+            {formatTime(currentTime)}&nbsp;/&nbsp;{formatTime(duration)}
+          </span>
+
+          {/* Seek slider */}
+          <Slider.Root
+            value={currentTime}
+            max={duration || 1}
+            step={0.1}
+            aria-label="Seek"
+            onValueChange={handleSeek}
+            onValueCommitted={() => setIsSeeking(false)}
+            className="group/slider flex grow items-center"
+          >
+            <Slider.Control className="flex h-5 w-full touch-none items-center">
+              <Slider.Track className="relative h-1 w-full rounded-full bg-white/25 transition-[height] duration-150 group-hover/slider:h-1.5">
+                <Slider.Indicator className="rounded-full bg-white/80" />
+                <Slider.Thumb className="block size-3 rounded-full bg-white opacity-0 shadow-sm transition-[opacity,transform] duration-150 focus:outline-none group-hover/slider:opacity-100 data-[dragging]:scale-125 data-[dragging]:opacity-100" />
+              </Slider.Track>
+            </Slider.Control>
+          </Slider.Root>
+
+          {/* Fullscreen */}
+          <button
+            type="button"
+            aria-label={isFullscreen ? "Exit Fullscreen" : "Enter Fullscreen"}
+            className="flex shrink-0 cursor-pointer items-center justify-center text-white/70 transition-colors hover:text-white"
+            onClick={toggleFullscreen}
+          >
+            {isFullscreen ? <Minimize size={16} /> : <Maximize size={16} />}
+          </button>
         </div>
-      </button>
-    </div>
+      </motion.div>
+    </section>
   );
 }
