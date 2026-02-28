@@ -49,7 +49,7 @@ export default async function BlogPostPage({ params }: { params: Params }) {
     return (
       <article>
         <header className="mb-12">
-          <Reveal inView={false}>
+          <Reveal>
             <Link
               href="/"
               className="mb-8 inline-flex items-center gap-1.5 text-sm text-text-muted transition-colors hover:text-text"
@@ -59,14 +59,14 @@ export default async function BlogPostPage({ params }: { params: Params }) {
             </Link>
           </Reveal>
 
-          <Reveal inView={false} delay={0.1}>
+          <Reveal delay={0.1}>
             <h1 className="text-3xl font-medium tracking-tight text-text md:text-4xl">
               {metadata.title}
             </h1>
           </Reveal>
 
           {metadata.date && (
-            <Reveal inView={false} delay={0.15}>
+            <Reveal delay={0.15}>
               <time className="mt-3 block font-mono text-sm text-text-muted">
                 {new Date(metadata.date).toLocaleDateString("en-US", {
                   year: "numeric",
@@ -78,7 +78,7 @@ export default async function BlogPostPage({ params }: { params: Params }) {
           )}
 
           {metadata.description && (
-            <Reveal inView={false} delay={0.2}>
+            <Reveal delay={0.2}>
               <p className="mt-4 text-lg text-text-secondary">
                 {metadata.description}
               </p>
@@ -86,7 +86,7 @@ export default async function BlogPostPage({ params }: { params: Params }) {
           )}
         </header>
 
-        <Reveal inView={false} delay={0.25}>
+        <Reveal delay={0.25}>
           <div className="prose">
             <MDXRemote
               source={content}

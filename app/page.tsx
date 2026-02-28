@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { ExternalLink } from "@/components/external-link";
 import { Reveal } from "@/components/motion-reveal";
-import { ProjectCard } from "@/components/project-card";
 import { getAllBlogPosts } from "@/lib/blogs";
 
 const SKILLS = [
@@ -65,19 +64,19 @@ export default async function Home() {
     <>
       {/* Hero Section */}
       <section className="flex flex-col justify-center">
-        <Reveal>
+        <Reveal delay={0.1}>
           <h1 className="max-w-4xl text-5xl leading-[1.1] font-medium tracking-tight text-text md:text-6xl lg:text-7xl">
             Rahul Choudhury
           </h1>
         </Reveal>
 
-        <Reveal>
+        <Reveal delay={0.15}>
           <p className="mt-6 max-w-2xl text-lg text-text-secondary md:text-xl">
             Building what designers draw and users need
           </p>
         </Reveal>
 
-        <Reveal>
+        <Reveal delay={0.2}>
           <div className="mt-6 flex items-center gap-6 text-sm">
             <ExternalLink href="https://github.com/rahul-choudhury">
               GitHub
@@ -92,13 +91,13 @@ export default async function Home() {
 
       {/* Skills Section */}
       <section className="mt-12 md:mt-16">
-        <Reveal delay={0.1}>
+        <Reveal delay={0.25}>
           <h2 className="mb-6 text-sm font-medium text-text-muted">
             Technologies
           </h2>
         </Reveal>
 
-        <Reveal delay={0.15}>
+        <Reveal delay={0.3}>
           <div className="flex flex-wrap gap-3">
             {SKILLS.map((skill) => (
               <span
@@ -114,7 +113,7 @@ export default async function Home() {
 
       {/* Blog Section */}
       <section className="mt-16 md:mt-20">
-        <Reveal delay={0.1}>
+        <Reveal delay={0.35}>
           <div className="mb-8 flex items-baseline justify-between">
             <h2 className="text-sm font-medium text-text-muted">Blogs</h2>
             <span className="font-mono text-sm text-text-muted">
@@ -123,7 +122,7 @@ export default async function Home() {
           </div>
         </Reveal>
 
-        <Reveal delay={0.15}>
+        <Reveal delay={0.4}>
           <div className="flex flex-col gap-4">
             {blogPosts.map((post) => (
               <Link
@@ -158,18 +157,44 @@ export default async function Home() {
 
       {/* Work Section */}
       <section className="mt-16 md:mt-20">
-        <Reveal delay={0.1}>
+        <Reveal delay={0.45}>
           <h2 className=" mb-8 text-sm font-medium text-text-muted">
             Selected Work
           </h2>
         </Reveal>
 
-        <Reveal delay={0.15}>
-          <div className="grid auto-rows-fr gap-6 md:grid-cols-2">
+        <Reveal delay={0.5}>
+          <div className="flex flex-col gap-4">
             {PROJECTS.map((project) => (
-              <div key={project.title} className="h-full">
-                <ProjectCard {...project} />
-              </div>
+              <Link
+                key={project.title}
+                href={project.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex items-start justify-between gap-4 border-b border-border py-4 transition-colors hover:border-border-hover"
+              >
+                <div className="flex flex-col gap-1">
+                  <h3 className="font-medium text-text transition-colors group-hover:text-text-secondary">
+                    {project.title}
+                  </h3>
+                  <p className="text-sm text-text-secondary">
+                    {project.description}
+                  </p>
+                  <div className="mt-2 flex flex-wrap gap-2">
+                    {project.tech.map((t) => (
+                      <span
+                        key={t}
+                        className="inline-flex items-center border border-border bg-white px-2 py-0.5 font-mono text-xs text-text-secondary"
+                      >
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+                <span className="shrink-0 font-mono text-sm text-text-muted">
+                  {project.year}
+                </span>
+              </Link>
             ))}
           </div>
         </Reveal>
@@ -177,13 +202,13 @@ export default async function Home() {
 
       {/* Contact Section */}
       <section className="mt-16 md:mt-20 ">
-        <Reveal>
+        <Reveal delay={0.55}>
           <p className="mb-6 text-lg text-text-secondary">
             Good projects need good developers. Here&apos;s my email.
           </p>
         </Reveal>
 
-        <Reveal delay={0.1}>
+        <Reveal delay={0.6}>
           <Link
             href="mailto:rchoudhury63@gmail.com"
             className="inline-flex items-center gap-2 text-lg font-medium text-text underline decoration-border underline-offset-4 hover:decoration-text"

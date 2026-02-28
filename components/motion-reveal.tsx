@@ -19,7 +19,7 @@ export function Reveal({
   children,
   className,
   delay = 0,
-  inView = true,
+  inView = false,
 }: RevealProps) {
   return (
     <motion.div
