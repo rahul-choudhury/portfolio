@@ -12,6 +12,11 @@
   --color-border-hover: #d4d4d4;
 }
 
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 32px;
+}
+
 body {
   background-color: var(--color-bg);
   color: var(--color-text);

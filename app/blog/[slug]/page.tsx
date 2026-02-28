@@ -6,8 +6,9 @@ import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypePrettyCode from "rehype-pretty-code";
 import rehypeSlug from "rehype-slug";
 import { Reveal } from "@/components/motion-reveal";
+import { TableOfContents } from "@/components/table-of-contents";
 import { VideoPlayer } from "@/components/video-player";
-import { getBlogPost, getBlogSlugs } from "@/lib/blogs";
+import { getBlogPost, getBlogSlugs, getTableOfContents } from "@/lib/blogs";
 
 type Params = Promise<{ slug: string }>;
 
@@ -45,6 +46,7 @@ export default async function BlogPostPage({ params }: { params: Params }) {
 
   try {
     const { metadata, content } = getBlogPost(slug);
+    const toc = getTableOfContents(content);
 
     return (
       <article>
@@ -87,6 +89,10 @@ export default async function BlogPostPage({ params }: { params: Params }) {
         </header>
 
         <Reveal delay={0.25}>
+          <TableOfContents toc={toc} />
+        </Reveal>
+
+        <Reveal delay={0.3}>
           <div className="prose">
             <MDXRemote
               source={content}

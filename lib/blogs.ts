@@ -4,6 +4,25 @@ import matter from "gray-matter";
 
 const CONTENT_DIR = path.join(process.cwd(), "content");
 
+export type TocEntry = { id: string; title: string; level: 2 | 3 };
+
+export function getTableOfContents(content: string): TocEntry[] {
+  const headingRegex = /^(#{2,3})\s+(.+)$/gm;
+  const entries: TocEntry[] = [];
+
+  for (const match of content.matchAll(headingRegex)) {
+    const level = match[1].length as 2 | 3;
+    const title = match[2].trim();
+    const id = title
+      .toLowerCase()
+      .replace(/[^\w\s-]/g, "")
+      .replace(/\s+/g, "-");
+    entries.push({ id, title, level });
+  }
+
+  return entries;
+}
+
 export interface BlogPost {
   title: string;
   date: string;
