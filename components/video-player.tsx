@@ -3,23 +3,8 @@
 import { Slider } from "@base-ui/react/slider";
 import { Maximize, Minimize, Pause, Play } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
-import { useEffect, useRef, useState, type VideoHTMLAttributes } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "@/hooks/use-media-query";
-import { cn } from "@/lib/utils";
-
-function extractVideoDimensions(src: string) {
-  try {
-    const url = new URL(src);
-    const width = url.searchParams.get("width");
-    const height = url.searchParams.get("height");
-    return {
-      width: width ? Number(width) : undefined,
-      height: height ? Number(height) : undefined,
-    };
-  } catch {
-    return {};
-  }
-}
 
 function formatTime(seconds: number) {
   const mins = Math.floor(seconds / 60);
@@ -28,10 +13,14 @@ function formatTime(seconds: number) {
 }
 
 export function VideoPlayer({
-  className,
   src,
-  ...props
-}: VideoHTMLAttributes<HTMLVideoElement>) {
+  width,
+  height,
+}: {
+  src: string;
+  width: string;
+  height: string;
+}) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
@@ -41,19 +30,18 @@ export function VideoPlayer({
 
   const videoRef = useRef<HTMLVideoElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const isFullscreenTransitioning = useRef(false);
   const isMobile = useMediaQuery("(max-width: 1023px)");
-
-  const { width, height } =
-    typeof src === "string" ? extractVideoDimensions(src) : {};
 
   const controlsVisible = !isPlaying || isMobile || isHovering;
 
   const handlePlayback = () => {
     const video = videoRef.current;
     if (!video) return;
-    if (video.paused) video.play();
-    else video.pause();
+    if (video.paused) {
+      video.play();
+    } else {
+      video.pause();
+    }
   };
 
   const handleSeek = (value: number) => {
@@ -67,7 +55,6 @@ export function VideoPlayer({
   const toggleFullscreen = () => {
     const container = containerRef.current;
     if (!container) return;
-    isFullscreenTransitioning.current = true;
     if (document.fullscreenElement) {
       document.exitFullscreen();
     } else {
@@ -78,11 +65,31 @@ export function VideoPlayer({
   useEffect(() => {
     const onChange = () => {
       setIsFullscreen(!!document.fullscreenElement);
-      isFullscreenTransitioning.current = false;
       setIsHovering(containerRef.current?.matches(":hover") ?? false);
     };
     document.addEventListener("fullscreenchange", onChange);
     return () => document.removeEventListener("fullscreenchange", onChange);
+  }, []);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const syncDuration = () => {
+      const nextDuration = video.duration;
+      setDuration(
+        Number.isFinite(nextDuration) && nextDuration > 0 ? nextDuration : 0,
+      );
+    };
+
+    syncDuration();
+    video.addEventListener("loadedmetadata", syncDuration);
+    video.addEventListener("durationchange", syncDuration);
+
+    return () => {
+      video.removeEventListener("loadedmetadata", syncDuration);
+      video.removeEventListener("durationchange", syncDuration);
+    };
   }, []);
 
   return (
@@ -91,9 +98,7 @@ export function VideoPlayer({
       aria-label="Video player"
       className="relative my-6 overflow-hidden bg-black"
       onMouseEnter={() => setIsHovering(true)}
-      onMouseLeave={() => {
-        if (!isFullscreenTransitioning.current) setIsHovering(false);
-      }}
+      onMouseLeave={() => setIsHovering(false)}
     >
       <video
         ref={videoRef}
@@ -104,14 +109,12 @@ export function VideoPlayer({
         loop
         playsInline
         preload="auto"
-        className={cn("mx-auto block", className)}
+        className="mx-auto block"
         onPlay={() => setIsPlaying(true)}
         onPause={() => setIsPlaying(false)}
         onTimeUpdate={(e) => {
           if (!isSeeking) setCurrentTime(e.currentTarget.currentTime);
         }}
-        onLoadedMetadata={(e) => setDuration(e.currentTarget.duration)}
-        {...props}
       />
 
       {/* Click overlay for play/pause */}
@@ -198,7 +201,7 @@ export function VideoPlayer({
             <Slider.Control className="flex h-5 w-full touch-none items-center">
               <Slider.Track className="relative h-1 w-full rounded-full bg-white/25 transition-[height] duration-150 group-hover/slider:h-1.5">
                 <Slider.Indicator className="rounded-full bg-white/80" />
-                <Slider.Thumb className="block size-3 rounded-full bg-white opacity-0 shadow-sm transition-[opacity,transform] duration-150 focus:outline-none group-hover/slider:opacity-100 data-[dragging]:scale-125 data-[dragging]:opacity-100" />
+                <Slider.Thumb className="block size-3 rounded-full bg-white opacity-0 shadow-sm transition-[opacity,transform] duration-150 focus:outline-none group-hover/slider:opacity-100 data-dragging:scale-125 data-dragging:opacity-100" />
               </Slider.Track>
             </Slider.Control>
           </Slider.Root>
