@@ -25,8 +25,7 @@ const PROJECTS = [
   },
   {
     title: "Bookmarks",
-    description:
-      "A simple and minimal link manager with drag-and-drop organization.",
+    description: "A simple and minimal keyboard focused link manager.",
     link: "https://bookmarks.rchoudhury.dev",
     tech: [
       "Next.js",
