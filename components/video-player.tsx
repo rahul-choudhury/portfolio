@@ -52,14 +52,25 @@ export function VideoPlayer({
     video.currentTime = value;
   };
 
-  const toggleFullscreen = () => {
+  const toggleFullscreen = async () => {
     const container = containerRef.current;
     if (!container) return;
     if (document.fullscreenElement) {
-      document.exitFullscreen();
-    } else {
-      container.requestFullscreen();
+      try {
+        screen.orientation.unlock();
+      } catch {}
+      await document.exitFullscreen();
+      return;
     }
+
+    await container.requestFullscreen();
+    try {
+      await (
+        screen.orientation as ScreenOrientation & {
+          lock(orientation: string): Promise<void>;
+        }
+      ).lock("landscape");
+    } catch {}
   };
 
   useEffect(() => {
