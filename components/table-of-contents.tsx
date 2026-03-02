@@ -26,14 +26,19 @@ export function TableOfContents({ toc }: { toc: TocEntry[] }) {
           </motion.span>
         </Collapsible.Trigger>
 
-        <Collapsible.Panel className="h-[var(--collapsible-panel-height)] overflow-hidden transition-[height,opacity] duration-250 ease-in-out data-[ending-style]:h-0 data-[ending-style]:opacity-0 data-[starting-style]:h-0 data-[starting-style]:opacity-0">
+        <Collapsible.Panel
+          keepMounted
+          className="h-(--collapsible-panel-height) overflow-hidden transition-[height,opacity] duration-250 ease-in-out data-ending-style:h-0 data-ending-style:opacity-0 data-starting-style:h-0 data-starting-style:opacity-0"
+        >
           <div className="mt-2 border border-border bg-bg-soft p-2">
             {toc.map((entry, index) => (
               <motion.a
                 key={entry.id}
                 href={`#${entry.id}`}
                 initial={false}
-                animate={isOpen ? { opacity: 1, x: 0 } : { opacity: 0, x: -8 }}
+                animate={
+                  isOpen ? { opacity: 1, x: 0 } : { opacity: 0, x: -8 }
+                }
                 transition={{
                   duration: 0.2,
                   delay: isOpen ? index * 0.03 : 0,
