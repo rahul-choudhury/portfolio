@@ -4,6 +4,7 @@ import { Slider } from "@base-ui/react/slider";
 import { Maximize, Minimize, Pause, Play } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
+import { triggerMobileHaptic } from "@/components/mobile-haptics";
 import { useMediaQuery } from "@/hooks/use-media-query";
 
 function formatTime(seconds: number) {
@@ -206,7 +207,10 @@ export function VideoPlayer({
             step={0.1}
             aria-label="Seek"
             onValueChange={handleSeek}
-            onValueCommitted={() => setIsSeeking(false)}
+            onValueCommitted={() => {
+              setIsSeeking(false);
+              triggerMobileHaptic();
+            }}
             className="group/slider flex grow items-center"
           >
             <Slider.Control className="flex h-5 w-full touch-none items-center">
