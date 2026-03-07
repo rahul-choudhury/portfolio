@@ -36,9 +36,7 @@ export function TableOfContents({ toc }: { toc: TocEntry[] }) {
                 key={entry.id}
                 href={`#${entry.id}`}
                 initial={false}
-                animate={
-                  isOpen ? { opacity: 1, x: 0 } : { opacity: 0, x: -8 }
-                }
+                animate={isOpen ? { opacity: 1, x: 0 } : { opacity: 0, x: -8 }}
                 transition={{
                   duration: 0.2,
                   delay: isOpen ? index * 0.03 : 0,
