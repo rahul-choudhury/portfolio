@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote/rsc";
+import type { Build } from "rehype-autolink-headings";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypePrettyCode from "rehype-pretty-code";
 import rehypeSlug from "rehype-slug";
@@ -11,6 +12,14 @@ import { VideoPlayer } from "@/components/video-player";
 import { getBlogPost, getBlogSlugs, getTableOfContents } from "@/lib/blogs";
 
 type Params = Promise<{ slug: string }>;
+const buildHeadingAnchorContent: Build = (element) => {
+  const level = Number.parseInt(element.tagName.replace("h", ""), 10);
+
+  return {
+    type: "text",
+    value: "#".repeat(Number.isNaN(level) ? 1 : level),
+  };
+};
 
 export function generateStaticParams() {
   return getBlogSlugs().map((slug) => ({ slug }));
@@ -106,10 +115,7 @@ export default async function BlogPostPage({ params }: { params: Params }) {
                       {
                         behavior: "append",
                         properties: { className: "heading-anchor" },
-                        content: {
-                          type: "text",
-                          value: "#",
-                        },
+                        content: buildHeadingAnchorContent,
                       },
                     ],
                     [
