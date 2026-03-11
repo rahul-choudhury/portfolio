@@ -77,7 +77,7 @@ export default async function Home() {
         </Reveal>
 
         <Reveal delay={0.2}>
-          <div className="mt-6 flex items-center gap-6 text-sm">
+          <div className="mt-6 flex items-center gap-3 md:gap-5 text-sm">
             <ExternalLink href="https://github.com/rahul-choudhury">
               GitHub
             </ExternalLink>
@@ -87,7 +87,7 @@ export default async function Home() {
             <ExternalLink href="/resume.pdf">Resumè</ExternalLink>
             <Link
               href="/design-system"
-              className="inline-flex items-center gap-1 rainbow-shimmer"
+              className="inline-flex items-center gap-1 whitespace-nowrap rainbow-shimmer"
               data-text="Design System"
             >
               Design System
