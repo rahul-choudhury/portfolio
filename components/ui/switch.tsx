@@ -13,7 +13,7 @@
  * @example
  * ```tsx
  * <Field.Root>
- *   <Field.Label nativeLabel={false}>
+ *   <Field.Label>
  *     <Switch checked={enabled} onCheckedChange={setEnabled} />
  *     Notifications
  *   </Field.Label>
