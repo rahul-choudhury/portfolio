@@ -279,25 +279,36 @@ export function Showcase() {
         <div className="flex flex-col gap-3">
           <Field.Root>
             <Field.Label className="inline-flex items-center gap-2">
-              <Checkbox checked={checkboxA} onCheckedChange={setCheckboxA} />
+              <Checkbox
+                checked={checkboxA}
+                name="design-system-checkbox-unchecked"
+                onCheckedChange={setCheckboxA}
+              />
               <span>Unchecked by default</span>
             </Field.Label>
           </Field.Root>
           <Field.Root>
             <Field.Label className="inline-flex items-center gap-2">
-              <Checkbox checked={checkboxB} onCheckedChange={setCheckboxB} />
+              <Checkbox
+                checked={checkboxB}
+                name="design-system-checkbox-checked"
+                onCheckedChange={setCheckboxB}
+              />
               <span>Checked by default</span>
             </Field.Label>
           </Field.Root>
           <Field.Root disabled>
             <Field.Label className="inline-flex items-center gap-2">
-              <Checkbox disabled />
+              <Checkbox disabled name="design-system-checkbox-disabled" />
               <span>Disabled</span>
             </Field.Label>
           </Field.Root>
           <Field.Root>
             <Field.Label className="inline-flex items-center gap-2">
-              <Checkbox indeterminate />
+              <Checkbox
+                indeterminate
+                name="design-system-checkbox-indeterminate"
+              />
               <span>Indeterminate</span>
             </Field.Label>
           </Field.Root>
@@ -309,6 +320,7 @@ export function Showcase() {
         <Field.Root>
           <Field.Label>Options</Field.Label>
           <RadioGroup
+            name="design-system-radio-options"
             value={radio}
             onValueChange={(v) => setRadio(v as string)}
           >
@@ -339,19 +351,27 @@ export function Showcase() {
         <div className="flex flex-col gap-3">
           <Field.Root>
             <Field.Label className="inline-flex items-center gap-2">
-              <Switch checked={switchA} onCheckedChange={setSwitchA} />
+              <Switch
+                checked={switchA}
+                name="design-system-switch-off"
+                onCheckedChange={setSwitchA}
+              />
               <span>Off by default</span>
             </Field.Label>
           </Field.Root>
           <Field.Root>
             <Field.Label className="inline-flex items-center gap-2">
-              <Switch checked={switchB} onCheckedChange={setSwitchB} />
+              <Switch
+                checked={switchB}
+                name="design-system-switch-on"
+                onCheckedChange={setSwitchB}
+              />
               <span>On by default</span>
             </Field.Label>
           </Field.Root>
           <Field.Root disabled>
             <Field.Label className="inline-flex items-center gap-2">
-              <Switch disabled />
+              <Switch disabled name="design-system-switch-disabled" />
               <span>Disabled</span>
             </Field.Label>
           </Field.Root>
@@ -390,7 +410,7 @@ export function Showcase() {
           </Field.Root>
 
           <Field.Root>
-            <Field.Label nativeLabel={false}>Favorite Font</Field.Label>
+            <Field.Label>Favorite Font</Field.Label>
             <Select defaultValue="sans">
               <SelectTrigger>
                 <SelectValue placeholder="Choose a font..." />
@@ -408,7 +428,11 @@ export function Showcase() {
 
           <Field.Root>
             <Field.Label className="inline-flex items-center gap-2">
-              <Checkbox checked={checkboxA} onCheckedChange={setCheckboxA} />
+              <Checkbox
+                checked={checkboxA}
+                name="design-system-checkbox-updates"
+                onCheckedChange={setCheckboxA}
+              />
               <span>Accept updates</span>
             </Field.Label>
             <Field.Description>
