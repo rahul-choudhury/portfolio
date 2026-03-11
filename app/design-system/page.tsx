@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { Reveal } from "@/components/motion-reveal";
 import { cn } from "@/lib/utils";
 import { Showcase } from "./showcase";
@@ -90,6 +91,16 @@ export default function DesignPage() {
   return (
     <>
       <header className="mb-16">
+        <Reveal>
+          <Link
+            href="/"
+            className="mb-8 inline-flex items-center gap-1.5 text-sm text-text-muted transition-colors hover:text-text"
+          >
+            <span aria-hidden="true">&larr;</span>
+            Back
+          </Link>
+        </Reveal>
+
         <Reveal delay={0.1}>
           <h1 className="text-3xl font-medium tracking-tight text-text md:text-4xl">
             Design System
