@@ -1,3 +1,27 @@
+/**
+ * Field
+ *
+ * Thin design-system wrappers around Base UI Field primitives.
+ *
+ * @parts Field.Root, Field.Label, Field.Description, Field.Control, Field.Item, Field.Error, Field.Validity
+ *
+ * @usage
+ * - Use `Field.Root` to scope labels, descriptions, errors, and controls.
+ * - Use `Field.Control` directly for custom controls, or pair `Field.Root`
+ *   with field-aware primitives like `Input`, `Textarea`, `Select`, `Checkbox`,
+ *   `Radio`, and `Switch`.
+ * - Use `Field.Item` for nested field items, such as radio groups.
+ *
+ * @example
+ * ```tsx
+ * <Field.Root invalid>
+ *   <Field.Label required>Email</Field.Label>
+ *   <Input type="email" placeholder="you@example.com" />
+ *   <Field.Error>Email is required.</Field.Error>
+ * </Field.Root>
+ * ```
+ */
+
 import { Field as BaseField } from "@base-ui/react/field";
 import { cn } from "@/lib/utils";
 
@@ -19,6 +43,7 @@ type FieldLabelProps = React.ComponentProps<typeof BaseField.Label> & {
   required?: boolean;
 };
 
+// `required` is a presentational affordance for the label marker.
 function FieldLabel({
   required,
   className,

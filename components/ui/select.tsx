@@ -27,6 +27,8 @@
  * ```
  */
 
+"use client";
+
 import { Select as BaseSelect } from "@base-ui/react/select";
 import { CheckIcon } from "@phosphor-icons/react";
 import { CaretUpDownIcon } from "@phosphor-icons/react/dist/ssr";

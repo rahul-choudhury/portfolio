@@ -1,11 +1,13 @@
 /**
  * Textarea
  *
- * Multi-line text input. Reads Field context for id, disabled,
- * required, invalid, and aria wiring.
+ * Multi-line text input built on Base UI `Field.Control` with
+ * `render={<textarea />}`.
  *
  * @sizes sm | md | lg (controls padding and text size, not rows)
  * @states default, hover, focus-visible, disabled, invalid
+ *
+ * @usage Must be rendered within `Field.Root`.
  *
  * @example
  * ```tsx
@@ -16,8 +18,6 @@
  * </Field.Root>
  * ```
  */
-
-"use client";
 
 import { Field as BaseField } from "@base-ui/react/field";
 import { cn } from "@/lib/utils";

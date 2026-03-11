@@ -8,9 +8,9 @@
  * @states default, hover, focus-visible, disabled, invalid
  *
  * @accessibility
- * - Uses native `<input>` element.
- * - aria-invalid set when Field is invalid.
- * - aria-describedby links to FieldHint and FieldError.
+ * - Renders Base UI `Input`, which uses a native `<input>` element.
+ * - Automatically integrates with `Field.Root` for labeling, validity, and
+ *   description/error relationships.
  *
  * @example
  * ```tsx
@@ -21,11 +21,10 @@
  * <Field.Root>
  *   <Field.Label>Name</Field.Label>
  *   <Input required placeholder="Jane Doe" />
+ *   <Field.Description>Used for your public profile.</Field.Description>
  * </Field.Root>
  * ```
  */
-
-"use client";
 
 import { Input as BaseInput } from "@base-ui/react/input";
 import { cn } from "@/lib/utils";
