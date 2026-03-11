@@ -1,16 +1,5 @@
 @import "tailwindcss";
-
-@theme inline {
-  --font-mono: var(--font-space-mono);
-
-  --color-bg: #fafafa;
-  --color-bg-soft: #f5f5f5;
-  --color-text: #171717;
-  --color-text-secondary: #525252;
-  --color-text-muted: #737373;
-  --color-border: #e5e5e5;
-  --color-border-hover: #d4d4d4;
-}
+@import "../design/tokens.css";
 
 html {
   scroll-padding-top: 32px;
@@ -30,8 +19,8 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--color-border-hover);
-  border-radius: 4px;
+  background: var(--color-border-strong);
+  border-radius: var(--radius-sm);
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -60,7 +49,7 @@ body {
   color: var(--color-text-muted);
   text-decoration: none;
   font-weight: 400;
-  transition: opacity 0.15s;
+  transition: opacity var(--duration-fast);
 }
 
 .prose :is(h2, h3):hover .heading-anchor {
@@ -95,7 +84,7 @@ body {
   text-decoration: underline;
   text-decoration-color: var(--color-border);
   text-underline-offset: 3px;
-  transition: text-decoration-color 0.15s;
+  transition: text-decoration-color var(--duration-fast);
 }
 
 .prose a:hover {
@@ -109,10 +98,10 @@ body {
 
 .prose code:not(pre code) {
   padding: 0.15em 0.4em;
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
   font-family: var(--font-mono);
   font-size: 0.875em;
-  background: var(--color-bg-soft);
+  background: var(--color-surface-soft);
   border: 1px solid var(--color-border);
   color: var(--color-text);
 }
@@ -151,9 +140,9 @@ body {
 .prose pre {
   margin-bottom: 1.5rem;
   padding: 1rem 1.25rem;
-  border-radius: 8px;
+  border-radius: var(--radius-md);
   border: 1px solid var(--color-border);
-  background: var(--color-bg-soft);
+  background: var(--color-surface-soft);
   overflow-x: auto;
   font-family: var(--font-mono);
   font-size: 0.85rem;
@@ -180,15 +169,15 @@ body {
   padding: 0.5rem 1.25rem;
   border: 1px solid var(--color-border);
   border-bottom: none;
-  border-radius: 8px 8px 0 0;
-  background: var(--color-bg-soft);
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+  background: var(--color-surface-soft);
   font-family: var(--font-mono);
   font-size: 0.8rem;
   color: var(--color-text-muted);
 }
 
 .prose [data-rehype-pretty-code-title] + pre {
-  border-radius: 0 0 8px 8px;
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
 }
 
 .prose [data-highlighted-line] {
@@ -199,4 +188,47 @@ body {
 
 .prose [data-line] {
   padding: 0 0.25rem;
+}
+
+/* Rainbow shimmer */
+@keyframes rainbow-shimmer {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 200% 50%;
+  }
+}
+
+.rainbow-shimmer {
+  position: relative;
+  background: linear-gradient(
+    90deg,
+    #ff6b6b,
+    #ffa500,
+    #ffd93d,
+    #6bcb77,
+    #4d96ff,
+    #9b59b6,
+    #ff6b9d,
+    #ff6b6b
+  );
+  background-size: 200% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: rainbow-shimmer 2s linear infinite;
+}
+
+.rainbow-shimmer::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  -webkit-text-fill-color: var(--color-text-secondary);
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+.rainbow-shimmer:hover::after {
+  opacity: 0;
 }

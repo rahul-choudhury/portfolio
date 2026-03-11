@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ExternalLink } from "@/components/external-link";
 import { Reveal } from "@/components/motion-reveal";
+import { Badge } from "@/components/ui/badge";
 import { getAllBlogPosts } from "@/lib/blogs";
 
 const SKILLS = [
@@ -84,6 +85,13 @@ export default async function Home() {
               LinkedIn
             </ExternalLink>
             <ExternalLink href="/resume.pdf">Resumè</ExternalLink>
+            <Link
+              href="/design-system"
+              className="inline-flex items-center gap-1 rainbow-shimmer"
+              data-text="Design System"
+            >
+              Design System
+            </Link>
           </div>
         </Reveal>
       </section>
@@ -99,12 +107,7 @@ export default async function Home() {
         <Reveal delay={0.3}>
           <div className="flex flex-wrap gap-3">
             {SKILLS.map((skill) => (
-              <span
-                key={skill}
-                className="inline-flex items-center border border-border bg-white px-3 py-1 text-sm text-text-secondary transition-colors hover:border-border-hover hover:text-text"
-              >
-                {skill}
-              </span>
+              <Badge key={skill}>{skill}</Badge>
             ))}
           </div>
         </Reveal>
@@ -127,7 +130,7 @@ export default async function Home() {
               <Link
                 key={post.slug}
                 href={`/blog/${post.slug}`}
-                className="group flex items-start justify-between gap-4 border-b border-border py-4 transition-colors hover:border-border-hover"
+                className="group flex items-start justify-between gap-4 border-b border-border py-4 transition-colors hover:border-border-strong"
               >
                 <div className="flex flex-col gap-1">
                   <h3 className="font-medium text-text transition-colors group-hover:text-text-secondary">
@@ -170,7 +173,7 @@ export default async function Home() {
                 href={project.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group flex items-start justify-between gap-4 border-b border-border py-4 transition-colors hover:border-border-hover"
+                className="group flex items-start justify-between gap-4 border-b border-border py-4 transition-colors hover:border-border-strong"
               >
                 <div className="flex flex-col gap-1">
                   <h3 className="font-medium text-text transition-colors group-hover:text-text-secondary">
@@ -181,12 +184,9 @@ export default async function Home() {
                   </p>
                   <div className="mt-2 flex flex-wrap gap-2">
                     {project.tech.map((t) => (
-                      <span
-                        key={t}
-                        className="inline-flex items-center border border-border bg-white px-2 py-0.5 font-mono text-xs text-text-secondary"
-                      >
+                      <Badge key={t} className="font-mono">
                         {t}
-                      </span>
+                      </Badge>
                     ))}
                   </div>
                 </div>

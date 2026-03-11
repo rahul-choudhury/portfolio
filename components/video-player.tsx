@@ -1,7 +1,12 @@
 "use client";
 
 import { Slider } from "@base-ui/react/slider";
-import { Maximize, Minimize, Pause, Play } from "lucide-react";
+import {
+  ArrowsInIcon,
+  ArrowsOutIcon,
+  PauseIcon,
+  PlayIcon,
+} from "@phosphor-icons/react";
 import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import { triggerMobileHaptic } from "@/components/mobile-haptics";
@@ -133,7 +138,7 @@ export function VideoPlayer({
       <button
         type="button"
         aria-label={isPlaying ? "Pause Video" : "Play Video"}
-        className="absolute inset-0 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+        className="absolute inset-0 cursor-pointer focus:outline-none"
         onClick={handlePlayback}
         onKeyDown={(e) => {
           if (e.key === " " || e.key === "Enter") {
@@ -179,7 +184,7 @@ export function VideoPlayer({
                   exit={{ scale: 0.8, opacity: 0 }}
                   transition={{ duration: 0.15 }}
                 >
-                  <Pause size={18} fill="currentColor" />
+                  <PauseIcon size={18} weight="fill" />
                 </motion.div>
               ) : (
                 <motion.div
@@ -189,7 +194,7 @@ export function VideoPlayer({
                   exit={{ scale: 0.8, opacity: 0 }}
                   transition={{ duration: 0.15 }}
                 >
-                  <Play size={18} fill="currentColor" />
+                  <PlayIcon size={18} weight="fill" />
                 </motion.div>
               )}
             </AnimatePresence>
@@ -228,7 +233,11 @@ export function VideoPlayer({
             className="flex shrink-0 cursor-pointer items-center justify-center text-white/70 transition-colors hover:text-white"
             onClick={toggleFullscreen}
           >
-            {isFullscreen ? <Minimize size={16} /> : <Maximize size={16} />}
+            {isFullscreen ? (
+              <ArrowsInIcon size={16} />
+            ) : (
+              <ArrowsOutIcon size={16} />
+            )}
           </button>
         </div>
       </motion.div>
