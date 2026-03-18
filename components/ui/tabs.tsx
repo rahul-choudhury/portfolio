@@ -24,7 +24,10 @@
  * ```
  */
 
+"use client";
+
 import { Tabs as BaseTabs } from "@base-ui/react/tabs";
+import { motion } from "motion/react";
 import { cn } from "@/lib/utils";
 
 /* ----- Root ----- */
@@ -35,12 +38,31 @@ const Tabs = BaseTabs.Root;
 
 type TabsListProps = React.ComponentProps<typeof BaseTabs.List>;
 
-function TabsList({ className, ...props }: TabsListProps) {
+function TabsList({ className, children, ...props }: TabsListProps) {
   return (
-    <BaseTabs.List
-      className={cn("flex border-b border-border", className)}
-      {...props}
-    />
+    <BaseTabs.List className={cn("relative flex", className)} {...props}>
+      {children}
+      <BaseTabs.Indicator
+        className="absolute bottom-0 h-0.5 bg-accent"
+        render={({
+          onDrag,
+          onDragEnd,
+          onDragStart,
+          onAnimationStart,
+          ...rest
+        }) => (
+          <motion.span
+            {...rest}
+            layout
+            style={{
+              ...rest.style,
+              left: "var(--active-tab-left)",
+              width: "var(--active-tab-width)",
+            }}
+          />
+        )}
+      />
+    </BaseTabs.List>
   );
 }
 
@@ -52,9 +74,9 @@ function Tab({ className, ...props }: TabProps) {
   return (
     <BaseTabs.Tab
       className={cn(
-        "-mb-px border-b-2 border-transparent px-3 py-2 text-sm font-medium text-text-muted transition-colors",
+        "px-3 py-2 text-sm font-medium text-text-muted transition-colors",
         "hover:text-text",
-        "aria-selected:border-accent aria-selected:text-text",
+        "aria-selected:text-text",
         "focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-accent",
         className,
       )}
