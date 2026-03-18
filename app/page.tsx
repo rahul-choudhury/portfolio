@@ -39,19 +39,19 @@ const PROJECTS = [
     year: "2025",
   },
   {
-    title: "Now Screening",
-    description:
-      "A Chrome extension that bridges Letterboxd & Bookmyshow for seamless movie discovery.",
-    link: "https://github.com/rahul-choudhury/now-screening",
-    tech: ["JavaScript", "Go", "PostgreSQL"],
-    year: "2025",
-  },
-  {
     title: "Custom Registry",
     description:
       "A personal library of reusable components and hooks distributed via the shadcn CLI.",
     link: "https://registry.rchoudhury.dev",
     tech: ["Next.js", "TypeScript", "Tailwind", "shadcn/ui"],
+    year: "2025",
+  },
+  {
+    title: "Now Screening",
+    description:
+      "A Chrome extension that bridges Letterboxd & Bookmyshow for seamless movie discovery.",
+    link: "https://github.com/rahul-choudhury/now-screening",
+    tech: ["JavaScript", "Go", "PostgreSQL"],
     year: "2025",
   },
 ];
