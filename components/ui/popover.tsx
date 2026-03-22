@@ -74,4 +74,4 @@ function PopoverContent({
 
 const PopoverClose = BasePopover.Close;
 
-export { Popover, PopoverTrigger, PopoverContent, PopoverClose };
+export { Popover, PopoverClose, PopoverContent, PopoverTrigger };

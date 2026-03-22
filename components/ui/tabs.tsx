@@ -93,4 +93,4 @@ function TabPanel({ className, ...props }: TabPanelProps) {
   return <BaseTabs.Panel className={cn("pt-4", className)} {...props} />;
 }
 
-export { Tabs, TabsList, Tab, TabPanel };
+export { Tab, TabPanel, Tabs, TabsList };

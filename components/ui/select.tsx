@@ -139,4 +139,4 @@ function SelectItem({ className, children, ...props }: SelectItemProps) {
   );
 }
 
-export { Select, SelectTrigger, SelectValue, SelectContent, SelectItem };
+export { Select, SelectContent, SelectItem, SelectTrigger, SelectValue };
