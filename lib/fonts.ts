@@ -1,3 +1,4 @@
+import { Instrument_Serif, JetBrains_Mono } from "next/font/google";
 import localFont from "next/font/local";
 
 export const satoshi = localFont({
@@ -5,12 +6,15 @@ export const satoshi = localFont({
   variable: "--font-satoshi",
 });
 
-export const instrumentSerif = localFont({
-  src: "../assets/fonts/InstrumentSerif-Regular.woff2",
+export const instrumentSerif = Instrument_Serif({
+  subsets: ["latin"],
+  weight: "400",
+  style: ["normal", "italic"],
   variable: "--font-instrument-serif",
 });
 
-export const jetBrainsMono = localFont({
-  src: "../assets/fonts/JetBrainsMono-Regular.woff2",
+export const jetBrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
   variable: "--font-jetbrains-mono",
 });
