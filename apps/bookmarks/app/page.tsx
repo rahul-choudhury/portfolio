@@ -25,7 +25,7 @@ export default async function Home() {
   return (
     <BookmarksProvider initialBookmarks={bookmarks}>
       <div className="grid grid-cols-[1fr_minmax(auto,800px)_1fr] gap-x-6 gap-y-4 pb-6 *:col-start-2 *:min-w-0">
-        <div className="sticky top-0 space-y-4 bg-white/95">
+        <div className="sticky top-0 z-(--z-sticky) space-y-4 bg-bg/95 pb-2 backdrop-blur-sm">
           <TitleBar />
           <SearchBar />
         </div>

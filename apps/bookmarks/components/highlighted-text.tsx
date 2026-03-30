@@ -44,7 +44,7 @@ export function HighlightedText({
         part.highlighted ? (
           <mark
             key={`${part.start}-${part.text}`}
-            className="bg-yellow-200/70 text-inherit"
+            className="rounded-sm bg-accent/10 px-0.5 text-inherit"
           >
             {part.text}
           </mark>

@@ -1,8 +1,9 @@
 "use client";
 
+import { cn } from "@workspace/design-system/lib/utils";
+import { Input } from "@workspace/design-system/ui/input";
 import * as React from "react";
 import { useBookmarks } from "@/components/providers/bookmarks-provider";
-import { Input } from "@/components/ui/input";
 import { saveLinkToDB } from "@/lib/actions";
 import { isUrl, transformUrl } from "@/lib/utils";
 
@@ -110,19 +111,23 @@ export function SearchBar() {
       <div className="relative">
         <Input
           ref={searchInputRef}
+          size="lg"
           name="search"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           onKeyDown={handleKeyDown}
           placeholder="Search or paste URL"
-          className={`peer h-10 w-full px-4 py-2 text-base ${searchTerm ? "lg:pr-44 lg:focus:pr-4" : ""}`}
+          className={cn(
+            "peer text-base",
+            searchTerm && "lg:pr-44 lg:focus:pr-4",
+          )}
         />
-        <span className="pointer-events-none absolute top-1/2 right-4 hidden -translate-y-1/2 text-sm text-gray-400 lg:inline lg:peer-focus:hidden">
+        <span className="pointer-events-none absolute top-1/2 right-4 hidden -translate-y-1/2 text-sm text-text-muted lg:inline lg:peer-focus:hidden">
           Press ? for help
         </span>
       </div>
       {state && !state.success && state.message && (
-        <p className="text-sm text-red-500">{state.message}</p>
+        <p className="text-sm text-danger">{state.message}</p>
       )}
     </div>
   );

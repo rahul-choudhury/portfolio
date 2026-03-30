@@ -1,12 +1,13 @@
 "use client";
 
-import { RedirectType, redirect } from "next/navigation";
-import { Button } from "@/components/ui/button";
+import { cn } from "@workspace/design-system/lib/utils";
+import { Button } from "@workspace/design-system/ui/button";
+import { useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
-import { cn } from "@/lib/utils";
 import { useBookmarks } from "./providers/bookmarks-provider";
 
 export function TitleBar() {
+  const router = useRouter();
   const { isManaging, bookmarks, setIsManaging } = useBookmarks();
 
   const exportBookmarks = () => {
@@ -31,7 +32,7 @@ export function TitleBar() {
       <div className="flex items-center gap-2">
         <svg
           aria-hidden="true"
-          className="h-5 w-5 text-gray-700"
+          className="h-5 w-5 text-text-secondary"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -44,31 +45,34 @@ export function TitleBar() {
             d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"
           />
         </svg>
-        <h1 className="text-base font-medium text-gray-900">Bookmarks</h1>
+        <h1 className="text-base font-medium text-text">Bookmarks</h1>
       </div>
 
       <div className="flex gap-2">
         <Button
+          variant="secondary"
           className={cn(
             "w-20",
-            isManaging && "border-blue-300 bg-blue-50 text-blue-700",
+            isManaging && "border-accent/20 bg-accent/10 text-text",
           )}
           size="sm"
+          aria-pressed={isManaging}
           onClick={() => setIsManaging((prev) => !prev)}
           disabled={bookmarks.length === 0 && !isManaging}
         >
           {isManaging ? "Done" : "Manage"}
         </Button>
         <Button
-          variant="icon"
+          variant="ghost"
           size="icon"
+          className="size-8 text-text-secondary hover:text-text"
           aria-label="Download"
           onClick={exportBookmarks}
           disabled={bookmarks.length === 0}
         >
           <svg
             aria-hidden="true"
-            className="h-4 w-4 text-gray-700"
+            className="h-4 w-4"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -83,17 +87,18 @@ export function TitleBar() {
           </svg>
         </Button>
         <Button
-          variant="icon"
+          variant="ghost"
           size="icon"
+          className="size-8 text-text-secondary hover:text-text"
           aria-label="Sign out"
-          onClick={() => {
-            authClient.signOut();
-            redirect("/login", RedirectType.replace);
+          onClick={async () => {
+            await authClient.signOut();
+            router.replace("/login");
           }}
         >
           <svg
             aria-hidden="true"
-            className="h-4 w-4 text-gray-700"
+            className="h-4 w-4"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"

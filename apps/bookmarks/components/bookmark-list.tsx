@@ -1,13 +1,16 @@
 "use client";
 
+import { cn } from "@workspace/design-system/lib/utils";
+import { Button } from "@workspace/design-system/ui/button";
+import { EmptyState } from "@workspace/design-system/ui/empty-state";
+import { Input } from "@workspace/design-system/ui/input";
 import { useActionState, useEffect, useRef } from "react";
 import { HighlightedText } from "@/components/highlighted-text";
+import { Keycap } from "@/components/keycap";
 import { useBookmarks } from "@/components/providers/bookmarks-provider";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { deleteBookmark, importBookmarks, updateName } from "@/lib/actions";
 import type { Bookmark } from "@/lib/db/bookmarks";
-import { cn, isUrl } from "@/lib/utils";
+import { isUrl } from "@/lib/utils";
 
 export function BookmarkList() {
   const {
@@ -192,34 +195,41 @@ export function BookmarkList() {
 
 function SearchResultPrompt({ searchTerm }: { searchTerm: string }) {
   return (
-    <div className="py-8 text-center text-sm text-gray-500 md:text-base">
-      <p>No results found for &quot;{searchTerm}&quot;</p>
-      {isUrl(searchTerm) && (
-        <p className="mt-2 text-sm">
-          Press{" "}
-          <kbd className="rounded border border-gray-300 bg-gray-100 px-2 py-1 text-xs">
-            <svg
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              width="14"
-              height="14"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="mr-1 inline-block"
-            >
-              <path d="M20 4v7a4 4 0 0 1-4 4H4" />
-              <path d="m9 10-5 5 5 5" />
-            </svg>
-            Enter
-          </kbd>{" "}
-          to add this link to your bookmarks
-        </p>
-      )}
-    </div>
+    <EmptyState
+      title={`No results found for "${searchTerm}"`}
+      description={
+        !isUrl(searchTerm)
+          ? "Try a different title, domain, or URL."
+          : undefined
+      }
+      action={
+        isUrl(searchTerm) ? (
+          <p className="text-sm text-text-secondary">
+            Press{" "}
+            <Keycap>
+              <svg
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M20 4v7a4 4 0 0 1-4 4H4" />
+                <path d="m9 10-5 5 5 5" />
+              </svg>
+              Enter
+            </Keycap>{" "}
+            to add this link to your bookmarks
+          </p>
+        ) : undefined
+      }
+      className="py-8"
+    />
   );
 }
 
@@ -228,51 +238,52 @@ function ImportBookmarks() {
   const ref = useRef<HTMLInputElement>(null);
 
   return (
-    <div className="flex flex-col items-center justify-center space-y-6 py-12">
-      <div className="text-center">
-        <p className="text-base font-medium text-gray-900">No bookmarks yet</p>
-        <p className="mt-1 text-sm text-gray-500">
-          Do you want to import any previously exported bookmarks?
-        </p>
-      </div>
-      <Button
-        className="relative gap-2"
-        size="sm"
-        onClick={() => ref.current?.click()}
-        disabled={isPending}
-      >
-        <svg
-          aria-hidden="true"
-          className={cn("h-4 w-4 text-gray-700", isPending && "animate-spin")}
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M12 4v16m8-8H4"
-          />
-        </svg>
-        <span className="text-sm">
-          {isPending ? "Importing..." : "Import Bookmarks"}
-        </span>
-        <form action={action}>
-          <input
-            ref={ref}
-            name="json"
-            type="file"
-            accept="application/JSON"
-            onChange={(e) => e.currentTarget.form?.requestSubmit()}
-            disabled={isPending}
-            hidden
-          />
-        </form>
-      </Button>
+    <div className="py-12">
+      <EmptyState
+        title="No bookmarks yet"
+        description="Import a previous export to get your library back in place."
+        action={
+          <>
+            <Button
+              variant="secondary"
+              size="sm"
+              className="relative gap-2"
+              onClick={() => ref.current?.click()}
+              disabled={isPending}
+            >
+              <svg
+                aria-hidden="true"
+                className={cn("h-4 w-4", isPending && "animate-spin")}
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M12 4v16m8-8H4"
+                />
+              </svg>
+              <span>{isPending ? "Importing..." : "Import Bookmarks"}</span>
+            </Button>
+            <form action={action}>
+              <input
+                ref={ref}
+                name="json"
+                type="file"
+                accept="application/JSON"
+                onChange={(e) => e.currentTarget.form?.requestSubmit()}
+                disabled={isPending}
+                hidden
+              />
+            </form>
+          </>
+        }
+      />
       {state && !state.success && state.message && (
-        <p className="text-sm text-red-500">{state.message}</p>
+        <p className="mt-4 text-center text-sm text-danger">{state.message}</p>
       )}
     </div>
   );
@@ -305,8 +316,8 @@ function BookmarkItem({
     <li
       ref={ref}
       className={cn(
-        "-mx-2 flex h-8 items-center gap-3 rounded px-2",
-        isSelected && "bg-neutral-100",
+        "-mx-2 flex h-8 items-center gap-3 rounded-md px-2",
+        isSelected && "bg-surface-soft",
         isOptimistic && "opacity-60",
       )}
     >
@@ -334,7 +345,7 @@ function BookmarkItem({
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
-            className="size-4 text-gray-400"
+            className="size-4 text-text-muted"
           >
             <circle cx="12" cy="12" r="10" />
             <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" />
@@ -346,7 +357,8 @@ function BookmarkItem({
         {isEditing ? (
           <Input
             autoFocus
-            className="h-8 w-full px-3 py-1.5 text-sm"
+            size="sm"
+            className="w-full"
             defaultValue={title || url}
             onBlur={async (e) => {
               const newTitle = e.currentTarget.value;
@@ -381,7 +393,7 @@ function BookmarkItem({
             href={url}
             target="_blank"
             rel="noopener"
-            className="max-w-137.5 truncate hover:underline"
+            className="max-w-137.5 truncate text-text transition-colors hover:text-text-secondary"
           >
             {matchIndices && title ? (
               <HighlightedText text={title} indices={matchIndices} />
@@ -390,20 +402,20 @@ function BookmarkItem({
             )}
           </a>
         )}
-        <p className="hidden text-xs text-gray-500 md:block">
+        <p className="hidden text-xs text-text-muted md:block">
           [{new URL(url).hostname}]
         </p>
       </div>
-      <p className="hidden shrink-0 text-gray-500 md:block">
+      <p className="hidden shrink-0 text-text-muted md:block">
         {new Date(timeStamp).toLocaleDateString("en-IN")}
       </p>
 
       {isManaging && !isOptimistic && (
         <div className="flex shrink-0 items-center gap-1">
           <Button
-            variant="icon"
-            size="xs"
-            className="text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+            variant="ghost"
+            size="icon"
+            className="size-7 text-text-muted hover:text-text"
             aria-label="Edit bookmark"
             onClick={() => setEditingId(isEditing ? null : id)}
           >
@@ -424,9 +436,9 @@ function BookmarkItem({
             </svg>
           </Button>
           <Button
-            size="xs"
-            variant="destructive"
-            className="text-gray-500"
+            variant="ghost"
+            size="icon"
+            className="size-7 text-text-muted hover:text-danger"
             aria-label="Delete bookmark"
             onClick={async () => {
               deleteOptimisticBookmark(id);

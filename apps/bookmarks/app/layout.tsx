@@ -1,6 +1,6 @@
+import { cn } from "@workspace/design-system/lib/utils";
 import type { Metadata } from "next";
 import { JetBrains_Mono } from "next/font/google";
-import { cn } from "@/lib/utils";
 import "./globals.css";
 import { CommandPalette } from "@/components/command-palette";
 
@@ -22,7 +22,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={cn(jetbrainsMono.className, "antialiased")}>
+      <body
+        className={cn(
+          jetbrainsMono.className,
+          jetbrainsMono.variable,
+          "bg-bg text-text antialiased",
+        )}
+      >
         <div className="root">{children}</div>
         <CommandPalette />
       </body>
