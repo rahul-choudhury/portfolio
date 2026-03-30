@@ -1,7 +1,6 @@
-import { readFile } from "node:fs/promises";
-import { join } from "node:path";
 import { ImageResponse } from "next/og";
 import { getBlogPost } from "@/lib/blogs";
+import { getOgFonts } from "@/lib/og-fonts";
 
 export const alt = "Blog Post";
 export const size = {
@@ -17,16 +16,6 @@ export default async function Image({
 }) {
   const { slug } = await params;
   const { metadata } = getBlogPost(slug);
-
-  const instrumentSerifRegular = await readFile(
-    join(process.cwd(), "assets/fonts/InstrumentSerif-Regular.woff2"),
-  );
-  const satoshiVariable = await readFile(
-    join(process.cwd(), "assets/fonts/Satoshi-Variable.woff2"),
-  );
-  const jetBrainsMonoRegular = await readFile(
-    join(process.cwd(), "assets/fonts/JetBrainsMono-Regular.woff2"),
-  );
 
   return new ImageResponse(
     <div
@@ -139,26 +128,7 @@ export default async function Image({
     </div>,
     {
       ...size,
-      fonts: [
-        {
-          name: "InstrumentSerif",
-          data: instrumentSerifRegular,
-          style: "normal",
-          weight: 400,
-        },
-        {
-          name: "Satoshi",
-          data: satoshiVariable,
-          style: "normal",
-          weight: 400,
-        },
-        {
-          name: "JetBrainsMono",
-          data: jetBrainsMonoRegular,
-          style: "normal",
-          weight: 400,
-        },
-      ],
+      fonts: await getOgFonts(),
     },
   );
 }
