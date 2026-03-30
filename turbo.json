@@ -3,8 +3,7 @@
   "ui": "tui",
   "tasks": {
     "build": {
-      "dependsOn": ["^build"],
-      "outputs": [".next/**", "dist/**", "!.next/cache/**"]
+      "dependsOn": ["^build"]
     },
     "dev": {
       "cache": false,
