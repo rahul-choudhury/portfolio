@@ -24,8 +24,7 @@ export default function LoginPage() {
         <div className="mb-6 space-y-1">
           <h1 className="text-lg font-medium text-text">Bookmarks</h1>
           <p className="text-sm text-text-secondary">
-            Sign in to manage your saved links with the shared workspace design
-            system.
+            Sign in to manage your saved links.
           </p>
         </div>
         <div className="flex flex-col gap-3">
