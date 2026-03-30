@@ -1,0 +1,7 @@
+{
+  "extends": "@workspace/typescript-config/react-library",
+  "compilerOptions": {
+    "baseUrl": "."
+  },
+  "include": ["src/**/*.ts", "src/**/*.tsx"]
+}

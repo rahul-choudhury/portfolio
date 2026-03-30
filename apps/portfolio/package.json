@@ -1,0 +1,37 @@
+{
+  "name": "@workspace/portfolio",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "biome check .",
+    "format": "biome format --write .",
+    "typecheck": "tsc --noEmit",
+    "analyze": "next experimental-analyze"
+  },
+  "dependencies": {
+    "@base-ui/react": "^1.3.0",
+    "@phosphor-icons/react": "^2.1.10",
+    "@workspace/design-system": "workspace:*",
+    "gray-matter": "^4.0.3",
+    "motion": "^12.38.0",
+    "next": "16.0.10",
+    "next-mdx-remote": "^6.0.0",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "rehype-autolink-headings": "^7.1.0",
+    "rehype-pretty-code": "^0.14.3",
+    "rehype-slug": "^6.0.0",
+    "shiki": "^4.0.2"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.2.2",
+    "@workspace/typescript-config": "workspace:*",
+    "@types/node": "^24.12.0",
+    "@types/react": "19.2.7",
+    "@types/react-dom": "19.2.3",
+    "tailwindcss": "^4.2.2"
+  }
+}
