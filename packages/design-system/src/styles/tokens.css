@@ -80,15 +80,19 @@
   --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-@theme inline {
+@theme {
   /* -------------------------------------------------------------------
    * Typography
-   * These tokens reference Next font variables, so they must be inlined
-   * for Tailwind utilities like `font-mono` and `font-serif` to resolve.
+   * Semantic font roles are the public contract. Framework-specific
+   * adapters can override these variables at the app root.
    * ------------------------------------------------------------------- */
-  --font-serif: var(--font-instrument-serif);
-  --font-sans: var(--font-satoshi);
-  --font-mono: var(--font-jetbrains-mono);
+  --font-sans:
+    ui-sans-serif, system-ui, -apple-system, blinkmacsystemfont, "Segoe UI",
+    sans-serif;
+  --font-serif: ui-serif, georgia, cambria, "Times New Roman", serif;
+  --font-mono:
+    ui-monospace, "SFMono-Regular", "SF Mono", menlo, monaco, consolas,
+    "Liberation Mono", "Courier New", monospace;
 }
 
 /*

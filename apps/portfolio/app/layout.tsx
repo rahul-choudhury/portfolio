@@ -1,8 +1,10 @@
 import { cn } from "@workspace/design-system/lib/utils";
+import { getDefaultAppFonts } from "@workspace/design-system/next";
 import type { Metadata } from "next";
 import { MobileHaptics } from "@/components/mobile-haptics";
-import { instrumentSerif, jetBrainsMono, satoshi } from "@/lib/fonts";
 import "./globals.css";
+
+const appFonts = getDefaultAppFonts();
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://rchoudhury.dev"),
@@ -24,15 +26,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={cn(
-          satoshi.className,
-          satoshi.variable,
-          instrumentSerif.variable,
-          jetBrainsMono.variable,
-          "antialiased",
-        )}
-      >
+      <body className={cn(appFonts.bodyClassName, "antialiased")}>
         <MobileHaptics />
         <main className="mx-auto max-w-4xl px-6 md:px-12 pt-12 md:pt-16 pb-16 md:pb-20">
           {children}
