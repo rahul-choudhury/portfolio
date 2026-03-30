@@ -18,11 +18,14 @@ export default async function Image({
   const { slug } = await params;
   const { metadata } = getBlogPost(slug);
 
-  const spaceGroteskBold = await readFile(
-    join(process.cwd(), "assets/fonts/SpaceGrotesk-Bold.woff"),
+  const instrumentSerifRegular = await readFile(
+    join(process.cwd(), "assets/fonts/InstrumentSerif-Regular.woff2"),
   );
-  const spaceMonoRegular = await readFile(
-    join(process.cwd(), "assets/fonts/SpaceMono-Regular.ttf"),
+  const satoshiVariable = await readFile(
+    join(process.cwd(), "assets/fonts/Satoshi-Variable.woff2"),
+  );
+  const jetBrainsMonoRegular = await readFile(
+    join(process.cwd(), "assets/fonts/JetBrainsMono-Regular.woff2"),
   );
 
   return new ImageResponse(
@@ -35,7 +38,7 @@ export default async function Image({
         flexDirection: "column",
         justifyContent: "space-between",
         padding: "80px",
-        fontFamily: "SpaceMono",
+        fontFamily: "Satoshi",
         color: "#171717",
       }}
     >
@@ -48,9 +51,9 @@ export default async function Image({
       >
         <div
           style={{
-            fontFamily: "SpaceGrotesk",
+            fontFamily: "InstrumentSerif",
             fontSize: 64,
-            fontWeight: 500,
+            fontWeight: 400,
             lineHeight: 1.1,
             letterSpacing: "-0.03em",
             color: "#171717",
@@ -91,6 +94,7 @@ export default async function Image({
         >
           <div
             style={{
+              fontFamily: "JetBrainsMono",
               fontSize: 18,
               color: "#a3a3a3",
               letterSpacing: "0.02em",
@@ -101,6 +105,7 @@ export default async function Image({
           {metadata.date && (
             <div
               style={{
+                fontFamily: "JetBrainsMono",
                 fontSize: 16,
                 color: "#a3a3a3",
                 letterSpacing: "0.02em",
@@ -136,14 +141,20 @@ export default async function Image({
       ...size,
       fonts: [
         {
-          name: "SpaceGrotesk",
-          data: spaceGroteskBold,
+          name: "InstrumentSerif",
+          data: instrumentSerifRegular,
           style: "normal",
-          weight: 500,
+          weight: 400,
         },
         {
-          name: "SpaceMono",
-          data: spaceMonoRegular,
+          name: "Satoshi",
+          data: satoshiVariable,
+          style: "normal",
+          weight: 400,
+        },
+        {
+          name: "JetBrainsMono",
+          data: jetBrainsMonoRegular,
           style: "normal",
           weight: 400,
         },

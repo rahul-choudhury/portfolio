@@ -65,7 +65,7 @@ export default async function Home() {
       {/* Hero Section */}
       <section className="flex flex-col justify-center">
         <Reveal delay={0.1}>
-          <h1 className="max-w-4xl text-5xl leading-[1.1] font-medium tracking-tight text-text md:text-6xl lg:text-7xl">
+          <h1 className="max-w-4xl font-serif text-5xl leading-[1.1] font-medium tracking-tight text-text md:text-6xl lg:text-7xl">
             Rahul Choudhury
           </h1>
         </Reveal>
@@ -184,7 +184,7 @@ export default async function Home() {
                   </p>
                   <div className="mt-2 flex flex-wrap gap-2">
                     {project.tech.map((t) => (
-                      <Badge key={t} className="font-mono">
+                      <Badge key={t}>
                         {t}
                       </Badge>
                     ))}

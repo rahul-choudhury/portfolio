@@ -102,7 +102,7 @@ export default function DesignPage() {
         </Reveal>
 
         <Reveal delay={0.1}>
-          <h1 className="text-3xl font-medium tracking-tight text-text md:text-4xl">
+          <h1 className="font-serif text-3xl font-medium tracking-tight text-text md:text-4xl">
             Design System
           </h1>
         </Reveal>
@@ -206,15 +206,23 @@ export default function DesignPage() {
               <div className="space-y-3">
                 <div className="flex items-baseline gap-4 border-b border-border pb-3">
                   <span className="text-lg font-medium text-text">
-                    Space Grotesk
+                    Satoshi
                   </span>
                   <span className="font-mono text-xs text-text-muted">
-                    font-sans - body, headings, labels
+                    font-sans - body copy, labels, UI text
+                  </span>
+                </div>
+                <div className="flex items-baseline gap-4 border-b border-border pb-3">
+                  <span className="font-serif text-lg font-medium text-text">
+                    Instrument Serif
+                  </span>
+                  <span className="font-mono text-xs text-text-muted">
+                    font-serif - titles, headings, display text
                   </span>
                 </div>
                 <div className="flex items-baseline gap-4">
                   <span className="font-mono text-lg font-medium text-text">
-                    Space Mono
+                    JetBrains Mono
                   </span>
                   <span className="font-mono text-xs text-text-muted">
                     font-mono - timestamps, metadata, code

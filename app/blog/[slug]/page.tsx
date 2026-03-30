@@ -71,7 +71,7 @@ export default async function BlogPostPage({ params }: { params: Params }) {
           </Reveal>
 
           <Reveal delay={0.1}>
-            <h1 className="text-3xl font-medium tracking-tight text-text md:text-4xl">
+            <h1 className="font-serif text-3xl font-medium tracking-tight text-text md:text-4xl">
               {metadata.title}
             </h1>
           </Reveal>

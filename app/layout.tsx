@@ -1,19 +1,8 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, Space_Mono } from "next/font/google";
 import { MobileHaptics } from "@/components/mobile-haptics";
+import { instrumentSerif, jetBrainsMono, satoshi } from "@/lib/fonts";
 import { cn } from "@/lib/utils";
 import "./globals.css";
-
-const spaceGrotesk = Space_Grotesk({
-  variable: "--font-space-grotesk",
-  subsets: ["latin"],
-});
-
-const spaceMono = Space_Mono({
-  variable: "--font-space-mono",
-  subsets: ["latin"],
-  weight: ["400", "700"],
-});
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://rchoudhury.dev"),
@@ -37,9 +26,10 @@ export default function RootLayout({
     <html lang="en">
       <body
         className={cn(
-          spaceGrotesk.className,
-          spaceGrotesk.variable,
-          spaceMono.variable,
+          satoshi.className,
+          satoshi.variable,
+          instrumentSerif.variable,
+          jetBrainsMono.variable,
           "antialiased",
         )}
       >
