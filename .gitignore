@@ -18,8 +18,6 @@
 # next.js
 /.next/
 **/.next/
-.turbo/
-**/.turbo/
 /out/
 
 # production
@@ -45,3 +43,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Turborepo
+.turbo
