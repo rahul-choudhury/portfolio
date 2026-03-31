@@ -47,32 +47,6 @@ const BORDER_COLORS = [
   },
 ];
 
-const TYPE_SCALE = [
-  { utility: "text-7xl", label: "7xl - 4.5rem", sample: "Display" },
-  { utility: "text-6xl", label: "6xl - 3.75rem", sample: "Display" },
-  { utility: "text-5xl", label: "5xl - 3rem", sample: "Hero" },
-  { utility: "text-4xl", label: "4xl - 2.25rem", sample: "Title" },
-  { utility: "text-3xl", label: "3xl - 1.875rem", sample: "Heading" },
-  { utility: "text-2xl", label: "2xl - 1.5rem", sample: "Heading" },
-  { utility: "text-xl", label: "xl - 1.25rem", sample: "Subheading" },
-  { utility: "text-lg", label: "lg - 1.125rem", sample: "Lead" },
-  { utility: "text-base", label: "base - 1rem", sample: "Body text" },
-  { utility: "text-sm", label: "sm - 0.875rem", sample: "Small text" },
-  { utility: "text-xs", label: "xs - 0.75rem", sample: "Micro label" },
-];
-
-const SPACING = [
-  { value: "4px", tailwind: "1", example: "gap-1" },
-  { value: "8px", tailwind: "2", example: "gap-2" },
-  { value: "12px", tailwind: "3", example: "gap-3" },
-  { value: "16px", tailwind: "4", example: "gap-4" },
-  { value: "24px", tailwind: "6", example: "gap-6" },
-  { value: "32px", tailwind: "8", example: "gap-8" },
-  { value: "48px", tailwind: "12", example: "mt-12" },
-  { value: "64px", tailwind: "16", example: "mt-16" },
-  { value: "80px", tailwind: "20", example: "mt-20" },
-];
-
 const RADII = [
   { token: "sm", value: "4px", className: "rounded-sm" },
   { token: "md", value: "8px", className: "rounded-md" },
@@ -228,88 +202,16 @@ export default function DesignPage() {
                 </div>
               </div>
             </div>
-
-            {/* Type scale */}
-            <div>
-              <h3 className="mb-3 text-sm font-medium text-text">Size Scale</h3>
-              <div className="space-y-3">
-                {TYPE_SCALE.map((t) => (
-                  <div
-                    key={t.utility}
-                    className="flex items-baseline gap-4 border-b border-border pb-2 last:border-0"
-                  >
-                    <span className={cn("font-medium text-text", t.utility)}>
-                      {t.sample}
-                    </span>
-                    <span className="shrink-0 font-mono text-xs text-text-muted">
-                      {t.label}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Weight scale */}
-            <div>
-              <h3 className="mb-3 text-sm font-medium text-text">Weights</h3>
-              <div className="space-y-2">
-                {(
-                  [
-                    ["font-normal", "400 - Normal"],
-                    ["font-medium", "500 - Medium"],
-                    ["font-semibold", "600 - Semibold"],
-                    ["font-bold", "700 - Bold"],
-                  ] as const
-                ).map(([cls, label]) => (
-                  <div
-                    key={cls}
-                    className="flex items-baseline gap-4 border-b border-border pb-2 last:border-0"
-                  >
-                    <span className={cn("text-base text-text", cls)}>
-                      The quick brown fox
-                    </span>
-                    <span className="shrink-0 font-mono text-xs text-text-muted">
-                      {label}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </Reveal>
-      </section>
-
-      {/* ---- Spacing ---- */}
-      <section className="mb-16">
-        <Reveal delay={0.4}>
-          <h2 className="mb-6 text-sm font-medium text-text-muted">Spacing</h2>
-        </Reveal>
-        <Reveal delay={0.45}>
-          <div className="space-y-2">
-            {SPACING.map((s) => (
-              <div key={s.tailwind} className="flex items-center gap-4">
-                <div
-                  className="shrink-0 rounded-sm bg-accent"
-                  style={{ width: s.value, height: "12px" }}
-                />
-                <span className="w-16 shrink-0 font-mono text-xs text-text-muted">
-                  {s.value}
-                </span>
-                <span className="font-mono text-xs text-text-secondary">
-                  {s.example}
-                </span>
-              </div>
-            ))}
           </div>
         </Reveal>
       </section>
 
       {/* ---- Radius ---- */}
       <section className="mb-16">
-        <Reveal delay={0.5}>
+        <Reveal delay={0.4}>
           <h2 className="mb-6 text-sm font-medium text-text-muted">Radius</h2>
         </Reveal>
-        <Reveal delay={0.55}>
+        <Reveal delay={0.45}>
           <div className="flex flex-wrap gap-6">
             {RADII.map((r) => (
               <div key={r.token} className="flex flex-col items-center gap-1.5">
@@ -333,10 +235,10 @@ export default function DesignPage() {
 
       {/* ---- Shadows ---- */}
       <section className="mb-16">
-        <Reveal delay={0.6}>
+        <Reveal delay={0.5}>
           <h2 className="mb-6 text-sm font-medium text-text-muted">Shadows</h2>
         </Reveal>
-        <Reveal delay={0.65}>
+        <Reveal delay={0.55}>
           <div className="flex flex-wrap gap-6">
             {SHADOWS.map((s) => (
               <div key={s.token} className="flex flex-col items-center gap-1.5">
@@ -353,7 +255,7 @@ export default function DesignPage() {
       </section>
 
       {/* ---- Components ---- */}
-      <Reveal delay={0.7}>
+      <Reveal delay={0.6}>
         <Showcase />
       </Reveal>
     </>
