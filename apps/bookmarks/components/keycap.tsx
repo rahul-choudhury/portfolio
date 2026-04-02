@@ -1,4 +1,4 @@
-import { cn } from "@workspace/design-system/lib/utils";
+import { cn } from "@workspace/design-system";
 
 type KeycapProps = React.ComponentProps<"kbd">;
 

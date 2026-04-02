@@ -1,9 +1,7 @@
 "use client";
 
-import { cn } from "@workspace/design-system/lib/utils";
-import { Button } from "@workspace/design-system/ui/button";
-import { EmptyState } from "@workspace/design-system/ui/empty-state";
-import { Input } from "@workspace/design-system/ui/input";
+import { cn } from "@workspace/design-system";
+import { Button, EmptyState, Input } from "@workspace/design-system/ui";
 import { useActionState, useEffect, useRef } from "react";
 import { HighlightedText } from "@/components/highlighted-text";
 import { Keycap } from "@/components/keycap";

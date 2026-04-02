@@ -1,7 +1,7 @@
 "use client";
 
-import { cn } from "@workspace/design-system/lib/utils";
-import { Input } from "@workspace/design-system/ui/input";
+import { cn } from "@workspace/design-system";
+import { Input } from "@workspace/design-system/ui";
 import * as React from "react";
 import { useBookmarks } from "@/components/providers/bookmarks-provider";
 import { saveLinkToDB } from "@/lib/actions";

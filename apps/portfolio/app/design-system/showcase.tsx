@@ -6,50 +6,43 @@ import {
   InfoIcon,
   PaperPlaneTiltIcon,
 } from "@phosphor-icons/react";
-import { Badge } from "@workspace/design-system/ui/badge";
-import { Button } from "@workspace/design-system/ui/button";
-import { Card } from "@workspace/design-system/ui/card";
-import { Checkbox } from "@workspace/design-system/ui/checkbox";
 import {
+  Badge,
+  Button,
+  Card,
+  Checkbox,
   Dialog,
   DialogClose,
   DialogContent,
   DialogDescription,
   DialogTitle,
   DialogTrigger,
-} from "@workspace/design-system/ui/dialog";
-import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@workspace/design-system/ui/dropdown-menu";
-import { EmptyState } from "@workspace/design-system/ui/empty-state";
-import { Field } from "@workspace/design-system/ui/field";
-import { Input } from "@workspace/design-system/ui/input";
-import {
+  EmptyState,
+  Field,
+  Input,
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@workspace/design-system/ui/popover";
-import { RadioGroup, RadioItem } from "@workspace/design-system/ui/radio-group";
-import {
+  RadioGroup,
+  RadioItem,
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@workspace/design-system/ui/select";
-import { Skeleton } from "@workspace/design-system/ui/skeleton";
-import { Switch } from "@workspace/design-system/ui/switch";
-import {
+  Skeleton,
+  Switch,
   Tab,
   TabPanel,
   Tabs,
   TabsList,
-} from "@workspace/design-system/ui/tabs";
-import { Textarea } from "@workspace/design-system/ui/textarea";
+  Textarea,
+} from "@workspace/design-system/ui";
 import { useState } from "react";
 
 function Section({

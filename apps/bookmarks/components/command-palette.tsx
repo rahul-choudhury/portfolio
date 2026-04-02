@@ -1,12 +1,12 @@
 "use client";
 
-import { Button } from "@workspace/design-system/ui/button";
 import {
+  Button,
   Dialog,
   DialogClose,
   DialogContent,
   DialogTitle,
-} from "@workspace/design-system/ui/dialog";
+} from "@workspace/design-system/ui";
 import { useCallback, useEffect, useState } from "react";
 import { Keycap } from "@/components/keycap";
 

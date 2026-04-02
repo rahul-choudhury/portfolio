@@ -8,19 +8,15 @@
       "types": "./src/index.ts",
       "default": "./src/index.ts"
     },
+    "./ui": {
+      "types": "./src/ui/index.ts",
+      "default": "./src/ui/index.ts"
+    },
     "./next": {
       "types": "./src/next/index.ts",
       "default": "./src/next/index.ts"
     },
-    "./lib/utils": {
-      "types": "./src/lib/utils.ts",
-      "default": "./src/lib/utils.ts"
-    },
-    "./tokens.css": "./src/styles/tokens.css",
-    "./ui/*": {
-      "types": "./src/ui/*.tsx",
-      "default": "./src/ui/*.tsx"
-    }
+    "./tokens.css": "./src/styles/tokens.css"
   },
   "scripts": {
     "build": "tsc --noEmit",

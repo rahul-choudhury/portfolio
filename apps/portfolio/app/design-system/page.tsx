@@ -1,4 +1,4 @@
-import { cn } from "@workspace/design-system/lib/utils";
+import { cn } from "@workspace/design-system";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Reveal } from "@/components/motion-reveal";

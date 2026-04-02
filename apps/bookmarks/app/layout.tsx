@@ -1,4 +1,4 @@
-import { cn } from "@workspace/design-system/lib/utils";
+import { cn } from "@workspace/design-system";
 import { getDefaultAppFonts } from "@workspace/design-system/next";
 import type { Metadata } from "next";
 import "./globals.css";

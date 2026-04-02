@@ -1,7 +1,7 @@
 "use client";
 
-import { cn } from "@workspace/design-system/lib/utils";
-import { Button } from "@workspace/design-system/ui/button";
+import { cn } from "@workspace/design-system";
+import { Button } from "@workspace/design-system/ui";
 import { useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
 import { useBookmarks } from "./providers/bookmarks-provider";

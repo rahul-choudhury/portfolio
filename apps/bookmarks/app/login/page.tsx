@@ -1,7 +1,6 @@
 "use client";
 
-import { Button } from "@workspace/design-system/ui/button";
-import { Card } from "@workspace/design-system/ui/card";
+import { Button, Card } from "@workspace/design-system/ui";
 import { authClient } from "@/lib/auth-client";
 
 export default function LoginPage() {

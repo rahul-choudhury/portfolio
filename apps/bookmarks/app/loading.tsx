@@ -1,4 +1,4 @@
-import { Skeleton } from "@workspace/design-system/ui/skeleton";
+import { Skeleton } from "@workspace/design-system/ui";
 
 const rowWidths = [280, 340, 250, 310, 290, 360, 270, 320];
 

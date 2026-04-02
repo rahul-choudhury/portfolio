@@ -1,4 +1,4 @@
-import { Badge } from "@workspace/design-system/ui/badge";
+import { Badge } from "@workspace/design-system/ui";
 import Link from "next/link";
 import { ExternalLink } from "@/components/external-link";
 import { Reveal } from "@/components/motion-reveal";
