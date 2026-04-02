@@ -10,6 +10,12 @@ import { deleteBookmark, importBookmarks, updateName } from "@/lib/actions";
 import type { Bookmark } from "@/lib/db/bookmarks";
 import { isUrl } from "@/lib/utils";
 
+const bookmarkDateFormatter = new Intl.DateTimeFormat("en-IN", {
+  day: "2-digit",
+  month: "2-digit",
+  year: "numeric",
+});
+
 export function BookmarkList() {
   const {
     bookmarks,
@@ -405,7 +411,7 @@ function BookmarkItem({
         </p>
       </div>
       <p className="hidden shrink-0 font-mono text-text-muted md:block">
-        {new Date(timeStamp).toLocaleDateString("en-IN")}
+        {bookmarkDateFormatter.format(new Date(timeStamp))}
       </p>
 
       {isManaging && !isOptimistic && (
