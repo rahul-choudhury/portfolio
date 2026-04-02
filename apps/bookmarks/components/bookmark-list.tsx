@@ -404,7 +404,7 @@ function BookmarkItem({
           [{new URL(url).hostname}]
         </p>
       </div>
-      <p className="hidden shrink-0 text-text-muted md:block">
+      <p className="hidden shrink-0 font-mono text-text-muted md:block">
         {new Date(timeStamp).toLocaleDateString("en-IN")}
       </p>
 
