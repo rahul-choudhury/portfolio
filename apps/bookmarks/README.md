@@ -11,7 +11,7 @@ https://github.com/user-attachments/assets/ff8efd50-ed2c-4ae7-bee7-8a5d25d4e371
 bun install
 
 # Copy environment variables
-cp apps/bookmarks/.env.sample apps/bookmarks/.env.development.local
+cp apps/bookmarks/.env.example apps/bookmarks/.env.development.local
 
 # Start development server
 bunx turbo run dev --filter=@workspace/bookmarks
