@@ -1,3 +1,5 @@
+"use client";
+
 /**
  * Tabs
  *
@@ -23,8 +25,6 @@
  * </Tabs>
  * ```
  */
-
-"use client";
 
 import { Tabs as BaseTabs } from "@base-ui/react/tabs";
 import { motion } from "motion/react";

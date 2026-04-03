@@ -1,3 +1,5 @@
+"use client";
+
 /**
  * Select
  *
@@ -26,8 +28,6 @@
  * </Select>
  * ```
  */
-
-"use client";
 
 import { Select as BaseSelect } from "@base-ui/react/select";
 import { CheckIcon } from "@phosphor-icons/react";

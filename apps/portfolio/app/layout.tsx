@@ -1,4 +1,3 @@
-import { cn } from "@workspace/design-system";
 import { getDefaultAppFonts } from "@workspace/design-system/next";
 import type { Metadata } from "next";
 import { MobileHaptics } from "@/components/mobile-haptics";
@@ -26,7 +25,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={cn(appFonts.bodyClassName, "antialiased")}>
+      <body className={`${appFonts.bodyClassName} antialiased`}>
         <MobileHaptics />
         <main className="mx-auto max-w-4xl px-6 md:px-12 pt-12 md:pt-16 pb-16 md:pb-20">
           {children}
