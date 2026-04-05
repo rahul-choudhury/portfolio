@@ -22,13 +22,13 @@ export type AppFonts = AppFontRoles & {
   rootClassName: string
 }
 
-const defaultSans = localFont({
+const satoshi = localFont({
   src: "../assets/fonts/Satoshi-Variable.woff2",
   variable: "--font-sans",
   display: "swap",
 })
 
-const defaultSerif = Instrument_Serif({
+const instrumentSerif = Instrument_Serif({
   subsets: ["latin"],
   weight: "400",
   style: ["normal", "italic"],
@@ -36,7 +36,7 @@ const defaultSerif = Instrument_Serif({
   display: "swap",
 })
 
-const defaultMono = JetBrains_Mono({
+const jetBrainsMono = JetBrains_Mono({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
   variable: "--font-mono",
@@ -46,9 +46,9 @@ const defaultMono = JetBrains_Mono({
 export function createAppFonts(
   overrides: Partial<AppFontRoles> = {}
 ): AppFonts {
-  const sans = overrides.sans ?? defaultSans
-  const serif = overrides.serif ?? defaultSerif
-  const mono = overrides.mono ?? defaultMono
+  const sans = overrides.sans ?? satoshi
+  const serif = overrides.serif ?? instrumentSerif
+  const mono = overrides.mono ?? jetBrainsMono
   const variableClassName = cn(sans.variable, serif.variable, mono.variable)
   const bodyClassName = cn(sans.className, variableClassName)
 
