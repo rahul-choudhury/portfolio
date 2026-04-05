@@ -1,13 +1,33 @@
-import { ImageResponse } from "next/og"
 import { getBlogPost } from "@/lib/blogs"
-import { getDefaultOgFonts } from "@workspace/design-system/next"
+import {
+  createOgImage,
+  OG_IMAGE_CONTENT_TYPE,
+  OG_IMAGE_SIZE,
+} from "@workspace/design-system/next"
 
 export const alt = "Blog Post"
-export const size = {
-  width: 1200,
-  height: 630,
+export const size = OG_IMAGE_SIZE
+export const contentType = OG_IMAGE_CONTENT_TYPE
+
+function PortfolioMark() {
+  return (
+    <svg
+      aria-hidden="true"
+      width="160"
+      height="160"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="#e5e5e5"
+      strokeWidth="1"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <line x1="12" y1="3" x2="12" y2="21" />
+      <line x1="4.2" y1="7.5" x2="19.8" y2="16.5" />
+      <line x1="4.2" y1="16.5" x2="19.8" y2="7.5" />
+    </svg>
+  )
 }
-export const contentType = "image/png"
 
 export default async function Image({
   params,
@@ -17,118 +37,24 @@ export default async function Image({
   const { slug } = await params
   const { metadata } = getBlogPost(slug)
 
-  return new ImageResponse(
-    <div
-      style={{
-        background: "#fafafa",
-        width: "100%",
-        height: "100%",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "space-between",
-        padding: "80px",
-        fontFamily: "Satoshi",
-        color: "#171717",
-      }}
-    >
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: "12px",
-        }}
-      >
-        <div
-          style={{
-            fontFamily: "InstrumentSerif",
-            fontSize: 64,
-            fontWeight: 400,
-            lineHeight: 1.1,
-            letterSpacing: "-0.03em",
-            color: "#171717",
-          }}
-        >
-          {metadata.title}
-        </div>
-
-        {metadata.description && (
-          <div
-            style={{
-              fontSize: 24,
-              color: "#737373",
-              letterSpacing: "0.01em",
-              marginTop: "8px",
-              lineHeight: 1.4,
-            }}
-          >
-            {metadata.description}
-          </div>
-        )}
-      </div>
-
-      <div
-        style={{
-          display: "flex",
-          width: "100%",
-          justifyContent: "space-between",
-          alignItems: "flex-end",
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            gap: "4px",
-          }}
-        >
-          <div
-            style={{
-              fontFamily: "JetBrainsMono",
-              fontSize: 18,
-              color: "#a3a3a3",
-              letterSpacing: "0.02em",
-            }}
-          >
-            rchoudhury.dev
-          </div>
-          {metadata.date && (
-            <div
-              style={{
-                fontFamily: "JetBrainsMono",
-                fontSize: 16,
-                color: "#a3a3a3",
-                letterSpacing: "0.02em",
-              }}
-            >
-              {new Date(metadata.date).toLocaleDateString("en-US", {
-                year: "numeric",
-                month: "long",
-                day: "numeric",
-              })}
-            </div>
-          )}
-        </div>
-
-        <svg
-          aria-hidden="true"
-          width="160"
-          height="160"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="#e5e5e5"
-          strokeWidth="1"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <line x1="12" y1="3" x2="12" y2="21" />
-          <line x1="4.2" y1="7.5" x2="19.8" y2="16.5" />
-          <line x1="4.2" y1="16.5" x2="19.8" y2="7.5" />
-        </svg>
-      </div>
-    </div>,
-    {
-      ...size,
-      fonts: await getDefaultOgFonts(),
-    }
-  )
+  return createOgImage({
+    title: metadata.title,
+    subtitle: metadata.description,
+    site: "rchoudhury.dev",
+    mark: <PortfolioMark />,
+    metaLines: metadata.date
+      ? [
+          {
+            text: new Date(metadata.date).toLocaleDateString("en-US", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            }),
+          },
+        ]
+      : [],
+    titleSize: 64,
+    titleLineHeight: 1.1,
+    subtitleLetterSpacing: "0.01em",
+  })
 }
