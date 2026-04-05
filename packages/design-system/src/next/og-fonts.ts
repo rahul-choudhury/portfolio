@@ -1,11 +1,7 @@
 import { readFile } from "node:fs/promises"
 import path from "node:path"
-import { fileURLToPath } from "node:url"
 
-const OG_FONTS_DIR = path.resolve(
-  path.dirname(fileURLToPath(import.meta.url)),
-  "../assets/fonts/og"
-)
+const DEFAULT_OG_FONTS_DIR = path.join(process.cwd(), "public", "og-fonts")
 
 export type OgFont = {
   name: string
@@ -14,31 +10,46 @@ export type OgFont = {
   weight: 400 | 500 | 600 | 700
 }
 
-const ogFontsPromise = Promise.all([
-  readFile(path.join(OG_FONTS_DIR, "InstrumentSerif-Regular.ttf")),
-  readFile(path.join(OG_FONTS_DIR, "Satoshi-Regular.ttf")),
-  readFile(path.join(OG_FONTS_DIR, "JetBrainsMono-Regular.ttf")),
-]).then(([instrumentSerifRegular, satoshiRegular, jetBrainsMonoRegular]) => [
-  {
-    name: "InstrumentSerif",
-    data: instrumentSerifRegular,
-    style: "normal" as const,
-    weight: 400 as const,
-  },
-  {
-    name: "Satoshi",
-    data: satoshiRegular,
-    style: "normal" as const,
-    weight: 400 as const,
-  },
-  {
-    name: "JetBrainsMono",
-    data: jetBrainsMonoRegular,
-    style: "normal" as const,
-    weight: 400 as const,
-  },
-])
+function readOgFonts(fontsDir: string) {
+  return Promise.all([
+    readFile(path.join(fontsDir, "InstrumentSerif-Regular.ttf")),
+    readFile(path.join(fontsDir, "Satoshi-Regular.ttf")),
+    readFile(path.join(fontsDir, "JetBrainsMono-Regular.ttf")),
+  ])
+    .then(([instrumentSerifRegular, satoshiRegular, jetBrainsMonoRegular]) => [
+      {
+        name: "InstrumentSerif",
+        data: instrumentSerifRegular,
+        style: "normal" as const,
+        weight: 400 as const,
+      },
+      {
+        name: "Satoshi",
+        data: satoshiRegular,
+        style: "normal" as const,
+        weight: 400 as const,
+      },
+      {
+        name: "JetBrainsMono",
+        data: jetBrainsMonoRegular,
+        style: "normal" as const,
+        weight: 400 as const,
+      },
+    ])
+    .catch((error: unknown) => {
+      const details = error instanceof Error ? error.message : String(error)
+
+      throw new Error(
+        `OG fonts could not be loaded from ${fontsDir}. ` +
+          `Each app should ship InstrumentSerif-Regular.ttf, ` +
+          `Satoshi-Regular.ttf, and JetBrainsMono-Regular.ttf under public/og-fonts. ` +
+          `Original error: ${details}`
+      )
+    })
+}
+
+const defaultOgFontsPromise = readOgFonts(DEFAULT_OG_FONTS_DIR)
 
 export function getDefaultOgFonts() {
-  return ogFontsPromise
+  return defaultOgFontsPromise
 }

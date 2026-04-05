@@ -1,4 +1,4 @@
-import { getBlogPost } from "@/lib/blogs"
+import { getBlogMetadata } from "@/lib/blogs"
 import {
   createOgImage,
   OG_IMAGE_CONTENT_TYPE,
@@ -35,7 +35,7 @@ export default async function Image({
   params: Promise<{ slug: string }>
 }) {
   const { slug } = await params
-  const { metadata } = getBlogPost(slug)
+  const metadata = getBlogMetadata(slug)
 
   return createOgImage({
     title: metadata.title,

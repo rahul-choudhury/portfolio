@@ -2,6 +2,7 @@ import fs from "node:fs"
 import path from "node:path"
 import { fileURLToPath } from "node:url"
 import matter from "gray-matter"
+import { blogPostMetadata, type BlogPostMetadata } from "./blog-metadata"
 
 const CONTENT_DIR = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
@@ -27,18 +28,20 @@ export function getTableOfContents(content: string): TocEntry[] {
   return entries
 }
 
-export interface BlogPost {
-  title: string
-  date: string
-  description: string
-  slug: string
-}
+export interface BlogPost extends BlogPostMetadata {}
 
 export function getBlogSlugs(): string[] {
-  return fs
-    .readdirSync(CONTENT_DIR)
-    .filter((file) => file.endsWith(".mdx"))
-    .map((file) => file.replace(/\.mdx$/, ""))
+  return blogPostMetadata.map((post) => post.slug)
+}
+
+export function getBlogMetadata(slug: string): BlogPost {
+  const post = blogPostMetadata.find((entry) => entry.slug === slug)
+
+  if (!post) {
+    throw new Error(`Blog post not found for slug: ${slug}`)
+  }
+
+  return post
 }
 
 export function getBlogPost(slug: string): {
@@ -51,18 +54,17 @@ export function getBlogPost(slug: string): {
 
   return {
     metadata: {
-      title: data.title,
-      date: data.date,
-      description: data.description ?? "",
-      slug,
+      ...getBlogMetadata(slug),
+      title: data.title ?? getBlogMetadata(slug).title,
+      date: data.date ?? getBlogMetadata(slug).date,
+      description: data.description ?? getBlogMetadata(slug).description,
     },
     content,
   }
 }
 
 export function getAllBlogPosts(): BlogPost[] {
-  return getBlogSlugs()
-    .map((slug) => getBlogPost(slug).metadata)
+  return [...blogPostMetadata]
     .sort((a, b) => {
       if (!a.date) return 1
       if (!b.date) return -1

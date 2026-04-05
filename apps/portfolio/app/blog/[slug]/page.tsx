@@ -9,7 +9,12 @@ import rehypeSlug from "rehype-slug"
 import { Reveal } from "@/components/motion-reveal"
 import { TableOfContents } from "@/components/table-of-contents"
 import { VideoPlayer } from "@/components/video-player"
-import { getBlogPost, getBlogSlugs, getTableOfContents } from "@/lib/blogs"
+import {
+  getBlogMetadata,
+  getBlogPost,
+  getBlogSlugs,
+  getTableOfContents,
+} from "@/lib/blogs"
 
 type Params = Promise<{ slug: string }>
 const buildHeadingAnchorContent: Build = (element) => {
@@ -33,7 +38,7 @@ export async function generateMetadata({
   const { slug } = await params
 
   try {
-    const { metadata } = getBlogPost(slug)
+    const metadata = getBlogMetadata(slug)
     return {
       title: metadata.title,
       description: metadata.description,
