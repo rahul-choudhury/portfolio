@@ -1,20 +1,20 @@
-"use client";
+"use client"
 
-import { cn } from "@workspace/design-system";
-import { Button, EmptyState, Input } from "@workspace/design-system/ui";
-import { useActionState, useEffect, useRef } from "react";
-import { HighlightedText } from "@/components/highlighted-text";
-import { Keycap } from "@/components/keycap";
-import { useBookmarks } from "@/components/providers/bookmarks-provider";
-import { deleteBookmark, importBookmarks, updateName } from "@/lib/actions";
-import type { Bookmark } from "@/lib/db/bookmarks";
-import { isUrl } from "@/lib/utils";
+import { cn } from "@workspace/design-system"
+import { Button, EmptyState, Input } from "@workspace/design-system/ui"
+import { useActionState, useEffect, useRef } from "react"
+import { HighlightedText } from "@/components/highlighted-text"
+import { Keycap } from "@/components/keycap"
+import { useBookmarks } from "@/components/providers/bookmarks-provider"
+import { deleteBookmark, importBookmarks, updateName } from "@/lib/actions"
+import type { Bookmark } from "@/lib/db/bookmarks"
+import { isUrl } from "@/lib/utils"
 
 const bookmarkDateFormatter = new Intl.DateTimeFormat("en-IN", {
   day: "2-digit",
   month: "2-digit",
   year: "numeric",
-});
+})
 
 export function BookmarkList() {
   const {
@@ -27,35 +27,35 @@ export function BookmarkList() {
     setSelectedIndex,
     setEditingId,
     deleteOptimisticBookmark,
-  } = useBookmarks();
+  } = useBookmarks()
 
-  const itemRefs = useRef<(HTMLLIElement | null)[]>([]);
-  const lastGPressRef = useRef<number>(0);
+  const itemRefs = useRef<(HTMLLIElement | null)[]>([])
+  const lastGPressRef = useRef<number>(0)
 
   // Keyboard shortcuts
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      const target = e.target as HTMLElement;
+      const target = e.target as HTMLElement
       const isInputFocused =
-        target.tagName === "INPUT" || target.tagName === "TEXTAREA";
+        target.tagName === "INPUT" || target.tagName === "TEXTAREA"
 
-      if (isInputFocused) return;
+      if (isInputFocused) return
 
       // 'm' to toggle management mode
       if (e.key === "m" && bookmarks.length > 0) {
-        e.preventDefault();
-        setIsManaging((prev) => !prev);
-        return;
+        e.preventDefault()
+        setIsManaging((prev) => !prev)
+        return
       }
 
       // Escape to exit management mode or clear selection
       if (e.key === "Escape") {
         if (isManaging) {
-          setIsManaging(false);
+          setIsManaging(false)
         } else if (selectedIndex !== null) {
-          setSelectedIndex(null);
+          setSelectedIndex(null)
         }
-        return;
+        return
       }
 
       // Navigation: j/k, arrow keys, or Ctrl+N/P
@@ -65,12 +65,12 @@ export function BookmarkList() {
           (e.ctrlKey && e.key === "n")) &&
         bookmarks.length > 0
       ) {
-        e.preventDefault();
+        e.preventDefault()
         setSelectedIndex((prev) => {
-          if (prev === null) return 0;
-          return Math.min(prev + 1, bookmarks.length - 1);
-        });
-        return;
+          if (prev === null) return 0
+          return Math.min(prev + 1, bookmarks.length - 1)
+        })
+        return
       }
 
       if (
@@ -79,32 +79,32 @@ export function BookmarkList() {
           (e.ctrlKey && e.key === "p")) &&
         bookmarks.length > 0
       ) {
-        e.preventDefault();
+        e.preventDefault()
         setSelectedIndex((prev) => {
-          if (prev === null) return 0;
-          return Math.max(prev - 1, 0);
-        });
-        return;
+          if (prev === null) return 0
+          return Math.max(prev - 1, 0)
+        })
+        return
       }
 
       // gg to go to top of list
       if (e.key === "g" && !e.shiftKey && bookmarks.length > 0) {
-        const now = Date.now();
+        const now = Date.now()
         if (now - lastGPressRef.current < 300) {
-          e.preventDefault();
-          setSelectedIndex(0);
-          lastGPressRef.current = 0;
+          e.preventDefault()
+          setSelectedIndex(0)
+          lastGPressRef.current = 0
         } else {
-          lastGPressRef.current = now;
+          lastGPressRef.current = now
         }
-        return;
+        return
       }
 
       // Shift+G to go to bottom of list
       if (e.key === "G" && e.shiftKey && bookmarks.length > 0) {
-        e.preventDefault();
-        setSelectedIndex(bookmarks.length - 1);
-        return;
+        e.preventDefault()
+        setSelectedIndex(bookmarks.length - 1)
+        return
       }
 
       // Enter to open selected bookmark
@@ -113,9 +113,9 @@ export function BookmarkList() {
         selectedIndex !== null &&
         bookmarks[selectedIndex]
       ) {
-        e.preventDefault();
-        window.open(bookmarks[selectedIndex].url, "_blank");
-        return;
+        e.preventDefault()
+        window.open(bookmarks[selectedIndex].url, "_blank")
+        return
       }
 
       // Edit selected bookmark (e or Shift+R) - only in manage mode
@@ -125,12 +125,12 @@ export function BookmarkList() {
         selectedIndex !== null &&
         bookmarks[selectedIndex]
       ) {
-        e.preventDefault();
-        const target = bookmarks[selectedIndex];
+        e.preventDefault()
+        const target = bookmarks[selectedIndex]
         if (target.userId !== "temp") {
-          setEditingId(target.id);
+          setEditingId(target.id)
         }
-        return;
+        return
       }
 
       // Delete selected bookmark (d or Shift+D) - only in manage mode
@@ -140,18 +140,18 @@ export function BookmarkList() {
         selectedIndex !== null &&
         bookmarks[selectedIndex]
       ) {
-        e.preventDefault();
-        const bookmarkToDelete = bookmarks[selectedIndex];
+        e.preventDefault()
+        const bookmarkToDelete = bookmarks[selectedIndex]
         if (bookmarkToDelete.userId !== "temp") {
-          deleteOptimisticBookmark(bookmarkToDelete.id);
-          deleteBookmark(bookmarkToDelete.id);
+          deleteOptimisticBookmark(bookmarkToDelete.id)
+          deleteBookmark(bookmarkToDelete.id)
         }
-        return;
+        return
       }
-    };
+    }
 
-    document.addEventListener("keydown", handleKeyDown);
-    return () => document.removeEventListener("keydown", handleKeyDown);
+    document.addEventListener("keydown", handleKeyDown)
+    return () => document.removeEventListener("keydown", handleKeyDown)
   }, [
     bookmarks,
     isManaging,
@@ -160,7 +160,7 @@ export function BookmarkList() {
     setSelectedIndex,
     setEditingId,
     deleteOptimisticBookmark,
-  ]);
+  ])
 
   // Scroll selected item into view
   useEffect(() => {
@@ -168,16 +168,16 @@ export function BookmarkList() {
       itemRefs.current[selectedIndex]?.scrollIntoView({
         block: "center",
         behavior: "smooth",
-      });
+      })
     }
-  }, [selectedIndex]);
+  }, [selectedIndex])
 
   if (bookmarks.length === 0 && searchTerm.trim()) {
-    return <SearchResultPrompt searchTerm={searchTerm} />;
+    return <SearchResultPrompt searchTerm={searchTerm} />
   }
 
   if (bookmarks.length === 0) {
-    return <ImportBookmarks />;
+    return <ImportBookmarks />
   }
 
   return (
@@ -189,12 +189,12 @@ export function BookmarkList() {
           matchIndices={matchIndicesMap.get(bookmark.id)}
           isSelected={index === selectedIndex}
           ref={(el) => {
-            itemRefs.current[index] = el;
+            itemRefs.current[index] = el
           }}
         />
       ))}
     </ul>
-  );
+  )
 }
 
 function SearchResultPrompt({ searchTerm }: { searchTerm: string }) {
@@ -208,7 +208,7 @@ function SearchResultPrompt({ searchTerm }: { searchTerm: string }) {
       }
       action={
         isUrl(searchTerm) ? (
-          <p className="text-sm text-text-secondary">
+          <p className="text-text-secondary text-sm">
             Press{" "}
             <Keycap>
               <svg
@@ -234,12 +234,12 @@ function SearchResultPrompt({ searchTerm }: { searchTerm: string }) {
       }
       className="py-8"
     />
-  );
+  )
 }
 
 function ImportBookmarks() {
-  const [state, action, isPending] = useActionState(importBookmarks, null);
-  const ref = useRef<HTMLInputElement>(null);
+  const [state, action, isPending] = useActionState(importBookmarks, null)
+  const ref = useRef<HTMLInputElement>(null)
 
   return (
     <div className="py-12">
@@ -287,10 +287,10 @@ function ImportBookmarks() {
         }
       />
       {state && !state.success && state.message && (
-        <p className="mt-4 text-center text-sm text-danger">{state.message}</p>
+        <p className="text-danger mt-4 text-center text-sm">{state.message}</p>
       )}
     </div>
-  );
+  )
 }
 
 function BookmarkItem({
@@ -299,10 +299,10 @@ function BookmarkItem({
   isSelected,
   ref,
 }: {
-  bookmark: Bookmark;
-  matchIndices?: number[];
-  isSelected: boolean;
-  ref: React.Ref<HTMLLIElement>;
+  bookmark: Bookmark
+  matchIndices?: number[]
+  isSelected: boolean
+  ref: React.Ref<HTMLLIElement>
 }) {
   const {
     isManaging,
@@ -310,11 +310,11 @@ function BookmarkItem({
     setEditingId,
     updateOptimisticBookmark,
     deleteOptimisticBookmark,
-  } = useBookmarks();
-  const { id, url, title, favicon, timeStamp } = bookmark;
-  const isOptimistic = bookmark.userId === "temp";
+  } = useBookmarks()
+  const { id, url, title, favicon, timeStamp } = bookmark
+  const isOptimistic = bookmark.userId === "temp"
 
-  const isEditing = !isOptimistic && editingId === id;
+  const isEditing = !isOptimistic && editingId === id
 
   return (
     <li
@@ -322,19 +322,19 @@ function BookmarkItem({
       className={cn(
         "-mx-2 flex h-8 items-center gap-3 rounded-md px-2",
         isSelected && "bg-surface-soft",
-        isOptimistic && "opacity-60",
+        isOptimistic && "opacity-60"
       )}
     >
       <div className="size-4 shrink-0">
         {favicon ? (
-          // biome-ignore lint/performance/noImgElement: favicon URLs are dynamic and don't fit next/image optimization.
+          // eslint-disable-next-line @next/next/no-img-element -- favicon URLs are dynamic and don't fit next/image optimization.
           <img
             src={favicon}
             alt=""
             className="size-4"
             onError={(e) => {
               e.currentTarget.src =
-                "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20'/%3E%3Cpath d='M2 12h20'/%3E%3C/svg%3E";
+                "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20'/%3E%3Cpath d='M2 12h20'/%3E%3C/svg%3E"
             }}
           />
         ) : (
@@ -349,7 +349,7 @@ function BookmarkItem({
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
-            className="size-4 text-text-muted"
+            className="text-text-muted size-4"
           >
             <circle cx="12" cy="12" r="10" />
             <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" />
@@ -365,30 +365,30 @@ function BookmarkItem({
             className="w-full"
             defaultValue={title || url}
             onBlur={async (e) => {
-              const newTitle = e.currentTarget.value;
+              const newTitle = e.currentTarget.value
 
               if (newTitle === bookmark.title) {
-                setEditingId(null);
-                return;
+                setEditingId(null)
+                return
               }
 
-              updateOptimisticBookmark(id, newTitle);
-              setEditingId(null);
-              await updateName(id, newTitle);
+              updateOptimisticBookmark(id, newTitle)
+              setEditingId(null)
+              await updateName(id, newTitle)
             }}
             onKeyDown={async (e) => {
               if (e.key === "Escape") {
-                e.preventDefault();
-                e.stopPropagation();
-                setEditingId(null);
-                return;
+                e.preventDefault()
+                e.stopPropagation()
+                setEditingId(null)
+                return
               }
               if (e.key === "Enter") {
-                e.preventDefault();
-                const newTitle = e.currentTarget.value;
-                updateOptimisticBookmark(id, newTitle);
-                setEditingId(null);
-                await updateName(id, newTitle);
+                e.preventDefault()
+                const newTitle = e.currentTarget.value
+                updateOptimisticBookmark(id, newTitle)
+                setEditingId(null)
+                await updateName(id, newTitle)
               }
             }}
           />
@@ -397,7 +397,7 @@ function BookmarkItem({
             href={url}
             target="_blank"
             rel="noopener"
-            className="max-w-137.5 truncate text-text transition-colors hover:text-text-secondary"
+            className="max-w-137.5 text-text hover:text-text-secondary truncate transition-colors"
           >
             {matchIndices && title ? (
               <HighlightedText text={title} indices={matchIndices} />
@@ -406,11 +406,11 @@ function BookmarkItem({
             )}
           </a>
         )}
-        <p className="hidden text-xs text-text-muted md:block">
+        <p className="text-text-muted hidden text-xs md:block">
           [{new URL(url).hostname}]
         </p>
       </div>
-      <p className="hidden shrink-0 font-mono text-text-muted md:block">
+      <p className="text-text-muted hidden shrink-0 font-mono md:block">
         {bookmarkDateFormatter.format(new Date(timeStamp))}
       </p>
 
@@ -419,7 +419,7 @@ function BookmarkItem({
           <Button
             variant="ghost"
             size="icon"
-            className="size-7 text-text-muted hover:text-text"
+            className="text-text-muted hover:text-text size-7"
             aria-label="Edit bookmark"
             onClick={() => setEditingId(isEditing ? null : id)}
           >
@@ -442,11 +442,11 @@ function BookmarkItem({
           <Button
             variant="ghost"
             size="icon"
-            className="size-7 text-text-muted hover:text-danger"
+            className="text-text-muted hover:text-danger size-7"
             aria-label="Delete bookmark"
             onClick={async () => {
-              deleteOptimisticBookmark(id);
-              await deleteBookmark(id);
+              deleteOptimisticBookmark(id)
+              await deleteBookmark(id)
             }}
           >
             <svg
@@ -469,5 +469,5 @@ function BookmarkItem({
         </div>
       )}
     </li>
-  );
+  )
 }

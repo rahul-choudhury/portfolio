@@ -1,38 +1,38 @@
-"use client";
+"use client"
 
-import { cn } from "@workspace/design-system";
-import { Button } from "@workspace/design-system/ui";
-import { useRouter } from "next/navigation";
-import { authClient } from "@/lib/auth-client";
-import { useBookmarks } from "./providers/bookmarks-provider";
+import { cn } from "@workspace/design-system"
+import { Button } from "@workspace/design-system/ui"
+import { useRouter } from "next/navigation"
+import { authClient } from "@/lib/auth-client"
+import { useBookmarks } from "./providers/bookmarks-provider"
 
 export function TitleBar() {
-  const router = useRouter();
-  const { isManaging, bookmarks, setIsManaging } = useBookmarks();
+  const router = useRouter()
+  const { isManaging, bookmarks, setIsManaging } = useBookmarks()
 
   const exportBookmarks = () => {
     const sanitizedBookmarks = bookmarks.map(
-      ({ id: _id, userId: _userId, ...rest }) => rest,
-    );
-    const jsonString = JSON.stringify(sanitizedBookmarks, null, 2);
-    const jsonBlob = new Blob([jsonString], { type: "application/json" });
+      ({ id: _id, userId: _userId, ...rest }) => rest
+    )
+    const jsonString = JSON.stringify(sanitizedBookmarks, null, 2)
+    const jsonBlob = new Blob([jsonString], { type: "application/json" })
 
-    const url = URL.createObjectURL(jsonBlob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `bookmarks-${new Date().toISOString()}.json`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-  };
+    const url = URL.createObjectURL(jsonBlob)
+    const a = document.createElement("a")
+    a.href = url
+    a.download = `bookmarks-${new Date().toISOString()}.json`
+    document.body.appendChild(a)
+    a.click()
+    document.body.removeChild(a)
+    URL.revokeObjectURL(url)
+  }
 
   return (
     <header className="flex items-center justify-between pt-6">
       <div className="flex items-center gap-2">
         <svg
           aria-hidden="true"
-          className="h-5 w-5 text-text-secondary"
+          className="text-text-secondary h-5 w-5"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -45,7 +45,7 @@ export function TitleBar() {
             d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"
           />
         </svg>
-        <h1 className="text-base font-medium text-text">Bookmarks</h1>
+        <h1 className="text-text text-base font-medium">Bookmarks</h1>
       </div>
 
       <div className="flex gap-2">
@@ -53,7 +53,7 @@ export function TitleBar() {
           variant="secondary"
           className={cn(
             "w-20",
-            isManaging && "border-accent/20 bg-accent/10 text-text",
+            isManaging && "border-accent/20 bg-accent/10 text-text"
           )}
           size="sm"
           aria-pressed={isManaging}
@@ -65,7 +65,7 @@ export function TitleBar() {
         <Button
           variant="ghost"
           size="icon"
-          className="size-8 text-text-secondary hover:text-text"
+          className="text-text-secondary hover:text-text size-8"
           aria-label="Download"
           onClick={exportBookmarks}
           disabled={bookmarks.length === 0}
@@ -89,11 +89,11 @@ export function TitleBar() {
         <Button
           variant="ghost"
           size="icon"
-          className="size-8 text-text-secondary hover:text-text"
+          className="text-text-secondary hover:text-text size-8"
           aria-label="Sign out"
           onClick={async () => {
-            await authClient.signOut();
-            router.replace("/login");
+            await authClient.signOut()
+            router.replace("/login")
           }}
         >
           <svg
@@ -114,5 +114,5 @@ export function TitleBar() {
         </Button>
       </div>
     </header>
-  );
+  )
 }

@@ -1,21 +1,21 @@
-import { cn } from "@workspace/design-system";
-import { getDefaultAppFonts } from "@workspace/design-system/next";
-import type { Metadata } from "next";
-import "./globals.css";
-import { CommandPalette } from "@/components/command-palette";
+import { cn } from "@workspace/design-system"
+import { getDefaultAppFonts } from "@workspace/design-system/next"
+import type { Metadata } from "next"
+import "./globals.css"
+import { CommandPalette } from "@/components/command-palette"
 
-const appFonts = getDefaultAppFonts();
+const appFonts = getDefaultAppFonts()
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://bookmarks.rchoudhury.dev"),
   title: "Bookmarks",
   description: "<kbd /> focused bookmark manager",
-};
+}
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode
 }>) {
   return (
     <html lang="en">
@@ -26,5 +26,5 @@ export default function RootLayout({
         <CommandPalette />
       </body>
     </html>
-  );
+  )
 }

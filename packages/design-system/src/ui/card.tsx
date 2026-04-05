@@ -20,22 +20,22 @@
  * ```
  */
 
-import { cn } from "../lib/utils";
+import { cn } from "../lib/utils"
 
 type CardProps = {
-  variant?: "default" | "bordered" | "elevated";
-} & React.ComponentProps<"div">;
+  variant?: "default" | "bordered" | "elevated"
+} & React.ComponentProps<"div">
 
 export function Card({ variant = "default", className, ...props }: CardProps) {
   return (
     <div
       className={cn(
-        "rounded-md bg-surface",
-        variant === "bordered" && "border border-border",
+        "bg-surface rounded-md",
+        variant === "bordered" && "border-border border",
         variant === "elevated" && "shadow-md",
-        className,
+        className
       )}
       {...props}
     />
-  );
+  )
 }

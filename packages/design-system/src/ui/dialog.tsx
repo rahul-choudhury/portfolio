@@ -1,4 +1,4 @@
-"use client";
+"use client"
 
 /**
  * Dialog
@@ -32,79 +32,79 @@
  * ```
  */
 
-import { Dialog as BaseDialog } from "@base-ui/react/dialog";
-import { cn } from "../lib/utils";
+import { Dialog as BaseDialog } from "@base-ui/react/dialog"
+import { cn } from "../lib/utils"
 
 /* ----- Root ----- */
 
-const Dialog = BaseDialog.Root;
+const Dialog = BaseDialog.Root
 
 /* ----- Trigger ----- */
 
-const DialogTrigger = BaseDialog.Trigger;
+const DialogTrigger = BaseDialog.Trigger
 
 /* ----- Content (Portal + Backdrop + Popup) ----- */
 
-type DialogContentProps = React.ComponentProps<typeof BaseDialog.Popup>;
+type DialogContentProps = React.ComponentProps<typeof BaseDialog.Popup>
 
 function DialogContent({ className, children, ...props }: DialogContentProps) {
   return (
     <BaseDialog.Portal>
       <BaseDialog.Backdrop
         className={cn(
-          "fixed inset-0 z-(--z-overlay) bg-black/40",
+          "z-(--z-overlay) fixed inset-0 bg-black/40",
           "transition-opacity duration-300",
           "data-starting-style:opacity-0",
-          "data-ending-style:opacity-0",
+          "data-ending-style:opacity-0"
         )}
       />
       <BaseDialog.Popup
         className={cn(
-          "fixed top-1/2 left-1/2 z-(--z-modal) w-full max-w-md -translate-x-1/2 -translate-y-1/2 rounded-lg bg-surface p-6 shadow-overlay",
+          "z-(--z-modal) bg-surface shadow-overlay fixed left-1/2 top-1/2 w-full max-w-md -translate-x-1/2 -translate-y-1/2 rounded-lg p-6",
           "transition-[opacity,scale] duration-300",
           "data-starting-style:scale-95 data-starting-style:opacity-0",
           "data-ending-style:scale-95 data-ending-style:opacity-0",
-          className,
+          className
         )}
         {...props}
       >
         {children}
       </BaseDialog.Popup>
     </BaseDialog.Portal>
-  );
+  )
 }
 
 /* ----- Title ----- */
 
-type DialogTitleProps = React.ComponentProps<typeof BaseDialog.Title>;
+type DialogTitleProps = React.ComponentProps<typeof BaseDialog.Title>
 
 function DialogTitle({ className, ...props }: DialogTitleProps) {
   return (
     <BaseDialog.Title
-      className={cn("text-lg font-medium text-text", className)}
+      className={cn("text-text text-lg font-medium", className)}
       {...props}
     />
-  );
+  )
 }
 
 /* ----- Description ----- */
 
 type DialogDescriptionProps = React.ComponentProps<
   typeof BaseDialog.Description
->;
+>
 
 function DialogDescription({ className, ...props }: DialogDescriptionProps) {
   return (
     <BaseDialog.Description
-      className={cn("mt-1 text-sm text-text-secondary", className)}
+      className={cn("text-text-secondary mt-1 text-sm", className)}
       {...props}
     />
-  );
+  )
 }
 
 /* ----- Close ----- */
 
-const DialogClose = BaseDialog.Close;
+const DialogClose = BaseDialog.Close
 
 export {
   Dialog,
@@ -113,4 +113,4 @@ export {
   DialogDescription,
   DialogTitle,
   DialogTrigger,
-};
+}

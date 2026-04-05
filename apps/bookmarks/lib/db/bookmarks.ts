@@ -1,5 +1,5 @@
-import { pgTable, text, timestamp, unique, uuid } from "drizzle-orm/pg-core";
-import { user } from "./auth-schema";
+import { pgTable, text, timestamp, unique, uuid } from "drizzle-orm/pg-core"
+import { user } from "./auth-schema"
 
 export const bookmarksTable = pgTable(
   "bookmarks",
@@ -13,7 +13,7 @@ export const bookmarksTable = pgTable(
       .notNull()
       .references(() => user.id, { onDelete: "cascade" }),
   },
-  (table) => [unique().on(table.url, table.userId)],
-);
+  (table) => [unique().on(table.url, table.userId)]
+)
 
-export type Bookmark = typeof bookmarksTable.$inferSelect;
+export type Bookmark = typeof bookmarksTable.$inferSelect

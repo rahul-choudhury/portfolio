@@ -1,4 +1,4 @@
-"use client";
+"use client"
 
 /**
  * Select
@@ -29,19 +29,19 @@
  * ```
  */
 
-import { Select as BaseSelect } from "@base-ui/react/select";
-import { CheckIcon } from "@phosphor-icons/react";
-import { CaretUpDownIcon } from "@phosphor-icons/react/dist/ssr";
-import { createContext, useContext } from "react";
-import { cn } from "../lib/utils";
+import { Select as BaseSelect } from "@base-ui/react/select"
+import { CheckIcon } from "@phosphor-icons/react"
+import { CaretUpDownIcon } from "@phosphor-icons/react/dist/ssr"
+import { createContext, useContext } from "react"
+import { cn } from "../lib/utils"
 
 /* ----- Root (no HTML rendered) ----- */
 
-const Select = BaseSelect.Root;
+const Select = BaseSelect.Root
 
-type SelectSize = "sm" | "md" | "lg";
+type SelectSize = "sm" | "md" | "lg"
 
-const SelectSizeContext = createContext<SelectSize>("md");
+const SelectSizeContext = createContext<SelectSize>("md")
 
 /* ----- Trigger ----- */
 
@@ -49,11 +49,11 @@ const sizeStyles: Record<SelectSize, string> = {
   sm: "h-8 px-2.5 text-sm",
   md: "h-9 px-3 text-sm",
   lg: "h-10 px-3.5 text-base",
-};
+}
 
 type SelectTriggerProps = {
-  size?: SelectSize;
-} & React.ComponentProps<typeof BaseSelect.Trigger>;
+  size?: SelectSize
+} & React.ComponentProps<typeof BaseSelect.Trigger>
 
 function SelectTrigger({
   size = "md",
@@ -65,14 +65,14 @@ function SelectTrigger({
     <SelectSizeContext value={size}>
       <BaseSelect.Trigger
         className={cn(
-          "inline-flex w-full items-center justify-between rounded-md border border-border bg-surface text-text transition-[color,box-shadow]",
+          "border-border bg-surface text-text inline-flex w-full items-center justify-between rounded-md border transition-[color,box-shadow]",
           "hover:border-border-strong",
           "focus-visible:border-accent focus-visible:ring-3 focus-visible:ring-accent/15 focus-visible:outline-none",
           "disabled:cursor-not-allowed disabled:opacity-50",
           "aria-invalid:border-danger aria-invalid:focus-visible:border-danger aria-invalid:focus-visible:ring-danger/15",
           "data-popup-open:border-accent",
           sizeStyles[size],
-          className,
+          className
         )}
         {...props}
       >
@@ -82,19 +82,19 @@ function SelectTrigger({
         </BaseSelect.Icon>
       </BaseSelect.Trigger>
     </SelectSizeContext>
-  );
+  )
 }
 
 /* ----- Value ----- */
 
-const SelectValue = BaseSelect.Value;
+const SelectValue = BaseSelect.Value
 
 /* ----- Content (Portal + Positioner + Popup) ----- */
 
 type SelectContentProps = {
-  side?: "top" | "bottom";
-  sideOffset?: number;
-} & React.ComponentProps<typeof BaseSelect.Popup>;
+  side?: "top" | "bottom"
+  sideOffset?: number
+} & React.ComponentProps<typeof BaseSelect.Popup>
 
 function SelectContent({ className, children, ...props }: SelectContentProps) {
   return (
@@ -102,8 +102,8 @@ function SelectContent({ className, children, ...props }: SelectContentProps) {
       <BaseSelect.Positioner>
         <BaseSelect.Popup
           className={cn(
-            "z-(--z-dropdown) min-w-(--anchor-width) max-h-60 overflow-auto rounded-md border border-border bg-surface shadow-md",
-            className,
+            "z-(--z-dropdown) min-w-(--anchor-width) border-border bg-surface max-h-60 overflow-auto rounded-md border shadow-md",
+            className
           )}
           {...props}
         >
@@ -111,23 +111,23 @@ function SelectContent({ className, children, ...props }: SelectContentProps) {
         </BaseSelect.Popup>
       </BaseSelect.Positioner>
     </BaseSelect.Portal>
-  );
+  )
 }
 
 /* ----- Item ----- */
 
-type SelectItemProps = React.ComponentProps<typeof BaseSelect.Item>;
+type SelectItemProps = React.ComponentProps<typeof BaseSelect.Item>
 
 function SelectItem({ className, children, ...props }: SelectItemProps) {
-  const size = useContext(SelectSizeContext);
+  const size = useContext(SelectSizeContext)
 
   return (
     <BaseSelect.Item
       className={cn(
-        "flex cursor-pointer items-center justify-between text-text outline-none transition-colors",
+        "text-text flex cursor-pointer items-center justify-between outline-none transition-colors",
         "data-highlighted:bg-surface-soft",
         sizeStyles[size],
-        className,
+        className
       )}
       {...props}
     >
@@ -136,7 +136,7 @@ function SelectItem({ className, children, ...props }: SelectItemProps) {
         <CheckIcon size={14} />
       </BaseSelect.ItemIndicator>
     </BaseSelect.Item>
-  );
+  )
 }
 
-export { Select, SelectContent, SelectItem, SelectTrigger, SelectValue };
+export { Select, SelectContent, SelectItem, SelectTrigger, SelectValue }

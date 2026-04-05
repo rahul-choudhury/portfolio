@@ -1,8 +1,8 @@
-import { loadEnvConfig } from "@next/env";
-import { defineConfig } from "drizzle-kit";
-import { getEnv } from "./lib/env";
+import { loadEnvConfig } from "@next/env"
+import { defineConfig } from "drizzle-kit"
+import { getEnv } from "./lib/env"
 
-loadEnvConfig(process.cwd(), process.env.NODE_ENV === "development");
+loadEnvConfig(process.cwd(), process.env.NODE_ENV === "development")
 
 export default defineConfig({
   schema: ["./lib/db/auth-schema.ts", "./lib/db/bookmarks.ts"],
@@ -11,4 +11,4 @@ export default defineConfig({
   dbCredentials: {
     url: getEnv("DATABASE_URL"),
   },
-});
+})

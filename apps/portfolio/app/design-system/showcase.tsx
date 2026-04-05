@@ -1,11 +1,11 @@
-"use client";
+"use client"
 
 import {
   DotsThreeIcon,
   FileTextIcon,
   InfoIcon,
   PaperPlaneTiltIcon,
-} from "@phosphor-icons/react";
+} from "@phosphor-icons/react"
 import {
   Badge,
   Button,
@@ -42,62 +42,62 @@ import {
   Tabs,
   TabsList,
   Textarea,
-} from "@workspace/design-system/ui";
-import { useState } from "react";
+} from "@workspace/design-system/ui"
+import { useState } from "react"
 
 function Section({
   title,
   children,
 }: {
-  title: string;
-  children: React.ReactNode;
+  title: string
+  children: React.ReactNode
 }) {
   return (
     <section className="mb-16">
-      <h2 className="mb-6 text-sm font-medium text-text-muted">{title}</h2>
+      <h2 className="text-text-muted mb-6 text-sm font-medium">{title}</h2>
       {children}
     </section>
-  );
+  )
 }
 
 function Row({
   label,
   children,
 }: {
-  label: string;
-  children: React.ReactNode;
+  label: string
+  children: React.ReactNode
 }) {
   return (
-    <div className="flex flex-col gap-3 border-b border-border pb-6 last:border-0 last:pb-0">
-      <h3 className="text-sm font-medium text-text">{label}</h3>
+    <div className="border-border flex flex-col gap-3 border-b pb-6 last:border-0 last:pb-0">
+      <h3 className="text-text text-sm font-medium">{label}</h3>
       {children}
     </div>
-  );
+  )
 }
 
 function StatePreview({
   label,
   children,
 }: {
-  label: string;
-  children: React.ReactNode;
+  label: string
+  children: React.ReactNode
 }) {
   return (
     <div className="space-y-1.5">
-      <p className="text-xs font-mono uppercase tracking-[0.08em] text-text-muted">
+      <p className="text-text-muted font-mono text-xs uppercase tracking-[0.08em]">
         {label}
       </p>
       {children}
     </div>
-  );
+  )
 }
 
 export function Showcase() {
-  const [checkboxA, setCheckboxA] = useState(false);
-  const [checkboxB, setCheckboxB] = useState(true);
-  const [radio, setRadio] = useState("option-1");
-  const [switchA, setSwitchA] = useState(false);
-  const [switchB, setSwitchB] = useState(true);
+  const [checkboxA, setCheckboxA] = useState(false)
+  const [checkboxB, setCheckboxB] = useState(true)
+  const [radio, setRadio] = useState("option-1")
+  const [switchA, setSwitchA] = useState(false)
+  const [switchB, setSwitchB] = useState(true)
 
   return (
     <>
@@ -147,20 +147,20 @@ export function Showcase() {
       <Section title="Card">
         <div className="grid gap-4 sm:grid-cols-3">
           <Card className="p-4">
-            <p className="text-sm font-medium text-text">Default</p>
-            <p className="mt-1 text-sm text-text-secondary">
+            <p className="text-text text-sm font-medium">Default</p>
+            <p className="text-text-secondary mt-1 text-sm">
               Plain surface, no border.
             </p>
           </Card>
           <Card variant="bordered" className="p-4">
-            <p className="text-sm font-medium text-text">Bordered</p>
-            <p className="mt-1 text-sm text-text-secondary">
+            <p className="text-text text-sm font-medium">Bordered</p>
+            <p className="text-text-secondary mt-1 text-sm">
               Visual separation.
             </p>
           </Card>
           <Card variant="elevated" className="p-4">
-            <p className="text-sm font-medium text-text">Elevated</p>
-            <p className="mt-1 text-sm text-text-secondary">
+            <p className="text-text text-sm font-medium">Elevated</p>
+            <p className="text-text-secondary mt-1 text-sm">
               Subtle shadow lift.
             </p>
           </Card>
@@ -472,7 +472,7 @@ export function Showcase() {
             <InfoIcon size={16} />
           </PopoverTrigger>
           <PopoverContent>
-            <p className="text-sm text-text-secondary">
+            <p className="text-text-secondary text-sm">
               This is a popover with additional context. It anchors to the
               trigger and supports keyboard navigation.
             </p>
@@ -506,18 +506,18 @@ export function Showcase() {
             <Tab value="notifications">Notifications</Tab>
           </TabsList>
           <TabPanel value="overview">
-            <p className="text-sm text-text-secondary">
+            <p className="text-text-secondary text-sm">
               Overview content goes here. Tabs use Base UI for keyboard
               navigation and focus management.
             </p>
           </TabPanel>
           <TabPanel value="settings">
-            <p className="text-sm text-text-secondary">
+            <p className="text-text-secondary text-sm">
               Settings content goes here.
             </p>
           </TabPanel>
           <TabPanel value="notifications">
-            <p className="text-sm text-text-secondary">
+            <p className="text-text-secondary text-sm">
               Notifications content goes here.
             </p>
           </TabPanel>
@@ -552,5 +552,5 @@ export function Showcase() {
         </Card>
       </Section>
     </>
-  );
+  )
 }

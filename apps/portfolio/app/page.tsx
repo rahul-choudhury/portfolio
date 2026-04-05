@@ -1,8 +1,8 @@
-import { Badge } from "@workspace/design-system/ui";
-import Link from "next/link";
-import { ExternalLink } from "@/components/external-link";
-import { Reveal } from "@/components/motion-reveal";
-import { getAllBlogPosts } from "@/lib/blogs";
+import { Badge } from "@workspace/design-system/ui"
+import Link from "next/link"
+import { ExternalLink } from "@/components/external-link"
+import { Reveal } from "@/components/motion-reveal"
+import { getAllBlogPosts } from "@/lib/blogs"
 
 const SKILLS = [
   "JavaScript",
@@ -13,7 +13,7 @@ const SKILLS = [
   "Go",
   "PostgreSQL",
   "Redis",
-];
+]
 
 const PROJECTS = [
   {
@@ -54,30 +54,30 @@ const PROJECTS = [
     tech: ["JavaScript", "Go", "PostgreSQL"],
     year: "2025",
   },
-];
+]
 
 export default async function Home() {
-  const blogPosts = getAllBlogPosts();
-  const totalBlogs = blogPosts.length;
+  const blogPosts = getAllBlogPosts()
+  const totalBlogs = blogPosts.length
 
   return (
     <>
       {/* Hero Section */}
       <section className="flex flex-col justify-center">
         <Reveal delay={0.1}>
-          <h1 className="max-w-4xl font-serif text-5xl leading-[1.1] font-medium tracking-tight text-text md:text-6xl lg:text-7xl">
+          <h1 className="text-text max-w-4xl font-serif text-5xl font-medium leading-[1.1] tracking-tight md:text-6xl lg:text-7xl">
             Rahul Choudhury
           </h1>
         </Reveal>
 
         <Reveal delay={0.15}>
-          <p className="mt-6 max-w-2xl text-lg text-text-secondary md:text-xl">
+          <p className="text-text-secondary mt-6 max-w-2xl text-lg md:text-xl">
             Building what designers draw and users need
           </p>
         </Reveal>
 
         <Reveal delay={0.2}>
-          <div className="mt-6 flex items-center gap-3 md:gap-5 text-sm">
+          <div className="mt-6 flex items-center gap-3 text-sm md:gap-5">
             <ExternalLink href="https://github.com/rahul-choudhury">
               GitHub
             </ExternalLink>
@@ -89,7 +89,7 @@ export default async function Home() {
             </ExternalLink>
             <Link
               href="/design-system"
-              className="inline-flex items-center gap-1 whitespace-nowrap rainbow-shimmer"
+              className="rainbow-shimmer inline-flex items-center gap-1 whitespace-nowrap"
               data-text="Design System"
             >
               Design System
@@ -101,7 +101,7 @@ export default async function Home() {
       {/* Skills Section */}
       <section className="mt-12 md:mt-16">
         <Reveal delay={0.25}>
-          <h2 className="mb-6 text-sm font-medium text-text-muted">
+          <h2 className="text-text-muted mb-6 text-sm font-medium">
             Technologies
           </h2>
         </Reveal>
@@ -119,8 +119,8 @@ export default async function Home() {
       <section className="mt-16 md:mt-20">
         <Reveal delay={0.35}>
           <div className="mb-8 flex items-baseline justify-between">
-            <h2 className="text-sm font-medium text-text-muted">Blogs</h2>
-            <span className="font-mono text-sm text-text-muted">
+            <h2 className="text-text-muted text-sm font-medium">Blogs</h2>
+            <span className="text-text-muted font-mono text-sm">
               {totalBlogs} {totalBlogs === 1 ? "post" : "posts"}
             </span>
           </div>
@@ -132,20 +132,20 @@ export default async function Home() {
               <Link
                 key={post.slug}
                 href={`/blog/${post.slug}`}
-                className="group flex items-start justify-between gap-4 border-b border-border py-4 transition-colors hover:border-border-strong"
+                className="border-border hover:border-border-strong group flex items-start justify-between gap-4 border-b py-4 transition-colors"
               >
                 <div className="flex flex-col gap-1">
-                  <h3 className="font-medium text-text transition-colors group-hover:text-text-secondary">
+                  <h3 className="text-text group-hover:text-text-secondary font-medium transition-colors">
                     {post.title}
                   </h3>
                   {post.description && (
-                    <p className="text-sm text-text-secondary">
+                    <p className="text-text-secondary text-sm">
                       {post.description}
                     </p>
                   )}
                 </div>
                 {post.date && (
-                  <span className="shrink-0 font-mono text-sm text-text-muted">
+                  <span className="text-text-muted shrink-0 font-mono text-sm">
                     {new Date(post.date).toLocaleDateString("en-US", {
                       year: "numeric",
                       month: "short",
@@ -162,7 +162,7 @@ export default async function Home() {
       {/* Work Section */}
       <section className="mt-16 md:mt-20">
         <Reveal delay={0.45}>
-          <h2 className=" mb-8 text-sm font-medium text-text-muted">
+          <h2 className="text-text-muted mb-8 text-sm font-medium">
             Selected Work
           </h2>
         </Reveal>
@@ -175,13 +175,13 @@ export default async function Home() {
                 href={project.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group flex items-start justify-between gap-4 border-b border-border py-4 transition-colors hover:border-border-strong"
+                className="border-border hover:border-border-strong group flex items-start justify-between gap-4 border-b py-4 transition-colors"
               >
                 <div className="flex flex-col gap-1">
-                  <h3 className="font-medium text-text transition-colors group-hover:text-text-secondary">
+                  <h3 className="text-text group-hover:text-text-secondary font-medium transition-colors">
                     {project.title}
                   </h3>
-                  <p className="text-sm text-text-secondary">
+                  <p className="text-text-secondary text-sm">
                     {project.description}
                   </p>
                   <div className="mt-2 flex flex-wrap gap-2">
@@ -190,7 +190,7 @@ export default async function Home() {
                     ))}
                   </div>
                 </div>
-                <span className="shrink-0 font-mono text-sm text-text-muted">
+                <span className="text-text-muted shrink-0 font-mono text-sm">
                   {project.year}
                 </span>
               </Link>
@@ -200,9 +200,9 @@ export default async function Home() {
       </section>
 
       {/* Contact Section */}
-      <section className="mt-16 md:mt-20 ">
+      <section className="mt-16 md:mt-20">
         <Reveal delay={0.55}>
-          <p className="mb-6 text-lg text-text-secondary">
+          <p className="text-text-secondary mb-6 text-lg">
             Good projects need good developers. Here&apos;s my email.
           </p>
         </Reveal>
@@ -210,12 +210,12 @@ export default async function Home() {
         <Reveal delay={0.6}>
           <Link
             href="mailto:rchoudhury63@gmail.com"
-            className="inline-flex items-center gap-2 text-lg font-medium text-text underline decoration-border underline-offset-4 hover:decoration-text"
+            className="text-text decoration-border hover:decoration-text inline-flex items-center gap-2 text-lg font-medium underline underline-offset-4"
           >
             rchoudhury63@gmail.com
           </Link>
         </Reveal>
       </section>
     </>
-  );
+  )
 }

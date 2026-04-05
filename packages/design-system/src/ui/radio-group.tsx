@@ -1,4 +1,4 @@
-"use client";
+"use client"
 
 /**
  * RadioGroup + RadioItem
@@ -27,13 +27,13 @@
  * ```
  */
 
-import { Radio as BaseRadio } from "@base-ui/react/radio";
-import { RadioGroup as BaseRadioGroup } from "@base-ui/react/radio-group";
-import { cn } from "../lib/utils";
+import { Radio as BaseRadio } from "@base-ui/react/radio"
+import { RadioGroup as BaseRadioGroup } from "@base-ui/react/radio-group"
+import { cn } from "../lib/utils"
 
 /* ----- RadioGroup ----- */
 
-type RadioGroupProps = React.ComponentProps<typeof BaseRadioGroup>;
+type RadioGroupProps = React.ComponentProps<typeof BaseRadioGroup>
 
 function RadioGroup({ className, ...props }: RadioGroupProps) {
   return (
@@ -41,31 +41,31 @@ function RadioGroup({ className, ...props }: RadioGroupProps) {
       className={cn("flex flex-col gap-2", className)}
       {...props}
     />
-  );
+  )
 }
 
 /* ----- RadioItem ----- */
 
-type RadioItemProps = React.ComponentProps<typeof BaseRadio.Root>;
+type RadioItemProps = React.ComponentProps<typeof BaseRadio.Root>
 
 function RadioItem({ className, ...props }: RadioItemProps) {
   return (
     <BaseRadio.Root
       className={cn(
-        "inline-flex size-4 shrink-0 items-center justify-center rounded-full border border-border bg-surface transition-colors",
+        "border-border bg-surface inline-flex size-4 shrink-0 items-center justify-center rounded-full border transition-colors",
         "hover:border-border-strong",
-        "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent",
+        "focus-visible:outline-accent focus-visible:outline-2 focus-visible:outline-offset-2",
         "data-checked:border-accent",
         "data-disabled:cursor-not-allowed data-disabled:opacity-50",
-        className,
+        className
       )}
       {...props}
     >
       <BaseRadio.Indicator className="flex items-center justify-center">
-        <span className="size-2 rounded-full bg-accent" />
+        <span className="bg-accent size-2 rounded-full" />
       </BaseRadio.Indicator>
     </BaseRadio.Root>
-  );
+  )
 }
 
-export { RadioGroup, RadioItem };
+export { RadioGroup, RadioItem }

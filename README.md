@@ -10,5 +10,4 @@ A Bun + Turborepo monorepo for personal apps, shared UI, and tooling.
 ## Packages
 
 - `packages/design-system`: shared UI primitives and design tokens
-- `packages/biome-config`: shared Biome config
 - `packages/typescript-config`: shared TypeScript config

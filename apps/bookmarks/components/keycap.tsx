@@ -1,15 +1,15 @@
-import { cn } from "@workspace/design-system";
+import { cn } from "@workspace/design-system"
 
-type KeycapProps = React.ComponentProps<"kbd">;
+type KeycapProps = React.ComponentProps<"kbd">
 
 export function Keycap({ className, ...props }: KeycapProps) {
   return (
     <kbd
       className={cn(
-        "inline-flex items-center gap-1 rounded-sm border border-border bg-surface-soft px-2 py-1 font-mono text-xs text-text-secondary",
-        className,
+        "border-border bg-surface-soft text-text-secondary inline-flex items-center gap-1 rounded-sm border px-2 py-1 font-mono text-xs",
+        className
       )}
       {...props}
     />
-  );
+  )
 }

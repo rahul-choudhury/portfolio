@@ -12,16 +12,16 @@
  * ```
  */
 
-import { cn } from "../lib/utils";
+import { cn } from "../lib/utils"
 
-type SkeletonProps = React.ComponentProps<"div">;
+type SkeletonProps = React.ComponentProps<"div">
 
 export function Skeleton({ className, ...props }: SkeletonProps) {
   return (
     <div
-      className={cn("animate-pulse rounded-md bg-surface-soft", className)}
+      className={cn("bg-surface-soft animate-pulse rounded-md", className)}
       aria-hidden="true"
       {...props}
     />
-  );
+  )
 }

@@ -16,11 +16,11 @@
  * ```
  */
 
-import { cn } from "../lib/utils";
+import { cn } from "../lib/utils"
 
 type BadgeProps = {
-  variant?: "neutral" | "danger" | "warning" | "success";
-} & React.ComponentProps<"span">;
+  variant?: "neutral" | "danger" | "warning" | "success"
+} & React.ComponentProps<"span">
 
 export function Badge({
   variant = "neutral",
@@ -36,9 +36,9 @@ export function Badge({
         variant === "danger" && "border-danger/20 bg-danger/10 text-danger",
         variant === "warning" && "border-warning/20 bg-warning/10 text-warning",
         variant === "success" && "border-success/20 bg-success/10 text-success",
-        className,
+        className
       )}
       {...props}
     />
-  );
+  )
 }

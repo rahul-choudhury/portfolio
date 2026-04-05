@@ -1,4 +1,4 @@
-"use client";
+"use client"
 
 /**
  * Input
@@ -28,33 +28,33 @@
  * ```
  */
 
-import { Input as BaseInput } from "@base-ui/react/input";
-import { cn } from "../lib/utils";
+import { Input as BaseInput } from "@base-ui/react/input"
+import { cn } from "../lib/utils"
 
 const sizeStyles = {
   sm: "h-8 px-2.5 text-sm",
   md: "h-9 px-3 text-sm",
   lg: "h-10 px-3.5 text-base",
-};
+}
 
 type InputProps = {
-  size?: "sm" | "md" | "lg";
-} & Omit<React.ComponentProps<"input">, "size">;
+  size?: "sm" | "md" | "lg"
+} & Omit<React.ComponentProps<"input">, "size">
 
 export function Input({ size = "md", className, ...props }: InputProps) {
   return (
     <BaseInput
       className={cn(
-        "w-full rounded-md border border-border bg-surface text-text transition-[border-color,box-shadow]",
+        "border-border bg-surface text-text w-full rounded-md border transition-[border-color,box-shadow]",
         "placeholder:text-text-muted",
         "hover:border-border-strong",
         "focus-visible:border-accent focus-visible:ring-3 focus-visible:ring-accent/15 focus-visible:outline-none",
         "disabled:cursor-not-allowed disabled:opacity-50",
         "aria-invalid:border-danger aria-invalid:focus-visible:border-danger aria-invalid:focus-visible:ring-danger/15",
         sizeStyles[size],
-        className,
+        className
       )}
       {...props}
     />
-  );
+  )
 }

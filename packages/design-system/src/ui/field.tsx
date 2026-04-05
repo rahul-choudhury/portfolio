@@ -1,4 +1,4 @@
-"use client";
+"use client"
 
 /**
  * Field
@@ -24,13 +24,13 @@
  * ```
  */
 
-import { Field as BaseField } from "@base-ui/react/field";
-import { cn } from "../lib/utils";
+import { Field as BaseField } from "@base-ui/react/field"
+import { cn } from "../lib/utils"
 
-const Control = BaseField.Control;
-const Validity = BaseField.Validity;
+const Control = BaseField.Control
+const Validity = BaseField.Validity
 
-type FieldRootProps = React.ComponentProps<typeof BaseField.Root>;
+type FieldRootProps = React.ComponentProps<typeof BaseField.Root>
 
 function FieldRoot({ className, ...props }: FieldRootProps) {
   return (
@@ -38,12 +38,12 @@ function FieldRoot({ className, ...props }: FieldRootProps) {
       className={cn("flex flex-col gap-1.5", className)}
       {...props}
     />
-  );
+  )
 }
 
 type FieldLabelProps = React.ComponentProps<typeof BaseField.Label> & {
-  required?: boolean;
-};
+  required?: boolean
+}
 
 // `required` is a presentational affordance for the label marker.
 function FieldLabel({
@@ -55,33 +55,33 @@ function FieldLabel({
   return (
     <BaseField.Label
       className={cn(
-        "text-sm font-medium text-text data-disabled:cursor-not-allowed data-disabled:opacity-50",
-        className,
+        "text-text data-disabled:cursor-not-allowed data-disabled:opacity-50 text-sm font-medium",
+        className
       )}
       {...props}
     >
       {children}
       {required && (
-        <span className="ml-0.5 text-danger" aria-hidden="true">
+        <span className="text-danger ml-0.5" aria-hidden="true">
           *
         </span>
       )}
     </BaseField.Label>
-  );
+  )
 }
 
-type FieldDescriptionProps = React.ComponentProps<typeof BaseField.Description>;
+type FieldDescriptionProps = React.ComponentProps<typeof BaseField.Description>
 
 function FieldDescription({ className, ...props }: FieldDescriptionProps) {
   return (
     <BaseField.Description
-      className={cn("text-sm text-text-muted", className)}
+      className={cn("text-text-muted text-sm", className)}
       {...props}
     />
-  );
+  )
 }
 
-type FieldItemProps = React.ComponentProps<typeof BaseField.Item>;
+type FieldItemProps = React.ComponentProps<typeof BaseField.Item>
 
 function FieldItem({ className, ...props }: FieldItemProps) {
   return (
@@ -89,19 +89,19 @@ function FieldItem({ className, ...props }: FieldItemProps) {
       className={cn("flex flex-col gap-1.5", className)}
       {...props}
     />
-  );
+  )
 }
 
-type FieldErrorProps = React.ComponentProps<typeof BaseField.Error>;
+type FieldErrorProps = React.ComponentProps<typeof BaseField.Error>
 
 function FieldError({ className, ...props }: FieldErrorProps) {
   return (
     <BaseField.Error
       role="alert"
-      className={cn("text-sm text-danger", className)}
+      className={cn("text-danger text-sm", className)}
       {...props}
     />
-  );
+  )
 }
 
 const Field = {
@@ -112,7 +112,7 @@ const Field = {
   Item: FieldItem,
   Error: FieldError,
   Validity,
-};
+}
 
 export {
   Control as FieldControl,
@@ -123,4 +123,4 @@ export {
   FieldLabel,
   FieldRoot,
   Validity as FieldValidity,
-};
+}

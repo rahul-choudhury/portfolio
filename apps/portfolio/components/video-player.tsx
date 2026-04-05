@@ -1,21 +1,21 @@
-"use client";
+"use client"
 
-import { Slider } from "@base-ui/react/slider";
+import { Slider } from "@base-ui/react/slider"
 import {
   ArrowsInIcon,
   ArrowsOutIcon,
   PauseIcon,
   PlayIcon,
-} from "@phosphor-icons/react";
-import { AnimatePresence, motion } from "motion/react";
-import { useEffect, useRef, useState } from "react";
-import { useMediaQuery } from "@/hooks/use-media-query";
-import { triggerMobileHaptic } from "./mobile-haptics";
+} from "@phosphor-icons/react"
+import { AnimatePresence, motion } from "motion/react"
+import { useEffect, useRef, useState } from "react"
+import { useMediaQuery } from "@/hooks/use-media-query"
+import { triggerMobileHaptic } from "./mobile-haptics"
 
 function formatTime(seconds: number) {
-  const mins = Math.floor(seconds / 60);
-  const secs = Math.floor(seconds % 60);
-  return `${mins}:${secs.toString().padStart(2, "0")}`;
+  const mins = Math.floor(seconds / 60)
+  const secs = Math.floor(seconds % 60)
+  return `${mins}:${secs.toString().padStart(2, "0")}`
 }
 
 export function VideoPlayer({
@@ -23,91 +23,95 @@ export function VideoPlayer({
   width,
   height,
 }: {
-  src: string;
-  width: string;
-  height: string;
+  src: string
+  width: string
+  height: string
 }) {
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [currentTime, setCurrentTime] = useState(0);
-  const [duration, setDuration] = useState(0);
-  const [isSeeking, setIsSeeking] = useState(false);
-  const [isFullscreen, setIsFullscreen] = useState(false);
-  const [isHovering, setIsHovering] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false)
+  const [currentTime, setCurrentTime] = useState(0)
+  const [duration, setDuration] = useState(0)
+  const [isSeeking, setIsSeeking] = useState(false)
+  const [isFullscreen, setIsFullscreen] = useState(false)
+  const [isHovering, setIsHovering] = useState(false)
 
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const isMobile = useMediaQuery("(max-width: 1023px)");
+  const videoRef = useRef<HTMLVideoElement>(null)
+  const containerRef = useRef<HTMLDivElement>(null)
+  const isMobile = useMediaQuery("(max-width: 1023px)")
 
-  const controlsVisible = !isPlaying || isMobile || isHovering;
+  const controlsVisible = !isPlaying || isMobile || isHovering
 
   const handlePlayback = () => {
-    const video = videoRef.current;
-    if (!video) return;
+    const video = videoRef.current
+    if (!video) return
     if (video.paused) {
-      video.play();
+      video.play()
     } else {
-      video.pause();
+      video.pause()
     }
-  };
+  }
 
   const handleSeek = (value: number) => {
-    const video = videoRef.current;
-    if (!video) return;
-    setIsSeeking(true);
-    setCurrentTime(value);
-    video.currentTime = value;
-  };
+    const video = videoRef.current
+    if (!video) return
+    setIsSeeking(true)
+    setCurrentTime(value)
+    video.currentTime = value
+  }
 
   const toggleFullscreen = async () => {
-    const container = containerRef.current;
-    if (!container) return;
+    const container = containerRef.current
+    if (!container) return
     if (document.fullscreenElement) {
       try {
-        screen.orientation.unlock();
-      } catch {}
-      await document.exitFullscreen();
-      return;
+        screen.orientation.unlock()
+      } catch {
+        // Some browsers do not expose screen orientation controls.
+      }
+      await document.exitFullscreen()
+      return
     }
 
-    await container.requestFullscreen();
+    await container.requestFullscreen()
     try {
       await (
         screen.orientation as ScreenOrientation & {
-          lock(orientation: string): Promise<void>;
+          lock(orientation: string): Promise<void>
         }
-      ).lock("landscape");
-    } catch {}
-  };
+      ).lock("landscape")
+    } catch {
+      // Ignore unsupported orientation lock requests on desktop and Safari.
+    }
+  }
 
   useEffect(() => {
     const onChange = () => {
-      setIsFullscreen(!!document.fullscreenElement);
-      setIsHovering(containerRef.current?.matches(":hover") ?? false);
-    };
-    document.addEventListener("fullscreenchange", onChange);
-    return () => document.removeEventListener("fullscreenchange", onChange);
-  }, []);
+      setIsFullscreen(!!document.fullscreenElement)
+      setIsHovering(containerRef.current?.matches(":hover") ?? false)
+    }
+    document.addEventListener("fullscreenchange", onChange)
+    return () => document.removeEventListener("fullscreenchange", onChange)
+  }, [])
 
   useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
+    const video = videoRef.current
+    if (!video) return
 
     const syncDuration = () => {
-      const nextDuration = video.duration;
+      const nextDuration = video.duration
       setDuration(
-        Number.isFinite(nextDuration) && nextDuration > 0 ? nextDuration : 0,
-      );
-    };
+        Number.isFinite(nextDuration) && nextDuration > 0 ? nextDuration : 0
+      )
+    }
 
-    syncDuration();
-    video.addEventListener("loadedmetadata", syncDuration);
-    video.addEventListener("durationchange", syncDuration);
+    syncDuration()
+    video.addEventListener("loadedmetadata", syncDuration)
+    video.addEventListener("durationchange", syncDuration)
 
     return () => {
-      video.removeEventListener("loadedmetadata", syncDuration);
-      video.removeEventListener("durationchange", syncDuration);
-    };
-  }, []);
+      video.removeEventListener("loadedmetadata", syncDuration)
+      video.removeEventListener("durationchange", syncDuration)
+    }
+  }, [])
 
   return (
     <section
@@ -130,7 +134,7 @@ export function VideoPlayer({
         onPlay={() => setIsPlaying(true)}
         onPause={() => setIsPlaying(false)}
         onTimeUpdate={(e) => {
-          if (!isSeeking) setCurrentTime(e.currentTarget.currentTime);
+          if (!isSeeking) setCurrentTime(e.currentTarget.currentTime)
         }}
       />
 
@@ -142,8 +146,8 @@ export function VideoPlayer({
         onClick={handlePlayback}
         onKeyDown={(e) => {
           if (e.key === " " || e.key === "Enter") {
-            e.preventDefault();
-            handlePlayback();
+            e.preventDefault()
+            handlePlayback()
           }
         }}
       />
@@ -201,7 +205,7 @@ export function VideoPlayer({
           </button>
 
           {/* Time */}
-          <span className="shrink-0 select-none font-mono text-xs text-white/70 tabular-nums">
+          <span className="shrink-0 select-none font-mono text-xs tabular-nums text-white/70">
             {formatTime(currentTime)}&nbsp;/&nbsp;{formatTime(duration)}
           </span>
 
@@ -213,15 +217,15 @@ export function VideoPlayer({
             aria-label="Seek"
             onValueChange={handleSeek}
             onValueCommitted={() => {
-              setIsSeeking(false);
-              triggerMobileHaptic();
+              setIsSeeking(false)
+              triggerMobileHaptic()
             }}
             className="group/slider flex grow items-center"
           >
             <Slider.Control className="flex h-5 w-full touch-none items-center">
               <Slider.Track className="relative h-1 w-full rounded-full bg-white/25 transition-[height] duration-150 group-hover/slider:h-1.5">
                 <Slider.Indicator className="rounded-full bg-white/80" />
-                <Slider.Thumb className="block size-3 rounded-full bg-white opacity-0 shadow-sm transition-[opacity,transform] duration-150 focus:outline-none group-hover/slider:opacity-100 data-dragging:scale-125 data-dragging:opacity-100" />
+                <Slider.Thumb className="data-dragging:scale-125 data-dragging:opacity-100 block size-3 rounded-full bg-white opacity-0 shadow-sm transition-[opacity,transform] duration-150 focus:outline-none group-hover/slider:opacity-100" />
               </Slider.Track>
             </Slider.Control>
           </Slider.Root>
@@ -242,5 +246,5 @@ export function VideoPlayer({
         </div>
       </motion.div>
     </section>
-  );
+  )
 }

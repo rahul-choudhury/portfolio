@@ -1,22 +1,22 @@
-import { drizzle } from "drizzle-orm/node-postgres";
-import { Pool } from "pg";
-import { getEnv } from "../env";
+import { drizzle } from "drizzle-orm/node-postgres"
+import { Pool } from "pg"
+import { getEnv } from "../env"
 
 function createDb() {
-  const pool = new Pool({ connectionString: getEnv("DATABASE_URL") });
-  return drizzle({ client: pool });
+  const pool = new Pool({ connectionString: getEnv("DATABASE_URL") })
+  return drizzle({ client: pool })
 }
 
-type DbInstance = ReturnType<typeof createDb>;
+type DbInstance = ReturnType<typeof createDb>
 
-let dbInstance: DbInstance | undefined;
+let dbInstance: DbInstance | undefined
 
 export function getDb(): DbInstance {
   if (dbInstance) {
-    return dbInstance;
+    return dbInstance
   }
 
-  dbInstance = createDb();
+  dbInstance = createDb()
 
-  return dbInstance;
+  return dbInstance
 }

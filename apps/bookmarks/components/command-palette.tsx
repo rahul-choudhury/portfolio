@@ -1,4 +1,4 @@
-"use client";
+"use client"
 
 import {
   Button,
@@ -6,9 +6,9 @@ import {
   DialogClose,
   DialogContent,
   DialogTitle,
-} from "@workspace/design-system/ui";
-import { useCallback, useEffect, useState } from "react";
-import { Keycap } from "@/components/keycap";
+} from "@workspace/design-system/ui"
+import { useCallback, useEffect, useState } from "react"
+import { Keycap } from "@/components/keycap"
 
 const shortcuts = [
   {
@@ -43,42 +43,42 @@ const shortcuts = [
     category: "Help",
     items: [{ keys: ["?"], description: "Show this dialog" }],
   },
-];
+]
 
 export function CommandPalette() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false)
 
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
-    const target = e.target as HTMLElement;
+    const target = e.target as HTMLElement
     if (
       target.tagName === "INPUT" ||
       target.tagName === "TEXTAREA" ||
       target.isContentEditable
     ) {
-      return;
+      return
     }
 
     if (e.key === "?") {
-      e.preventDefault();
-      setIsOpen(true);
+      e.preventDefault()
+      setIsOpen(true)
     }
-  }, []);
+  }, [])
 
   useEffect(() => {
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [handleKeyDown]);
+    window.addEventListener("keydown", handleKeyDown)
+    return () => window.removeEventListener("keydown", handleKeyDown)
+  }, [handleKeyDown])
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogContent className="max-h-[80vh] max-w-lg overflow-auto border border-border p-6">
+      <DialogContent className="border-border max-h-[80vh] max-w-lg overflow-auto border p-6">
         <DialogTitle className="mb-4 pr-10 text-lg font-semibold">
           Keyboard Shortcuts
         </DialogTitle>
         <div className="space-y-6">
           {shortcuts.map((section) => (
             <div key={section.category}>
-              <h3 className="mb-2 text-xs font-medium tracking-[0.12em] text-text-muted uppercase">
+              <h3 className="text-text-muted mb-2 text-xs font-medium uppercase tracking-[0.12em]">
                 {section.category}
               </h3>
               <div className="space-y-2">
@@ -87,7 +87,7 @@ export function CommandPalette() {
                     key={item.description}
                     className="flex items-center justify-between gap-3"
                   >
-                    <span className="text-sm text-text-secondary">
+                    <span className="text-text-secondary text-sm">
                       {item.description}
                     </span>
                     <div className="flex items-center gap-1">
@@ -98,7 +98,7 @@ export function CommandPalette() {
                         >
                           <Keycap>{key}</Keycap>
                           {index < item.keys.length - 1 && (
-                            <span className="mx-1 text-text-muted">/</span>
+                            <span className="text-text-muted mx-1">/</span>
                           )}
                         </span>
                       ))}
@@ -114,7 +114,7 @@ export function CommandPalette() {
             <Button
               variant="ghost"
               size="icon"
-              className="absolute top-4 right-4 size-8 text-text-muted hover:text-text"
+              className="text-text-muted hover:text-text absolute right-4 top-4 size-8"
               aria-label="Close shortcuts"
             />
           }
@@ -137,5 +137,5 @@ export function CommandPalette() {
         </DialogClose>
       </DialogContent>
     </Dialog>
-  );
+  )
 }

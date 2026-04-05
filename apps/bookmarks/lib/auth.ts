@@ -1,8 +1,8 @@
-import { betterAuth } from "better-auth";
-import { drizzleAdapter } from "better-auth/adapters/drizzle";
-import { getDb } from "./db";
-import { account, session, user, verification } from "./db/auth-schema";
-import { getEnv } from "./env";
+import { betterAuth } from "better-auth"
+import { drizzleAdapter } from "better-auth/adapters/drizzle"
+import { getDb } from "./db"
+import { account, session, user, verification } from "./db/auth-schema"
+import { getEnv } from "./env"
 
 function createAuth() {
   return betterAuth({
@@ -26,19 +26,19 @@ function createAuth() {
         clientSecret: getEnv("GOOGLE_CLIENT_SECRET"),
       },
     },
-  });
+  })
 }
 
-type AuthInstance = ReturnType<typeof createAuth>;
+type AuthInstance = ReturnType<typeof createAuth>
 
-let authInstance: AuthInstance | undefined;
+let authInstance: AuthInstance | undefined
 
 export function getAuth(): AuthInstance {
   if (authInstance) {
-    return authInstance;
+    return authInstance
   }
 
-  authInstance = createAuth();
+  authInstance = createAuth()
 
-  return authInstance;
+  return authInstance
 }

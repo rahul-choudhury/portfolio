@@ -21,53 +21,53 @@
  */
 export function fuzzyMatch(
   text: string,
-  query: string,
+  query: string
 ): { score: number; indices: number[] } {
-  const lower = text.toLowerCase();
-  const normalizedQuery = query.toLowerCase();
+  const lower = text.toLowerCase()
+  const normalizedQuery = query.toLowerCase()
 
   // --- Fast path: exact substring match ---
-  const substringPos = lower.indexOf(normalizedQuery);
+  const substringPos = lower.indexOf(normalizedQuery)
   if (substringPos !== -1) {
     const indices = Array.from(
       { length: normalizedQuery.length },
-      (_, i) => substringPos + i,
-    );
-    let score = normalizedQuery.length * 8;
+      (_, i) => substringPos + i
+    )
+    let score = normalizedQuery.length * 8
     if (
       substringPos === 0 ||
       lower[substringPos - 1] === " " ||
       lower[substringPos - 1] === "/"
     )
-      score += 10;
-    return { score, indices };
+      score += 10
+    return { score, indices }
   }
 
   // --- Slow path: fuzzy sequential character matching ---
-  let score = 0;
-  let textIndex = 0;
-  let prevMatchIndex = -2;
-  const indices: number[] = [];
+  let score = 0
+  let textIndex = 0
+  let prevMatchIndex = -2
+  const indices: number[] = []
 
   for (let i = 0; i < normalizedQuery.length; i++) {
-    const char = normalizedQuery[i];
-    const found = lower.indexOf(char, textIndex);
-    if (found === -1) return { score: 0, indices: [] };
+    const char = normalizedQuery[i]
+    const found = lower.indexOf(char, textIndex)
+    if (found === -1) return { score: 0, indices: [] }
 
-    indices.push(found);
-    score += 1;
-    if (found === prevMatchIndex + 1) score += 2; // consecutive bonus
+    indices.push(found)
+    score += 1
+    if (found === prevMatchIndex + 1) score += 2 // consecutive bonus
     if (found === 0 || lower[found - 1] === " " || lower[found - 1] === "/")
-      score += 3; // word-boundary bonus
+      score += 3 // word-boundary bonus
 
-    prevMatchIndex = found;
-    textIndex = found + 1;
+    prevMatchIndex = found
+    textIndex = found + 1
   }
 
   // Tightness bonus — reward matches clustered close together
-  const span = indices[indices.length - 1] - indices[0] + 1;
-  const tightness = normalizedQuery.length / span;
-  score += Math.round(tightness * normalizedQuery.length * 5);
+  const span = indices[indices.length - 1] - indices[0] + 1
+  const tightness = normalizedQuery.length / span
+  score += Math.round(tightness * normalizedQuery.length * 5)
 
-  return { score, indices };
+  return { score, indices }
 }

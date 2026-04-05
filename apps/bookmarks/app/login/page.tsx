@@ -1,28 +1,28 @@
-"use client";
+"use client"
 
-import { Button, Card } from "@workspace/design-system/ui";
-import { authClient } from "@/lib/auth-client";
+import { Button, Card } from "@workspace/design-system/ui"
+import { authClient } from "@/lib/auth-client"
 
 export default function LoginPage() {
   const handleGithubLogin = async () => {
     await authClient.signIn.social({
       provider: "github",
       callbackURL: "/",
-    });
-  };
+    })
+  }
 
   const handleGoogleLogin = async () => {
     await authClient.signIn.social({
       provider: "google",
-    });
-  };
+    })
+  }
 
   return (
-    <div className="flex min-h-svh items-center justify-center bg-bg px-6">
+    <div className="bg-bg flex min-h-svh items-center justify-center px-6">
       <Card variant="bordered" className="w-full max-w-md p-6">
         <div className="mb-6 space-y-1">
-          <h1 className="text-lg font-medium text-text">Bookmarks</h1>
-          <p className="text-sm text-text-secondary">
+          <h1 className="text-text text-lg font-medium">Bookmarks</h1>
+          <p className="text-text-secondary text-sm">
             Sign in to manage your saved links.
           </p>
         </div>
@@ -80,5 +80,5 @@ export default function LoginPage() {
         </div>
       </Card>
     </div>
-  );
+  )
 }

@@ -1,21 +1,21 @@
-import { ImageResponse } from "next/og";
-import { getBlogPost } from "@/lib/blogs";
-import { getOgFonts } from "@/lib/og-fonts";
+import { ImageResponse } from "next/og"
+import { getBlogPost } from "@/lib/blogs"
+import { getOgFonts } from "@/lib/og-fonts"
 
-export const alt = "Blog Post";
+export const alt = "Blog Post"
 export const size = {
   width: 1200,
   height: 630,
-};
-export const contentType = "image/png";
+}
+export const contentType = "image/png"
 
 export default async function Image({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ slug: string }>
 }) {
-  const { slug } = await params;
-  const { metadata } = getBlogPost(slug);
+  const { slug } = await params
+  const { metadata } = getBlogPost(slug)
 
   return new ImageResponse(
     <div
@@ -129,6 +129,6 @@ export default async function Image({
     {
       ...size,
       fonts: await getOgFonts(),
-    },
-  );
+    }
+  )
 }

@@ -1,12 +1,12 @@
-import { ImageResponse } from "next/og";
-import { getOgFonts } from "@/lib/og-fonts";
+import { ImageResponse } from "next/og"
+import { getOgFonts } from "@/lib/og-fonts"
 
-export const alt = "Rahul Choudhury - Frontend Developer";
+export const alt = "Rahul Choudhury - Frontend Developer"
 export const size = {
   width: 1200,
   height: 630,
-};
-export const contentType = "image/png";
+}
+export const contentType = "image/png"
 
 export default async function Image() {
   return new ImageResponse(
@@ -94,6 +94,6 @@ export default async function Image() {
     {
       ...size,
       fonts: await getOgFonts(),
-    },
-  );
+    }
+  )
 }

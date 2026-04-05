@@ -20,8 +20,8 @@
   },
   "scripts": {
     "build": "tsc --noEmit",
-    "lint": "biome check .",
-    "format": "biome format --write .",
+    "lint": "eslint .",
+    "format": "prettier --ignore-path ../../.prettierignore --write .",
     "typecheck": "tsc --noEmit"
   },
   "peerDependencies": {

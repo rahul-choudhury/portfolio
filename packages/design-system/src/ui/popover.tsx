@@ -1,4 +1,4 @@
-"use client";
+"use client"
 
 /**
  * Popover
@@ -25,24 +25,24 @@
  * ```
  */
 
-import { Popover as BasePopover } from "@base-ui/react/popover";
-import { cn } from "../lib/utils";
+import { Popover as BasePopover } from "@base-ui/react/popover"
+import { cn } from "../lib/utils"
 
 /* ----- Root ----- */
 
-const Popover = BasePopover.Root;
+const Popover = BasePopover.Root
 
 /* ----- Trigger ----- */
 
-const PopoverTrigger = BasePopover.Trigger;
+const PopoverTrigger = BasePopover.Trigger
 
 /* ----- Content (Portal + Positioner + Popup) ----- */
 
 type PopoverContentProps = {
-  side?: "top" | "right" | "bottom" | "left";
-  align?: "start" | "center" | "end";
-  sideOffset?: number;
-} & React.ComponentProps<typeof BasePopover.Popup>;
+  side?: "top" | "right" | "bottom" | "left"
+  align?: "start" | "center" | "end"
+  sideOffset?: number
+} & React.ComponentProps<typeof BasePopover.Popup>
 
 function PopoverContent({
   side = "bottom",
@@ -57,11 +57,11 @@ function PopoverContent({
       <BasePopover.Positioner side={side} align={align} sideOffset={sideOffset}>
         <BasePopover.Popup
           className={cn(
-            "z-(--z-popover) rounded-md border border-border bg-surface p-4 shadow-md",
+            "z-(--z-popover) border-border bg-surface rounded-md border p-4 shadow-md",
             "transition-[opacity,scale] duration-200",
             "data-starting-style:scale-95 data-starting-style:opacity-0",
             "data-ending-style:scale-95 data-ending-style:opacity-0",
-            className,
+            className
           )}
           {...props}
         >
@@ -69,11 +69,11 @@ function PopoverContent({
         </BasePopover.Popup>
       </BasePopover.Positioner>
     </BasePopover.Portal>
-  );
+  )
 }
 
 /* ----- Close ----- */
 
-const PopoverClose = BasePopover.Close;
+const PopoverClose = BasePopover.Close
 
-export { Popover, PopoverClose, PopoverContent, PopoverTrigger };
+export { Popover, PopoverClose, PopoverContent, PopoverTrigger }

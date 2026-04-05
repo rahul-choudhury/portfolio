@@ -7,103 +7,112 @@ slug: "overengineered-link-management"
 As engineers, we like to over-engineer simple stuff to justify our degrees. So, I thought about documenting all my over-engineered solutions as a series of blogs, starting with my personal link management tool. It's very simple on the surface. Paste your link into the universal input, press enter and it gets saved to a PostgreSQL database. You can search using its name or the actual link, update the label or delete them. Why the need to over-engineer this or even build it in the first place? Well, to answer the second question first: I browser-hop like the average Linux distro hopper out there. Browser specific "Reading List" feature won't work for me. Moreover, [Pocket has been discontinued](https://support.mozilla.org/en-US/kb/future-of-pocket). Finally, to answer the first question: Where's the fun in that?
 
 Before I start, here's a short video of me demoing the basic set of features:
-<VideoPlayer src="https://yxgrzrtmgxrw1bng.public.blob.vercel-storage.com/bookmarks-demo.webm" width="2880" height="1736" />
+
+<VideoPlayer
+  src="https://yxgrzrtmgxrw1bng.public.blob.vercel-storage.com/bookmarks-demo.webm"
+  width="2880"
+  height="1736"
+/>
 
 ## The universal input
+
 This universal input is configured as search-first. You search via title/link. If it doesn't find anything and your typed value is a link, you are prompted to press "Enter" to save it into the database. Link determination is done via a simple regex pattern matching. The search is done via direct matching with title or link. I might consider modifying this to use a fuzzy search.
+
 ```typescript
 bookmarks.filter((bookmark) => {
-  const titleMatch = bookmark.title
-    ?.toLowerCase()
-    .includes(lowerCaseSearchTerm);
-  const urlMatch = bookmark.url
-    ?.toLowerCase()
-    .includes(lowerCaseSearchTerm);
-  return titleMatch || urlMatch;
-});
+  const titleMatch = bookmark.title?.toLowerCase().includes(lowerCaseSearchTerm)
+  const urlMatch = bookmark.url?.toLowerCase().includes(lowerCaseSearchTerm)
+  return titleMatch || urlMatch
+})
 ```
 
 Now my favorite part, the keyboard navigation. You can focus on the search bar using the "/" key. If you wanna clear the input, press the "Esc" key twice.
 
 The focus logic is pretty straightforward. I register a side-effect which adds an `keydown` event listener to the DOM. It first checks if the input is already in focus or not. This is needed so as to not prevent the user to type the "/" character when typing in the input. It is done via comparing the event's current target with a ref I passed to the input. If they are the same, the input is in focus. If not, I call the `focus()` method on the ref's `current`.
+
 ```tsx
 React.useEffect(() => {
   const handleSearch = (e: KeyboardEvent) => {
     if (e.target === searchInputRef.current) {
-      return;
+      return
     }
 
     if (e.key === "/") {
-      e.preventDefault();
-      searchInputRef.current?.focus();
+      e.preventDefault()
+      searchInputRef.current?.focus()
     }
-  };
+  }
 
-  document.addEventListener("keydown", handleSearch);
-  return () => document.removeEventListener("keydown", handleSearch);
-}, []);
+  document.addEventListener("keydown", handleSearch)
+  return () => document.removeEventListener("keydown", handleSearch)
+}, [])
 ```
 
 For the input clearing I check for rapid firing of the `Escape` key in a window of 300ms, and clear the input's value. The ref used here stores the last clicked time value between renders.
+
 ```tsx
-const lastEscPressRef = React.useRef(0);
+const lastEscPressRef = React.useRef(0)
 
 const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
   if (e.key === "Escape") {
-    const now = Date.now();
+    const now = Date.now()
     if (now - lastEscPressRef.current < 300) {
-      setSearchTerm("");
+      setSearchTerm("")
     }
-    lastEscPressRef.current = now;
-    return;
+    lastEscPressRef.current = now
+    return
   }
-};
+}
 ```
 
 ## The list
+
 For the list, I wanted the actions to be blazingly fast. But, database operations take time. Enter, optimistic updates.
 
 ### Link saving, updating and deleting
+
 These basic set of features are handled via react's `useOptimistic` hook. I use a "dispatch" flow coupled with a react context. This singular context is responsible for all my state solutions for the application.
+
 ```tsx
 const [optimisticBookmarks, dispatchOptimistic] = React.useOptimistic(
   initialBookmarks,
   (state, action: Action) => {
     switch (action.type) {
       case "ADD":
-        return [action.bookmark, ...state];
+        return [action.bookmark, ...state]
       case "UPDATE":
         return state.map((item) =>
-          item.id === action.id ? { ...item, title: action.title } : item,
-        );
+          item.id === action.id ? { ...item, title: action.title } : item
+        )
       case "DELETE":
-        return state.filter((item) => item.id !== action.id);
+        return state.filter((item) => item.id !== action.id)
     }
-  },
-);
+  }
+)
 
 const addOptimisticBookmark = (bookmark: Bookmark) => {
   React.startTransition(() => {
-    dispatchOptimistic({ type: "ADD", bookmark });
-  });
-};
+    dispatchOptimistic({ type: "ADD", bookmark })
+  })
+}
 
 // Similar dispatchers for "UPDATE" & "DELETE"
 ```
-  
+
 The "ADD", "UPDATE" and "DELETE" actions are exposed via their respective dispatch functions. For any of these actions performed, these dispatchers are first called so they can optimistically update the local state. This gives us the illusion of fast updates. Then, the server action responsible for the actual database mutation is called. If it succeeds the local state is updated with the updated data and no change is noticeable to the user on the UI. If not, the UI syncs with the database and that entry vanishes from the list. An example usage in the search bar component:
+
 ```tsx
 export function SearchBar() {
-  const { addOptimisticBookmark } = useBookmarks();
-  const [state, action] = React.useActionState(saveLinkToDB, null);
+  const { addOptimisticBookmark } = useBookmarks()
+  const [state, action] = React.useActionState(saveLinkToDB, null)
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
-      e.preventDefault();
-      if (!isUrl(searchTerm)) return;
-      setSearchTerm("");
+      e.preventDefault()
+      if (!isUrl(searchTerm)) return
+      setSearchTerm("")
 
-      const transformedUrl = transformUrl(searchTerm);
+      const transformedUrl = transformUrl(searchTerm)
       addOptimisticBookmark({
         id: crypto.randomUUID(),
         userId: "temp",
@@ -111,60 +120,61 @@ export function SearchBar() {
         title: transformedUrl,
         favicon: null,
         timeStamp: new Date(),
-      });
+      })
 
       React.startTransition(() => {
-        action(searchTerm);
-      });
+        action(searchTerm)
+      })
     }
-  };
+  }
 
-  return (
-      <Input onKeyDown={handleKeyDown} />
-  );
+  return <Input onKeyDown={handleKeyDown} />
 }
 ```
+
 I use a similar pattern for update and delete as well.
 
 ### Link Metadata
+
 You might have noticed in the images that the links update with the title of the page and favicon after some time of addition to the list. Well, this is the most over-engineered part of the application and I'm kinda proud of it.
 
 I use a library called [unfurl](https://github.com/jacktuck/unfurl) to fetch the metadata of the page server side. It has an API similar to the `fetch` API. Initially, I had it configured to fetch the metadata when the `saveLinkToDB` server action is invoked. This took time based on the website I was trying to save. All while our optimistic updates took care of the UI of it by showing an entry immediately with some translucent styling. When the metadata was fetched, the entry was inserted into the DB and the UI would update accordingly. But, I faced a problem with it when adding a link that's hosted on vercel. Vercel flagged my request as a bot and rate limited me. This resulted in the link to never getting inserted into the database as the meta fetch step failed.
 
 So, I came up with a solution. An in-memory queue that handles the metadata fetching in the background. The entry is inserted into the db immediately upon request. Then, the meta fetching request is queued with a concurrency of 3 parallel fetches (if you are fast enough). After all of them are settled, the DB is updated with the value.
+
 ```typescript
 type QueueItem = {
-  url: string;
-  userId: string;
-};
+  url: string
+  userId: string
+}
 
 class MetaDataQueue {
-  private queue: QueueItem[] = [];
-  private processing = false;
-  private concurrency = 3;
+  private queue: QueueItem[] = []
+  private processing = false
+  private concurrency = 3
 
   add(url: string, userId: string) {
-    this.queue.push({ url, userId });
-    this.process();
+    this.queue.push({ url, userId })
+    this.process()
   }
 
   private async process() {
-    if (this.processing) return;
-    this.processing = true;
+    if (this.processing) return
+    this.processing = true
 
     while (this.queue.length > 0) {
-      const batch = this.queue.splice(0, this.concurrency);
-      await Promise.allSettled(batch.map((item) => this.fetchAndUpdate(item)));
+      const batch = this.queue.splice(0, this.concurrency)
+      await Promise.allSettled(batch.map((item) => this.fetchAndUpdate(item)))
     }
 
-    this.processing = false;
+    this.processing = false
   }
 
   private async fetchAndUpdate({ url, userId }: QueueItem) {
     try {
-      const result = await unfurl(url);
-      const title = result.title ?? null;
-      const favicon = result.favicon ?? null;
+      const result = await unfurl(url)
+      const title = result.title ?? null
+      const favicon = result.favicon ?? null
 
       await db
         .update(bookmarksTable)
@@ -173,19 +183,20 @@ class MetaDataQueue {
           and(
             eq(bookmarksTable.url, url),
             eq(bookmarksTable.userId, userId),
-            isNull(bookmarksTable.title),
-          ),
-        );
+            isNull(bookmarksTable.title)
+          )
+        )
     } catch (error) {
-      console.log(`Failed to fetch metadata for ${url}:`, error);
+      console.log(`Failed to fetch metadata for ${url}:`, error)
     }
   }
 }
 
-export const queue = new MetaDataQueue();
+export const queue = new MetaDataQueue()
 ```
 
 and its usage in the server action:
+
 ```typescript
 export async function saveLinkToDB(url: string) {
   await db
@@ -196,57 +207,61 @@ export async function saveLinkToDB(url: string) {
       favicon: null,
       userId: session.userId,
     })
-    .onConflictDoNothing();
+    .onConflictDoNothing()
 
-  revalidatePath("/");
-  queue.add(url, session.userId);
+  revalidatePath("/")
+  queue.add(url, session.userId)
 }
 ```
 
 Now, comes the `router.refresh()` bit. I needed the UI to update once the meta has been updated successfully. For this, I decided upon polling until the title field of any of the links is `null`.
+
 ```tsx
-const router = useRouter();
+const router = useRouter()
 
 const hasPendingMetadata = React.useMemo(() => {
-  return initialBookmarks.some((b) => !b.title);
-}, [initialBookmarks]);
+  return initialBookmarks.some((b) => !b.title)
+}, [initialBookmarks])
 
 React.useEffect(() => {
-  if (!hasPendingMetadata) return;
+  if (!hasPendingMetadata) return
 
   const interval = setInterval(() => {
-    router.refresh();
-  }, 1000);
+    router.refresh()
+  }, 1000)
 
-  return () => clearInterval(interval);
-}, [hasPendingMetadata, router]);
+  return () => clearInterval(interval)
+}, [hasPendingMetadata, router])
 ```
 
 ## Import/Export
+
 Lastly, I needed a way to create backups in the rare case that the reptilian brain took over and I nuked the VPS this application is hosted on. I had all the pieces wired up already. The links used a json schema. I just had to save it in a file and download it.
+
 ```typescript
 const exportBookmarks = () => {
-  const sanitizedBookmarks = bookmarks.map(({ id, userId, ...rest }) => rest);
-  const jsonString = JSON.stringify(sanitizedBookmarks, null, 2);
-  const jsonBlob = new Blob([jsonString], { type: "application/json" });
+  const sanitizedBookmarks = bookmarks.map(({ id, userId, ...rest }) => rest)
+  const jsonString = JSON.stringify(sanitizedBookmarks, null, 2)
+  const jsonBlob = new Blob([jsonString], { type: "application/json" })
 
-  const url = URL.createObjectURL(jsonBlob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = `bookmarks-${new Date().toISOString()}.json`;
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url);
-};
+  const url = URL.createObjectURL(jsonBlob)
+  const a = document.createElement("a")
+  a.href = url
+  a.download = `bookmarks-${new Date().toISOString()}.json`
+  document.body.appendChild(a)
+  a.click()
+  document.body.removeChild(a)
+  URL.revokeObjectURL(url)
+}
 ```
 
 and for importing, a simple read of the file and a db update
+
 ```typescript
 export async function importBookmarks(formData: FormData) {
-  const json = formData.get("json");
-  const text = await json.text();
-  const data = JSON.parse(text);
+  const json = formData.get("json")
+  const text = await json.text()
+  const data = JSON.parse(text)
 
   await db
     .insert(bookmarksTable)
@@ -255,9 +270,9 @@ export async function importBookmarks(formData: FormData) {
         ...item,
         timeStamp: new Date(item.timeStamp),
         userId: session.userId,
-      })),
+      }))
     )
-    .onConflictDoNothing();
+    .onConflictDoNothing()
 }
 ```
 

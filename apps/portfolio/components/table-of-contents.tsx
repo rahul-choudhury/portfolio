@@ -1,21 +1,21 @@
-"use client";
+"use client"
 
-import { Collapsible } from "@base-ui/react/collapsible";
-import { CaretDownIcon } from "@phosphor-icons/react";
-import { motion } from "motion/react";
-import { useState } from "react";
-import type { TocEntry } from "@/lib/blogs";
+import { Collapsible } from "@base-ui/react/collapsible"
+import { CaretDownIcon } from "@phosphor-icons/react"
+import { motion } from "motion/react"
+import { useState } from "react"
+import type { TocEntry } from "@/lib/blogs"
 
 export function TableOfContents({ toc }: { toc: TocEntry[] }) {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false)
 
-  if (toc.length === 0) return null;
+  if (toc.length === 0) return null
 
   return (
     <nav aria-label="Table of Contents" className="mb-12">
       <Collapsible.Root open={isOpen} onOpenChange={setIsOpen}>
-        <Collapsible.Trigger className="group rounded-sm flex w-full items-center justify-between border border-border bg-surface-soft px-4 py-2.5 transition-colors duration-200 hover:border-border-strong">
-          <span className="text-sm font-medium text-text-muted">
+        <Collapsible.Trigger className="border-border bg-surface-soft hover:border-border-strong group flex w-full items-center justify-between rounded-sm border px-4 py-2.5 transition-colors duration-200">
+          <span className="text-text-muted text-sm font-medium">
             Table of Contents
           </span>
           <motion.span
@@ -28,9 +28,9 @@ export function TableOfContents({ toc }: { toc: TocEntry[] }) {
 
         <Collapsible.Panel
           keepMounted
-          className="h-(--collapsible-panel-height) overflow-hidden transition-[height,opacity] duration-250 ease-in-out data-ending-style:h-0 data-ending-style:opacity-0 data-starting-style:h-0 data-starting-style:opacity-0"
+          className="h-(--collapsible-panel-height) duration-250 data-ending-style:h-0 data-ending-style:opacity-0 data-starting-style:h-0 data-starting-style:opacity-0 overflow-hidden transition-[height,opacity] ease-in-out"
         >
-          <div className="mt-2 border border-border bg-surface-soft p-2 rounded-sm">
+          <div className="border-border bg-surface-soft mt-2 rounded-sm border p-2">
             {toc.map((entry, index) => (
               <motion.a
                 key={entry.id}
@@ -42,7 +42,7 @@ export function TableOfContents({ toc }: { toc: TocEntry[] }) {
                   delay: isOpen ? index * 0.03 : 0,
                   ease: "easeOut",
                 }}
-                className="block px-3 py-1.5 text-sm text-text-muted transition-colors duration-200 hover:bg-surface-soft hover:text-text"
+                className="text-text-muted hover:bg-surface-soft hover:text-text block px-3 py-1.5 text-sm transition-colors duration-200"
                 style={{
                   paddingLeft: `${entry.level === 3 ? 1.75 : 0.75}rem`,
                 }}
@@ -54,5 +54,5 @@ export function TableOfContents({ toc }: { toc: TocEntry[] }) {
         </Collapsible.Panel>
       </Collapsible.Root>
     </nav>
-  );
+  )
 }

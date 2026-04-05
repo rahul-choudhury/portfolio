@@ -1,11 +1,11 @@
-import { Skeleton } from "@workspace/design-system/ui";
+import { Skeleton } from "@workspace/design-system/ui"
 
-const rowWidths = [280, 340, 250, 310, 290, 360, 270, 320];
+const rowWidths = [280, 340, 250, 310, 290, 360, 270, 320]
 
 export default function Loading() {
   return (
     <div className="grid grid-cols-[1fr_minmax(auto,800px)_1fr] gap-x-6 gap-y-4 pb-6 *:col-start-2 *:min-w-0">
-      <div className="sticky top-0 z-(--z-sticky) space-y-4 bg-bg/95 pb-2 backdrop-blur-sm">
+      <div className="z-(--z-sticky) bg-bg/95 sticky top-0 space-y-4 pb-2 backdrop-blur-sm">
         <header className="flex items-center justify-between pt-6">
           <div className="flex items-center gap-2">
             <Skeleton className="h-5 w-5 rounded-sm" />
@@ -19,7 +19,7 @@ export default function Loading() {
         </header>
 
         <div className="space-y-2">
-          <Skeleton className="h-10 w-full border border-border" />
+          <Skeleton className="border-border h-10 w-full border" />
         </div>
       </div>
 
@@ -39,5 +39,5 @@ export default function Loading() {
         ))}
       </ul>
     </div>
-  );
+  )
 }
