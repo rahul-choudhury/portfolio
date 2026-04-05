@@ -3,6 +3,7 @@ import { getDefaultAppFonts } from "@workspace/design-system/next"
 import type { Metadata } from "next"
 import "./globals.css"
 import { CommandPalette } from "@/components/command-palette"
+import { MobileHaptics } from "@/components/mobile-haptics"
 
 const appFonts = getDefaultAppFonts()
 
@@ -22,6 +23,7 @@ export default function RootLayout({
       <body
         className={cn(appFonts.bodyClassName, "bg-bg text-text antialiased")}
       >
+        <MobileHaptics />
         <div className="root">{children}</div>
         <CommandPalette />
       </body>
