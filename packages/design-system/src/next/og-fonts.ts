@@ -7,6 +7,13 @@ const OG_FONTS_DIR = path.resolve(
   "../assets/fonts/og"
 )
 
+export type OgFont = {
+  name: string
+  data: Buffer
+  style: "normal" | "italic"
+  weight: 400 | 500 | 600 | 700
+}
+
 const ogFontsPromise = Promise.all([
   readFile(path.join(OG_FONTS_DIR, "InstrumentSerif-Regular.ttf")),
   readFile(path.join(OG_FONTS_DIR, "Satoshi-Regular.ttf")),
@@ -32,6 +39,6 @@ const ogFontsPromise = Promise.all([
   },
 ])
 
-export function getOgFonts() {
+export function getDefaultOgFonts() {
   return ogFontsPromise
 }

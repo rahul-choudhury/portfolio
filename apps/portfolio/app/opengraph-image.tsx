@@ -1,5 +1,5 @@
 import { ImageResponse } from "next/og"
-import { getOgFonts } from "@/lib/og-fonts"
+import { getDefaultOgFonts } from "@workspace/design-system/next"
 
 export const alt = "Rahul Choudhury - Frontend Developer"
 export const size = {
@@ -93,7 +93,7 @@ export default async function Image() {
     </div>,
     {
       ...size,
-      fonts: await getOgFonts(),
+      fonts: await getDefaultOgFonts(),
     }
   )
 }
