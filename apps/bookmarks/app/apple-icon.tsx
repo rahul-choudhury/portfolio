@@ -21,9 +21,7 @@ export default function Icon() {
         strokeLinecap="round"
         strokeLinejoin="round"
       >
-        <line x1="12" y1="3" x2="12" y2="21" />
-        <line x1="4.2" y1="7.5" x2="19.8" y2="16.5" />
-        <line x1="4.2" y1="16.5" x2="19.8" y2="7.5" />
+        <path d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
       </svg>
     ),
   })

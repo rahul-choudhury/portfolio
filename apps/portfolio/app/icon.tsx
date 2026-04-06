@@ -1,25 +1,15 @@
-import { ImageResponse } from "next/og"
+import {
+  createFavicon,
+  FAVICON_SIZE,
+  FAVICON_CONTENT_TYPE,
+} from "@workspace/design-system/next"
 
-export const size = {
-  width: 32,
-  height: 32,
-}
-export const contentType = "image/png"
+export const size = FAVICON_SIZE
+export const contentType = FAVICON_CONTENT_TYPE
 
 export default function Icon() {
-  return new ImageResponse(
-    <div
-      style={{
-        background: "#fafafa",
-        width: "100%",
-        height: "100%",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        border: "1px solid #e5e5e5",
-        borderRadius: "6px",
-      }}
-    >
+  return createFavicon({
+    mark: (
       <svg
         aria-hidden="true"
         width="18"
@@ -35,9 +25,6 @@ export default function Icon() {
         <line x1="5.07" y1="8" x2="18.93" y2="16" />
         <line x1="5.07" y1="16" x2="18.93" y2="8" />
       </svg>
-    </div>,
-    {
-      ...size,
-    }
-  )
+    ),
+  })
 }
