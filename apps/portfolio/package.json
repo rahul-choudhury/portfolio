@@ -17,7 +17,7 @@
     "@workspace/design-system": "workspace:*",
     "gray-matter": "^4.0.3",
     "motion": "^12.38.0",
-    "next": "16.2.1",
+    "next": "16.2.3",
     "next-mdx-remote": "^6.0.0",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
@@ -30,7 +30,7 @@
     "@tailwindcss/postcss": "^4.2.2",
     "@workspace/typescript-config": "workspace:*",
     "@types/node": "^24.12.0",
-    "@types/react": "19.2.7",
+    "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
     "tailwindcss": "^4.2.2"
   }
