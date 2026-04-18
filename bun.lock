@@ -19,6 +19,7 @@
       "version": "0.1.0",
       "dependencies": {
         "@workspace/design-system": "workspace:*",
+        "@workspace/hooks": "workspace:*",
         "better-auth": "^1.6.2",
         "drizzle-orm": "0.45.2",
         "next": "16.2.3",
@@ -48,6 +49,7 @@
         "@base-ui/react": "^1.3.0",
         "@phosphor-icons/react": "^2.1.10",
         "@workspace/design-system": "workspace:*",
+        "@workspace/hooks": "workspace:*",
         "gray-matter": "^4.0.3",
         "motion": "^12.38.0",
         "next": "16.2.3",
@@ -86,6 +88,18 @@
         "next": "^16.0.10",
         "react": "^19.2.4",
         "react-dom": "^19.2.4",
+      },
+    },
+    "packages/hooks": {
+      "name": "@workspace/hooks",
+      "version": "0.1.0",
+      "devDependencies": {
+        "@types/node": "^24.12.0",
+        "@types/react": "^19.2.4",
+        "@workspace/typescript-config": "workspace:*",
+      },
+      "peerDependencies": {
+        "react": "^19.2.4",
       },
     },
     "packages/typescript-config": {
@@ -512,6 +526,8 @@
     "@workspace/bookmarks": ["@workspace/bookmarks@workspace:apps/bookmarks"],
 
     "@workspace/design-system": ["@workspace/design-system@workspace:packages/design-system"],
+
+    "@workspace/hooks": ["@workspace/hooks@workspace:packages/hooks"],
 
     "@workspace/portfolio": ["@workspace/portfolio@workspace:apps/portfolio"],
 

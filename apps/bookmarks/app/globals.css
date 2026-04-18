@@ -19,3 +19,10 @@ body {
   background: var(--color-accent);
   color: var(--color-accent-foreground);
 }
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}

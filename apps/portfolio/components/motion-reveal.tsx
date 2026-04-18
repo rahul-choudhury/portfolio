@@ -1,7 +1,8 @@
 "use client"
 
 import { motion, useAnimationControls } from "motion/react"
-import { type ReactNode, useEffect, useState } from "react"
+import { type ReactNode, useEffect } from "react"
+import { usePrefersReducedMotion } from "@workspace/hooks"
 
 type RevealProps = {
   children: ReactNode
@@ -42,24 +43,6 @@ if (typeof window !== "undefined") {
   } else {
     window.addEventListener("load", markReady, { once: true })
   }
-}
-
-function usePrefersReducedMotion() {
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false)
-
-  useEffect(() => {
-    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)")
-    setPrefersReducedMotion(mediaQuery.matches)
-
-    const handleChange = () => {
-      setPrefersReducedMotion(mediaQuery.matches)
-    }
-
-    mediaQuery.addEventListener("change", handleChange)
-    return () => mediaQuery.removeEventListener("change", handleChange)
-  }, [])
-
-  return prefersReducedMotion
 }
 
 export function Reveal({

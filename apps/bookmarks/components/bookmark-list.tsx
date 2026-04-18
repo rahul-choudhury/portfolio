@@ -2,6 +2,7 @@
 
 import { cn } from "@workspace/design-system"
 import { Button, EmptyState, Input } from "@workspace/design-system/ui"
+import { usePrefersReducedMotion } from "@workspace/hooks"
 import { useActionState, useEffect, useRef } from "react"
 import { HighlightedText } from "@/components/highlighted-text"
 import { Keycap } from "@/components/keycap"
@@ -31,6 +32,7 @@ export function BookmarkList() {
 
   const itemRefs = useRef<(HTMLLIElement | null)[]>([])
   const lastGPressRef = useRef<number>(0)
+  const prefersReducedMotion = usePrefersReducedMotion()
 
   // Keyboard shortcuts
   useEffect(() => {
@@ -167,10 +169,10 @@ export function BookmarkList() {
     if (selectedIndex !== null && itemRefs.current[selectedIndex]) {
       itemRefs.current[selectedIndex]?.scrollIntoView({
         block: "center",
-        behavior: "smooth",
+        behavior: prefersReducedMotion ? "auto" : "smooth",
       })
     }
-  }, [selectedIndex])
+  }, [selectedIndex, prefersReducedMotion])
 
   if (bookmarks.length === 0 && searchTerm.trim()) {
     return <SearchResultPrompt searchTerm={searchTerm} />
@@ -320,7 +322,7 @@ function BookmarkItem({
     <li
       ref={ref}
       className={cn(
-        "-mx-2 flex h-8 items-center gap-3 rounded-md px-2",
+        "-mx-2 flex h-8 items-center gap-3 rounded-md px-2 transition-colors duration-150",
         isSelected && "bg-surface-soft",
         isOptimistic && "opacity-60"
       )}

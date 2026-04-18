@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@workspace/design-system": "workspace:*",
+    "@workspace/hooks": "workspace:*",
     "better-auth": "^1.6.2",
     "drizzle-orm": "0.45.2",
     "next": "16.2.3",
