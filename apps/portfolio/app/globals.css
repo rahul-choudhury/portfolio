@@ -241,3 +241,17 @@ body {
     opacity: 0;
   }
 }
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .rainbow-shimmer {
+    animation: none;
+    background: none;
+    -webkit-background-clip: initial;
+    -webkit-text-fill-color: initial;
+    color: var(--color-text-secondary);
+  }
+  .rainbow-shimmer::after {
+    opacity: 0;
+  }
+}

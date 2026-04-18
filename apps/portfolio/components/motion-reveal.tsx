@@ -1,7 +1,7 @@
 "use client"
 
 import { motion, useAnimationControls } from "motion/react"
-import { type ReactNode, useEffect } from "react"
+import { type ReactNode, useEffect, useState } from "react"
 
 type RevealProps = {
   children: ReactNode
@@ -13,7 +13,7 @@ type RevealProps = {
 const easeOutQuint = [0.23, 1, 0.32, 1] as const
 
 const baseTransition = {
-  duration: 0.55,
+  duration: 0.4,
   ease: easeOutQuint,
 }
 
@@ -44,6 +44,24 @@ if (typeof window !== "undefined") {
   }
 }
 
+function usePrefersReducedMotion() {
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false)
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)")
+    setPrefersReducedMotion(mediaQuery.matches)
+
+    const handleChange = () => {
+      setPrefersReducedMotion(mediaQuery.matches)
+    }
+
+    mediaQuery.addEventListener("change", handleChange)
+    return () => mediaQuery.removeEventListener("change", handleChange)
+  }, [])
+
+  return prefersReducedMotion
+}
+
 export function Reveal({
   children,
   className,
@@ -51,6 +69,12 @@ export function Reveal({
   inView = false,
 }: RevealProps) {
   const controls = useAnimationControls()
+  const prefersReducedMotion = usePrefersReducedMotion()
+
+  // Skip animation if reduced motion is preferred
+  if (prefersReducedMotion) {
+    return <div className={className}>{children}</div>
+  }
 
   useEffect(() => {
     if (inView) return

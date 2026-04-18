@@ -39,7 +39,7 @@ export function TableOfContents({ toc }: { toc: TocEntry[] }) {
                 animate={isOpen ? { opacity: 1, x: 0 } : { opacity: 0, x: -8 }}
                 transition={{
                   duration: 0.2,
-                  delay: isOpen ? index * 0.03 : 0,
+                  delay: isOpen ? index * 0.05 : 0,
                   ease: "easeOut",
                 }}
                 className="text-text-muted hover:bg-surface-soft hover:text-text block px-3 py-1.5 text-sm transition-colors duration-200"
