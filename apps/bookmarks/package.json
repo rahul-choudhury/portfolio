@@ -20,7 +20,7 @@
     "@workspace/hooks": "workspace:*",
     "better-auth": "^1.6.2",
     "drizzle-orm": "0.45.2",
-    "next": "16.2.3",
+    "next": "16.2.6",
     "pg": "^8.18.0",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
@@ -29,7 +29,7 @@
     "zod": "^4.3.6"
   },
   "devDependencies": {
-    "@next/env": "16.2.3",
+    "@next/env": "16.2.6",
     "@tailwindcss/postcss": "^4.2.2",
     "@types/node": "^24.12.0",
     "@types/pg": "^8.16.0",
