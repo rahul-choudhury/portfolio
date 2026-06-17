@@ -1,0 +1,157 @@
+import { readFile } from "node:fs/promises";
+import path from "node:path";
+import { ImageResponse } from "next/og";
+import { getBlogMetadata } from "@/lib/blogs";
+
+export const alt = "Blog post";
+export const size = {
+  width: 1200,
+  height: 630,
+};
+export const contentType = "image/png";
+
+function PortfolioMark() {
+  return (
+    <svg
+      aria-hidden="true"
+      width="160"
+      height="160"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="#e5e5e5"
+      strokeWidth="1"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <line x1="12" y1="3" x2="12" y2="21" />
+      <line x1="4.2" y1="7.5" x2="19.8" y2="16.5" />
+      <line x1="4.2" y1="16.5" x2="19.8" y2="7.5" />
+    </svg>
+  );
+}
+
+export default async function Image({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  const metadata = getBlogMetadata(slug);
+  const date = metadata.date
+    ? new Date(metadata.date).toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      })
+    : null;
+
+  return new ImageResponse(
+    <div
+      style={{
+        background: "#fafafa",
+        width: "100%",
+        height: "100%",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+        padding: "80px",
+        fontFamily: "Satoshi",
+        color: "#171717",
+      }}
+    >
+      <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+        <div
+          style={{
+            fontFamily: "InstrumentSerif",
+            fontSize: 64,
+            fontWeight: 400,
+            lineHeight: 1.1,
+            letterSpacing: "-0.03em",
+            color: "#171717",
+          }}
+        >
+          {metadata.title}
+        </div>
+        <div
+          style={{
+            display: "flex",
+            fontSize: 24,
+            color: "#737373",
+            letterSpacing: "0.01em",
+            marginTop: "8px",
+            lineHeight: 1.4,
+          }}
+        >
+          {metadata.description}
+        </div>
+      </div>
+
+      <div
+        style={{
+          display: "flex",
+          width: "100%",
+          justifyContent: "space-between",
+          alignItems: "flex-end",
+        }}
+      >
+        <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
+          <div
+            style={{
+              fontFamily: "JetBrainsMono",
+              fontSize: 18,
+              color: "#a3a3a3",
+              letterSpacing: "0.02em",
+            }}
+          >
+            rchoudhury.dev
+          </div>
+          {date ? (
+            <div
+              style={{
+                fontFamily: "JetBrainsMono",
+                fontSize: 16,
+                color: "#a3a3a3",
+                letterSpacing: "0.02em",
+              }}
+            >
+              {date}
+            </div>
+          ) : null}
+        </div>
+        <PortfolioMark />
+      </div>
+    </div>,
+    {
+      ...size,
+      fonts: await Promise.all([
+        readFile(
+          path.join(
+            process.cwd(),
+            "public/og-fonts/InstrumentSerif-Regular.ttf",
+          ),
+        ).then((data) => ({
+          name: "InstrumentSerif",
+          data,
+          style: "normal" as const,
+          weight: 400 as const,
+        })),
+        readFile(
+          path.join(process.cwd(), "public/og-fonts/Satoshi-Regular.ttf"),
+        ).then((data) => ({
+          name: "Satoshi",
+          data,
+          style: "normal" as const,
+          weight: 400 as const,
+        })),
+        readFile(
+          path.join(process.cwd(), "public/og-fonts/JetBrainsMono-Regular.ttf"),
+        ).then((data) => ({
+          name: "JetBrainsMono",
+          data,
+          style: "normal" as const,
+          weight: 400 as const,
+        })),
+      ]),
+    },
+  );
+}
