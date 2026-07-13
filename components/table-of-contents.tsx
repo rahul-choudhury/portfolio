@@ -1,15 +1,15 @@
-"use client"
+"use client";
 
-import { Collapsible } from "@base-ui/react/collapsible"
-import { CaretDownIcon } from "@phosphor-icons/react"
-import { motion } from "motion/react"
-import { useState } from "react"
-import type { TocEntry } from "@/lib/blogs"
+import { Collapsible } from "@base-ui/react/collapsible";
+import { CaretDownIcon } from "@phosphor-icons/react";
+import { motion } from "motion/react";
+import { useState } from "react";
+import type { TocEntry } from "@/lib/blogs";
 
 export function TableOfContents({ toc }: { toc: TocEntry[] }) {
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(false);
 
-  if (toc.length === 0) return null
+  if (toc.length === 0) return null;
 
   return (
     <nav aria-label="Table of Contents" className="mb-12">
@@ -54,5 +54,5 @@ export function TableOfContents({ toc }: { toc: TocEntry[] }) {
         </Collapsible.Panel>
       </Collapsible.Root>
     </nav>
-  )
+  );
 }

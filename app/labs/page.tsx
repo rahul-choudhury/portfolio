@@ -1,13 +1,13 @@
-import type { Metadata } from "next"
-import { LabCard } from "@/components/labs/lab-card"
-import { Reveal } from "@/components/motion-reveal"
-import { LABS } from "@/lib/labs"
+import type { Metadata } from "next";
+import { LabCard } from "@/components/labs/lab-card";
+import { Reveal } from "@/components/motion-reveal";
+import { LABS } from "@/lib/labs";
 
 export const metadata: Metadata = {
   title: "Labs",
   description:
     "Interface experiments exploring motion, feedback, and interaction.",
-}
+};
 
 export default function LabsPage() {
   return (
@@ -35,5 +35,5 @@ export default function LabsPage() {
         ))}
       </div>
     </>
-  )
+  );
 }

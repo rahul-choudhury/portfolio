@@ -1,17 +1,17 @@
-import { cn } from "@rahul-choudhury/ui"
-import type { ReactNode } from "react"
+import { cn } from "@rahul-choudhury/ui";
+import type { ReactNode } from "react";
 
 type LabStageProps = {
-  children: ReactNode
-  compact?: boolean
-}
+  children: ReactNode;
+  compact?: boolean;
+};
 
 export function LabStage({ children, compact = false }: LabStageProps) {
   return (
     <div
       className={cn(
         "relative flex items-center justify-center overflow-hidden rounded-sm bg-surface-soft",
-        compact ? "aspect-4/3 p-5 sm:p-7" : "min-h-112 p-6 md:p-12"
+        compact ? "aspect-4/3 p-5 sm:p-7" : "min-h-112 p-6 md:p-12",
       )}
     >
       <div
@@ -22,5 +22,5 @@ export function LabStage({ children, compact = false }: LabStageProps) {
         {children}
       </div>
     </div>
-  )
+  );
 }

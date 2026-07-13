@@ -20,10 +20,12 @@ This universal input is configured as search-first. You search via title/link. I
 
 ```typescript
 bookmarks.filter((bookmark) => {
-  const titleMatch = bookmark.title?.toLowerCase().includes(lowerCaseSearchTerm)
-  const urlMatch = bookmark.url?.toLowerCase().includes(lowerCaseSearchTerm)
-  return titleMatch || urlMatch
-})
+  const titleMatch = bookmark.title
+    ?.toLowerCase()
+    .includes(lowerCaseSearchTerm);
+  const urlMatch = bookmark.url?.toLowerCase().includes(lowerCaseSearchTerm);
+  return titleMatch || urlMatch;
+});
 ```
 
 Now my favorite part, the keyboard navigation. You can focus on the search bar using the "/" key. If you wanna clear the input, press the "Esc" key twice.
@@ -34,35 +36,35 @@ The focus logic is pretty straightforward. I register a side-effect which adds a
 React.useEffect(() => {
   const handleSearch = (e: KeyboardEvent) => {
     if (e.target === searchInputRef.current) {
-      return
+      return;
     }
 
     if (e.key === "/") {
-      e.preventDefault()
-      searchInputRef.current?.focus()
+      e.preventDefault();
+      searchInputRef.current?.focus();
     }
-  }
+  };
 
-  document.addEventListener("keydown", handleSearch)
-  return () => document.removeEventListener("keydown", handleSearch)
-}, [])
+  document.addEventListener("keydown", handleSearch);
+  return () => document.removeEventListener("keydown", handleSearch);
+}, []);
 ```
 
 For the input clearing I check for rapid firing of the `Escape` key in a window of 300ms, and clear the input's value. The ref used here stores the last clicked time value between renders.
 
 ```tsx
-const lastEscPressRef = React.useRef(0)
+const lastEscPressRef = React.useRef(0);
 
 const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
   if (e.key === "Escape") {
-    const now = Date.now()
+    const now = Date.now();
     if (now - lastEscPressRef.current < 300) {
-      setSearchTerm("")
+      setSearchTerm("");
     }
-    lastEscPressRef.current = now
-    return
+    lastEscPressRef.current = now;
+    return;
   }
-}
+};
 ```
 
 ## The list
@@ -79,22 +81,22 @@ const [optimisticBookmarks, dispatchOptimistic] = React.useOptimistic(
   (state, action: Action) => {
     switch (action.type) {
       case "ADD":
-        return [action.bookmark, ...state]
+        return [action.bookmark, ...state];
       case "UPDATE":
         return state.map((item) =>
-          item.id === action.id ? { ...item, title: action.title } : item
-        )
+          item.id === action.id ? { ...item, title: action.title } : item,
+        );
       case "DELETE":
-        return state.filter((item) => item.id !== action.id)
+        return state.filter((item) => item.id !== action.id);
     }
-  }
-)
+  },
+);
 
 const addOptimisticBookmark = (bookmark: Bookmark) => {
   React.startTransition(() => {
-    dispatchOptimistic({ type: "ADD", bookmark })
-  })
-}
+    dispatchOptimistic({ type: "ADD", bookmark });
+  });
+};
 
 // Similar dispatchers for "UPDATE" & "DELETE"
 ```
@@ -103,16 +105,16 @@ The "ADD", "UPDATE" and "DELETE" actions are exposed via their respective dispat
 
 ```tsx
 export function SearchBar() {
-  const { addOptimisticBookmark } = useBookmarks()
-  const [state, action] = React.useActionState(saveLinkToDB, null)
+  const { addOptimisticBookmark } = useBookmarks();
+  const [state, action] = React.useActionState(saveLinkToDB, null);
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
-      e.preventDefault()
-      if (!isUrl(searchTerm)) return
-      setSearchTerm("")
+      e.preventDefault();
+      if (!isUrl(searchTerm)) return;
+      setSearchTerm("");
 
-      const transformedUrl = transformUrl(searchTerm)
+      const transformedUrl = transformUrl(searchTerm);
       addOptimisticBookmark({
         id: crypto.randomUUID(),
         userId: "temp",
@@ -120,15 +122,15 @@ export function SearchBar() {
         title: transformedUrl,
         favicon: null,
         timeStamp: new Date(),
-      })
+      });
 
       React.startTransition(() => {
-        action(searchTerm)
-      })
+        action(searchTerm);
+      });
     }
-  }
+  };
 
-  return <Input onKeyDown={handleKeyDown} />
+  return <Input onKeyDown={handleKeyDown} />;
 }
 ```
 
@@ -144,37 +146,37 @@ So, I came up with a solution. An in-memory queue that handles the metadata fetc
 
 ```typescript
 type QueueItem = {
-  url: string
-  userId: string
-}
+  url: string;
+  userId: string;
+};
 
 class MetaDataQueue {
-  private queue: QueueItem[] = []
-  private processing = false
-  private concurrency = 3
+  private queue: QueueItem[] = [];
+  private processing = false;
+  private concurrency = 3;
 
   add(url: string, userId: string) {
-    this.queue.push({ url, userId })
-    this.process()
+    this.queue.push({ url, userId });
+    this.process();
   }
 
   private async process() {
-    if (this.processing) return
-    this.processing = true
+    if (this.processing) return;
+    this.processing = true;
 
     while (this.queue.length > 0) {
-      const batch = this.queue.splice(0, this.concurrency)
-      await Promise.allSettled(batch.map((item) => this.fetchAndUpdate(item)))
+      const batch = this.queue.splice(0, this.concurrency);
+      await Promise.allSettled(batch.map((item) => this.fetchAndUpdate(item)));
     }
 
-    this.processing = false
+    this.processing = false;
   }
 
   private async fetchAndUpdate({ url, userId }: QueueItem) {
     try {
-      const result = await unfurl(url)
-      const title = result.title ?? null
-      const favicon = result.favicon ?? null
+      const result = await unfurl(url);
+      const title = result.title ?? null;
+      const favicon = result.favicon ?? null;
 
       await db
         .update(bookmarksTable)
@@ -183,16 +185,16 @@ class MetaDataQueue {
           and(
             eq(bookmarksTable.url, url),
             eq(bookmarksTable.userId, userId),
-            isNull(bookmarksTable.title)
-          )
-        )
+            isNull(bookmarksTable.title),
+          ),
+        );
     } catch (error) {
-      console.log(`Failed to fetch metadata for ${url}:`, error)
+      console.log(`Failed to fetch metadata for ${url}:`, error);
     }
   }
 }
 
-export const queue = new MetaDataQueue()
+export const queue = new MetaDataQueue();
 ```
 
 and its usage in the server action:
@@ -207,31 +209,31 @@ export async function saveLinkToDB(url: string) {
       favicon: null,
       userId: session.userId,
     })
-    .onConflictDoNothing()
+    .onConflictDoNothing();
 
-  revalidatePath("/")
-  queue.add(url, session.userId)
+  revalidatePath("/");
+  queue.add(url, session.userId);
 }
 ```
 
 Now, comes the `router.refresh()` bit. I needed the UI to update once the meta has been updated successfully. For this, I decided upon polling until the title field of any of the links is `null`.
 
 ```tsx
-const router = useRouter()
+const router = useRouter();
 
 const hasPendingMetadata = React.useMemo(() => {
-  return initialBookmarks.some((b) => !b.title)
-}, [initialBookmarks])
+  return initialBookmarks.some((b) => !b.title);
+}, [initialBookmarks]);
 
 React.useEffect(() => {
-  if (!hasPendingMetadata) return
+  if (!hasPendingMetadata) return;
 
   const interval = setInterval(() => {
-    router.refresh()
-  }, 1000)
+    router.refresh();
+  }, 1000);
 
-  return () => clearInterval(interval)
-}, [hasPendingMetadata, router])
+  return () => clearInterval(interval);
+}, [hasPendingMetadata, router]);
 ```
 
 ## Import/Export
@@ -240,28 +242,28 @@ Lastly, I needed a way to create backups in the rare case that the reptilian bra
 
 ```typescript
 const exportBookmarks = () => {
-  const sanitizedBookmarks = bookmarks.map(({ id, userId, ...rest }) => rest)
-  const jsonString = JSON.stringify(sanitizedBookmarks, null, 2)
-  const jsonBlob = new Blob([jsonString], { type: "application/json" })
+  const sanitizedBookmarks = bookmarks.map(({ id, userId, ...rest }) => rest);
+  const jsonString = JSON.stringify(sanitizedBookmarks, null, 2);
+  const jsonBlob = new Blob([jsonString], { type: "application/json" });
 
-  const url = URL.createObjectURL(jsonBlob)
-  const a = document.createElement("a")
-  a.href = url
-  a.download = `bookmarks-${new Date().toISOString()}.json`
-  document.body.appendChild(a)
-  a.click()
-  document.body.removeChild(a)
-  URL.revokeObjectURL(url)
-}
+  const url = URL.createObjectURL(jsonBlob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `bookmarks-${new Date().toISOString()}.json`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+};
 ```
 
 and for importing, a simple read of the file and a db update
 
 ```typescript
 export async function importBookmarks(formData: FormData) {
-  const json = formData.get("json")
-  const text = await json.text()
-  const data = JSON.parse(text)
+  const json = formData.get("json");
+  const text = await json.text();
+  const data = JSON.parse(text);
 
   await db
     .insert(bookmarksTable)
@@ -270,9 +272,9 @@ export async function importBookmarks(formData: FormData) {
         ...item,
         timeStamp: new Date(item.timeStamp),
         userId: session.userId,
-      }))
+      })),
     )
-    .onConflictDoNothing()
+    .onConflictDoNothing();
 }
 ```
 

@@ -1,32 +1,32 @@
-"use client"
+"use client";
 
-import { Button } from "@rahul-choudhury/ui/components"
-import { usePrefersReducedMotion } from "@rahul-choudhury/ui/hooks"
-import { CheckIcon, CircleNotchIcon } from "@phosphor-icons/react"
-import { AnimatePresence, motion } from "motion/react"
-import { useEffect, useRef, useState } from "react"
-import { LabStage } from "./lab-stage"
-import type { LabComponentProps } from "./lab-types"
+import { Button } from "@rahul-choudhury/ui/components";
+import { usePrefersReducedMotion } from "@rahul-choudhury/ui/hooks";
+import { CheckIcon, CircleNotchIcon } from "@phosphor-icons/react";
+import { AnimatePresence, motion } from "motion/react";
+import { useEffect, useRef, useState } from "react";
+import { LabStage } from "./lab-stage";
+import type { LabComponentProps } from "./lab-types";
 
-type Status = "idle" | "loading" | "success"
+type Status = "idle" | "loading" | "success";
 
 export function ActionFeedback({ compact = false }: LabComponentProps) {
-  const [status, setStatus] = useState<Status>("idle")
-  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
-  const prefersReducedMotion = usePrefersReducedMotion()
+  const [status, setStatus] = useState<Status>("idle");
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const prefersReducedMotion = usePrefersReducedMotion();
 
   useEffect(() => {
     return () => {
-      if (timeoutRef.current) clearTimeout(timeoutRef.current)
-    }
-  }, [])
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    };
+  }, []);
 
   function handleClick() {
-    setStatus("loading")
+    setStatus("loading");
     timeoutRef.current = setTimeout(() => {
-      setStatus("success")
-      timeoutRef.current = setTimeout(() => setStatus("idle"), 2500)
-    }, 900)
+      setStatus("success");
+      timeoutRef.current = setTimeout(() => setStatus("idle"), 2500);
+    }, 900);
   }
 
   const content = {
@@ -41,7 +41,7 @@ export function ActionFeedback({ compact = false }: LabComponentProps) {
       icon: <CheckIcon aria-hidden="true" className="size-4" weight="bold" />,
       label: "Published",
     },
-  }[status]
+  }[status];
 
   return (
     <LabStage compact={compact}>
@@ -73,5 +73,5 @@ export function ActionFeedback({ compact = false }: LabComponentProps) {
         </Button>
       </div>
     </LabStage>
-  )
+  );
 }

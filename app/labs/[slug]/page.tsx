@@ -1,24 +1,24 @@
-import type { Metadata } from "next"
-import Link from "next/link"
-import { notFound } from "next/navigation"
-import { Reveal } from "@/components/motion-reveal"
-import { getLab, LABS } from "@/lib/labs"
+import type { Metadata } from "next";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import { Reveal } from "@/components/motion-reveal";
+import { getLab, LABS } from "@/lib/labs";
 
-type Params = Promise<{ slug: string }>
+type Params = Promise<{ slug: string }>;
 
 export function generateStaticParams() {
-  return LABS.map(({ slug }) => ({ slug }))
+  return LABS.map(({ slug }) => ({ slug }));
 }
 
 export async function generateMetadata({
   params,
 }: {
-  params: Params
+  params: Params;
 }): Promise<Metadata> {
-  const { slug } = await params
-  const lab = getLab(slug)
+  const { slug } = await params;
+  const lab = getLab(slug);
 
-  if (!lab) return {}
+  if (!lab) return {};
 
   return {
     title: `${lab.title} | Labs`,
@@ -28,16 +28,16 @@ export async function generateMetadata({
       description: lab.description,
       url: `/labs/${lab.slug}`,
     },
-  }
+  };
 }
 
 export default async function LabPage({ params }: { params: Params }) {
-  const { slug } = await params
-  const lab = getLab(slug)
+  const { slug } = await params;
+  const lab = getLab(slug);
 
-  if (!lab) notFound()
+  if (!lab) notFound();
 
-  const { Demo } = lab
+  const { Demo } = lab;
 
   return (
     <article>
@@ -68,5 +68,5 @@ export default async function LabPage({ params }: { params: Params }) {
         </div>
       </Reveal>
     </article>
-  )
+  );
 }

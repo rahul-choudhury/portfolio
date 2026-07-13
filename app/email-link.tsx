@@ -1,39 +1,39 @@
-"use client"
+"use client";
 
-import { CheckIcon, CopyIcon } from "@phosphor-icons/react"
-import { easeOutQuint } from "@rahul-choudhury/ui"
-import { motion } from "motion/react"
-import { useEffect, useRef, useState } from "react"
+import { CheckIcon, CopyIcon } from "@phosphor-icons/react";
+import { easeOutQuint } from "@rahul-choudhury/ui";
+import { motion } from "motion/react";
+import { useEffect, useRef, useState } from "react";
 
-const EMAIL = "rchoudhury63@gmail.com"
-const COPY_RESET_DELAY = 1200
+const EMAIL = "rchoudhury63@gmail.com";
+const COPY_RESET_DELAY = 1200;
 
 export function EmailLink() {
-  const [isHovered, setIsHovered] = useState(false)
-  const [isCopied, setIsCopied] = useState(false)
-  const resetTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
-  const showIcon = isHovered || isCopied
+  const [isHovered, setIsHovered] = useState(false);
+  const [isCopied, setIsCopied] = useState(false);
+  const resetTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const showIcon = isHovered || isCopied;
 
   useEffect(() => {
     return () => {
       if (resetTimeoutRef.current) {
-        clearTimeout(resetTimeoutRef.current)
+        clearTimeout(resetTimeoutRef.current);
       }
-    }
-  }, [])
+    };
+  }, []);
 
   const handleClick = async () => {
-    await navigator.clipboard.writeText(EMAIL)
+    await navigator.clipboard.writeText(EMAIL);
 
     if (resetTimeoutRef.current) {
-      clearTimeout(resetTimeoutRef.current)
+      clearTimeout(resetTimeoutRef.current);
     }
 
-    setIsCopied(true)
+    setIsCopied(true);
     resetTimeoutRef.current = setTimeout(() => {
-      setIsCopied(false)
-    }, COPY_RESET_DELAY)
-  }
+      setIsCopied(false);
+    }, COPY_RESET_DELAY);
+  };
 
   return (
     <button
@@ -62,5 +62,5 @@ export function EmailLink() {
       </motion.span>
       {EMAIL}
     </button>
-  )
+  );
 }

@@ -1,8 +1,8 @@
-import { Badge } from "@rahul-choudhury/ui/components"
-import Link from "next/link"
-import { ExternalLink } from "@/components/external-link"
-import { Reveal } from "@/components/motion-reveal"
-import { EmailLink } from "./email-link"
+import { Badge } from "@rahul-choudhury/ui/components";
+import Link from "next/link";
+import { ExternalLink } from "@/components/external-link";
+import { Reveal } from "@/components/motion-reveal";
+import { EmailLink } from "./email-link";
 
 const SKILLS = [
   "JavaScript",
@@ -12,7 +12,7 @@ const SKILLS = [
   "Tailwind CSS",
   "Go",
   "PostgreSQL",
-]
+];
 
 const PROJECTS = [
   {
@@ -39,7 +39,7 @@ const PROJECTS = [
       "A Chrome extension connecting Letterboxd and BookMyShow for easier movie discovery.",
     link: "https://github.com/rahul-choudhury/now-screening",
   },
-]
+];
 
 export default function Home() {
   return (
@@ -75,9 +75,7 @@ export default function Home() {
       {/* Skills Section */}
       <section className="mt-12 md:mt-16">
         <Reveal delay={0.25}>
-          <h2 className="mb-6 text-sm font-medium text-text-muted">
-            Stack
-          </h2>
+          <h2 className="mb-6 text-sm font-medium text-text-muted">Stack</h2>
         </Reveal>
 
         <Reveal delay={0.3}>
@@ -132,5 +130,5 @@ export default function Home() {
         </Reveal>
       </section>
     </>
-  )
+  );
 }

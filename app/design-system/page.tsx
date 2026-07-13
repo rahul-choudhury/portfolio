@@ -1,12 +1,12 @@
-import { cn } from "@rahul-choudhury/ui"
-import type { Metadata } from "next"
-import { Reveal } from "@/components/motion-reveal"
-import { Showcase } from "./showcase"
+import { cn } from "@rahul-choudhury/ui";
+import type { Metadata } from "next";
+import { Reveal } from "@/components/motion-reveal";
+import { Showcase } from "./showcase";
 
 export const metadata: Metadata = {
   title: "Design System",
   description: "Token reference, typography, colors, and component showcase.",
-}
+};
 
 const COLORS = [
   { token: "bg", label: "Background", className: "bg-bg" },
@@ -20,7 +20,7 @@ const COLORS = [
   { token: "danger", label: "Danger", className: "bg-danger" },
   { token: "warning", label: "Warning", className: "bg-warning" },
   { token: "success", label: "Success", className: "bg-success" },
-]
+];
 
 const TEXT_COLORS = [
   { token: "text", label: "Text", className: "text-text" },
@@ -35,7 +35,7 @@ const TEXT_COLORS = [
     label: "Accent Foreground",
     className: "text-accent-foreground bg-accent px-2 py-0.5 rounded-sm",
   },
-]
+];
 
 const BORDER_COLORS = [
   { token: "border", label: "Border", className: "border-border" },
@@ -44,21 +44,21 @@ const BORDER_COLORS = [
     label: "Border Strong",
     className: "border-border-strong",
   },
-]
+];
 
 const RADII = [
   { token: "sm", value: "4px", className: "rounded-sm" },
   { token: "md", value: "8px", className: "rounded-md" },
   { token: "lg", value: "12px", className: "rounded-lg" },
   { token: "full", value: "9999px", className: "rounded-full" },
-]
+];
 
 const SHADOWS = [
   { token: "sm", className: "shadow-sm" },
   { token: "md", className: "shadow-md" },
   { token: "lg", className: "shadow-lg" },
   { token: "overlay", className: "shadow-overlay" },
-]
+];
 
 export default function DesignPage() {
   return (
@@ -95,7 +95,7 @@ export default function DesignPage() {
                     <div
                       className={cn(
                         "border-border h-16 rounded-md border",
-                        c.className
+                        c.className,
                       )}
                     />
                     <span className="text-text-muted font-mono text-xs">
@@ -115,7 +115,7 @@ export default function DesignPage() {
                     <span
                       className={cn(
                         "flex h-10 items-center text-base font-medium",
-                        c.className
+                        c.className,
                       )}
                     >
                       Aa
@@ -137,7 +137,7 @@ export default function DesignPage() {
                     <div
                       className={cn(
                         "h-12 w-24 rounded-md border-2",
-                        c.className
+                        c.className,
                       )}
                     />
                     <span className="text-text-muted font-mono text-xs">
@@ -207,7 +207,7 @@ export default function DesignPage() {
                 <div
                   className={cn(
                     "border-border-strong size-16 border-2",
-                    r.className
+                    r.className,
                   )}
                 />
                 <span className="text-text-muted font-mono text-xs">
@@ -248,5 +248,5 @@ export default function DesignPage() {
         <Showcase />
       </Reveal>
     </>
-  )
+  );
 }

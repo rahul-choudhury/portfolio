@@ -1,15 +1,15 @@
-import type { Metadata } from "next"
-import Link from "next/link"
-import { Reveal } from "@/components/motion-reveal"
-import { getAllBlogPosts } from "@/lib/blogs"
+import type { Metadata } from "next";
+import Link from "next/link";
+import { Reveal } from "@/components/motion-reveal";
+import { getAllBlogPosts } from "@/lib/blogs";
 
 export const metadata: Metadata = {
   title: "Blogs",
   description: "Notes on engineering, design, and building software.",
-}
+};
 
 export default function BlogsPage() {
-  const blogPosts = getAllBlogPosts()
+  const blogPosts = getAllBlogPosts();
 
   return (
     <>
@@ -61,5 +61,5 @@ export default function BlogsPage() {
         ))}
       </div>
     </>
-  )
+  );
 }

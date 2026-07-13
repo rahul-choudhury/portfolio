@@ -1,44 +1,44 @@
-import type { Metadata } from "next"
-import Link from "next/link"
-import { notFound } from "next/navigation"
-import { MDXRemote } from "next-mdx-remote/rsc"
-import type { Build } from "rehype-autolink-headings"
-import rehypeAutolinkHeadings from "rehype-autolink-headings"
-import rehypePrettyCode from "rehype-pretty-code"
-import rehypeSlug from "rehype-slug"
-import { Reveal } from "@/components/motion-reveal"
-import { TableOfContents } from "@/components/table-of-contents"
-import { VideoPlayer } from "@/components/video-player"
+import type { Metadata } from "next";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import { MDXRemote } from "next-mdx-remote/rsc";
+import type { Build } from "rehype-autolink-headings";
+import rehypeAutolinkHeadings from "rehype-autolink-headings";
+import rehypePrettyCode from "rehype-pretty-code";
+import rehypeSlug from "rehype-slug";
+import { Reveal } from "@/components/motion-reveal";
+import { TableOfContents } from "@/components/table-of-contents";
+import { VideoPlayer } from "@/components/video-player";
 import {
   getBlogMetadata,
   getBlogPost,
   getBlogSlugs,
   getTableOfContents,
-} from "@/lib/blogs"
+} from "@/lib/blogs";
 
-type Params = Promise<{ slug: string }>
+type Params = Promise<{ slug: string }>;
 const buildHeadingAnchorContent: Build = (element) => {
-  const level = Number.parseInt(element.tagName.replace("h", ""), 10)
+  const level = Number.parseInt(element.tagName.replace("h", ""), 10);
 
   return {
     type: "text",
     value: "#".repeat(Number.isNaN(level) ? 1 : level),
-  }
-}
+  };
+};
 
 export function generateStaticParams() {
-  return getBlogSlugs().map((slug) => ({ slug }))
+  return getBlogSlugs().map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({
   params,
 }: {
-  params: Params
+  params: Params;
 }): Promise<Metadata> {
-  const { slug } = await params
+  const { slug } = await params;
 
   try {
-    const metadata = getBlogMetadata(slug)
+    const metadata = getBlogMetadata(slug);
     return {
       title: metadata.title,
       description: metadata.description,
@@ -49,24 +49,24 @@ export async function generateMetadata({
         publishedTime: metadata.date,
         url: `/blogs/${slug}`,
       },
-    }
+    };
   } catch {
-    return {}
+    return {};
   }
 }
 
 export default async function BlogPostPage({ params }: { params: Params }) {
-  const { slug } = await params
+  const { slug } = await params;
 
-  let post: ReturnType<typeof getBlogPost>
+  let post: ReturnType<typeof getBlogPost>;
   try {
-    post = getBlogPost(slug)
+    post = getBlogPost(slug);
   } catch {
-    notFound()
+    notFound();
   }
 
-  const { metadata, content } = post
-  const toc = getTableOfContents(content)
+  const { metadata, content } = post;
+  const toc = getTableOfContents(content);
 
   return (
     <article>
@@ -143,5 +143,5 @@ export default async function BlogPostPage({ params }: { params: Params }) {
         </div>
       </Reveal>
     </article>
-  )
+  );
 }

@@ -1,6 +1,6 @@
-import { ActionFeedback } from "@/components/labs/action-feedback"
-import type { Lab } from "@/components/labs/lab-types"
-import { MagneticAction } from "@/components/labs/magnetic-action"
+import { ActionFeedback } from "@/components/labs/action-feedback";
+import type { Lab } from "@/components/labs/lab-types";
+import { MagneticAction } from "@/components/labs/magnetic-action";
 
 export const LABS: Lab[] = [
   {
@@ -19,8 +19,8 @@ export const LABS: Lab[] = [
     Preview: ActionFeedback,
     Demo: ActionFeedback,
   },
-]
+];
 
 export function getLab(slug: string) {
-  return LABS.find((lab) => lab.slug === slug)
+  return LABS.find((lab) => lab.slug === slug);
 }

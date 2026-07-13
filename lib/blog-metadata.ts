@@ -1,8 +1,8 @@
 export interface BlogPostMetadata {
-  title: string
-  date: string
-  description: string
-  slug: string
+  title: string;
+  date: string;
+  description: string;
+  slug: string;
 }
 
 export const blogPostMetadata: BlogPostMetadata[] = [
@@ -12,4 +12,4 @@ export const blogPostMetadata: BlogPostMetadata[] = [
     description: "",
     slug: "overengineered-link-management",
   },
-]
+];

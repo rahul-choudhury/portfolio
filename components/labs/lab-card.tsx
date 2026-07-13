@@ -1,12 +1,12 @@
-import Link from "next/link"
-import type { Lab } from "./lab-types"
+import Link from "next/link";
+import type { Lab } from "./lab-types";
 
 type LabCardProps = {
-  lab: Lab
-}
+  lab: Lab;
+};
 
 export function LabCard({ lab }: LabCardProps) {
-  const { Preview } = lab
+  const { Preview } = lab;
 
   return (
     <article className="overflow-hidden rounded-sm border border-border bg-surface transition-colors hover:border-border-strong">
@@ -21,5 +21,5 @@ export function LabCard({ lab }: LabCardProps) {
         </Link>
       </footer>
     </article>
-  )
+  );
 }

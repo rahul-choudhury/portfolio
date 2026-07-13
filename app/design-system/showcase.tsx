@@ -1,11 +1,11 @@
-"use client"
+"use client";
 
 import {
   DotsThreeIcon,
   FileTextIcon,
   InfoIcon,
   PaperPlaneTiltIcon,
-} from "@phosphor-icons/react"
+} from "@phosphor-icons/react";
 import {
   Badge,
   Button,
@@ -42,45 +42,45 @@ import {
   Tabs,
   TabsList,
   Textarea,
-} from "@rahul-choudhury/ui/components"
-import { useState } from "react"
+} from "@rahul-choudhury/ui/components";
+import { useState } from "react";
 
 function Section({
   title,
   children,
 }: {
-  title: string
-  children: React.ReactNode
+  title: string;
+  children: React.ReactNode;
 }) {
   return (
     <section className="mb-16">
       <h2 className="text-text-muted mb-6 text-sm font-medium">{title}</h2>
       {children}
     </section>
-  )
+  );
 }
 
 function Row({
   label,
   children,
 }: {
-  label: string
-  children: React.ReactNode
+  label: string;
+  children: React.ReactNode;
 }) {
   return (
     <div className="border-border flex flex-col gap-3 border-b pb-6 last:border-0 last:pb-0">
       <h3 className="text-text text-sm font-medium">{label}</h3>
       {children}
     </div>
-  )
+  );
 }
 
 function StatePreview({
   label,
   children,
 }: {
-  label: string
-  children: React.ReactNode
+  label: string;
+  children: React.ReactNode;
 }) {
   return (
     <div className="space-y-1.5">
@@ -89,15 +89,15 @@ function StatePreview({
       </p>
       {children}
     </div>
-  )
+  );
 }
 
 export function Showcase() {
-  const [checkboxA, setCheckboxA] = useState(false)
-  const [checkboxB, setCheckboxB] = useState(true)
-  const [radio, setRadio] = useState("option-1")
-  const [switchA, setSwitchA] = useState(false)
-  const [switchB, setSwitchB] = useState(true)
+  const [checkboxA, setCheckboxA] = useState(false);
+  const [checkboxB, setCheckboxB] = useState(true);
+  const [radio, setRadio] = useState("option-1");
+  const [switchA, setSwitchA] = useState(false);
+  const [switchB, setSwitchB] = useState(true);
 
   return (
     <>
@@ -552,5 +552,5 @@ export function Showcase() {
         </Card>
       </Section>
     </>
-  )
+  );
 }
