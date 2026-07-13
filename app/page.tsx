@@ -62,7 +62,7 @@ export default function Home() {
             <ExternalLink href="https://github.com/rahul-choudhury">
               GitHub
             </ExternalLink>
-            <ExternalLink href="https://www.linkedin.com/in/rahul-choudhury-51460b314">
+            <ExternalLink href="https://www.linkedin.com/in/rchoudhurydev">
               LinkedIn
             </ExternalLink>
             <ExternalLink href="/resume_rahul-choudhury.pdf">
