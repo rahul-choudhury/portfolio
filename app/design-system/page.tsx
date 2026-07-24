@@ -79,14 +79,14 @@ export default function DesignPage() {
       {/* ---- Colors ---- */}
       <section className="mb-16">
         <Reveal delay={0.15}>
-          <h2 className="text-text-muted mb-6 text-sm font-medium">Colors</h2>
+          <h2 className="mb-6 text-sm font-medium text-text-muted">Colors</h2>
         </Reveal>
 
         <Reveal delay={0.2}>
           <div className="space-y-8">
             {/* Background / surface colors */}
             <div>
-              <h3 className="text-text mb-3 text-sm font-medium">
+              <h3 className="mb-3 text-sm font-medium text-text">
                 Backgrounds &amp; Surfaces
               </h3>
               <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
@@ -94,11 +94,11 @@ export default function DesignPage() {
                   <div key={c.token} className="flex flex-col gap-1.5">
                     <div
                       className={cn(
-                        "border-border h-16 rounded-md border",
+                        "h-16 rounded-md border border-border",
                         c.className,
                       )}
                     />
-                    <span className="text-text-muted font-mono text-xs">
+                    <span className="font-mono text-xs text-text-muted">
                       {c.token}
                     </span>
                   </div>
@@ -108,7 +108,7 @@ export default function DesignPage() {
 
             {/* Text colors */}
             <div>
-              <h3 className="text-text mb-3 text-sm font-medium">Text</h3>
+              <h3 className="mb-3 text-sm font-medium text-text">Text</h3>
               <div className="flex flex-wrap gap-6">
                 {TEXT_COLORS.map((c) => (
                   <div key={c.token} className="flex flex-col gap-1">
@@ -120,7 +120,7 @@ export default function DesignPage() {
                     >
                       Aa
                     </span>
-                    <span className="text-text-muted font-mono text-xs">
+                    <span className="font-mono text-xs text-text-muted">
                       {c.token}
                     </span>
                   </div>
@@ -130,7 +130,7 @@ export default function DesignPage() {
 
             {/* Border colors */}
             <div>
-              <h3 className="text-text mb-3 text-sm font-medium">Borders</h3>
+              <h3 className="mb-3 text-sm font-medium text-text">Borders</h3>
               <div className="flex flex-wrap gap-4">
                 {BORDER_COLORS.map((c) => (
                   <div key={c.token} className="flex flex-col gap-1.5">
@@ -140,7 +140,7 @@ export default function DesignPage() {
                         c.className,
                       )}
                     />
-                    <span className="text-text-muted font-mono text-xs">
+                    <span className="font-mono text-xs text-text-muted">
                       {c.token}
                     </span>
                   </div>
@@ -154,7 +154,7 @@ export default function DesignPage() {
       {/* ---- Typography ---- */}
       <section className="mb-16">
         <Reveal delay={0.3}>
-          <h2 className="text-text-muted mb-6 text-sm font-medium">
+          <h2 className="mb-6 text-sm font-medium text-text-muted">
             Typography
           </h2>
         </Reveal>
@@ -163,29 +163,29 @@ export default function DesignPage() {
           <div className="space-y-8">
             {/* Font families */}
             <div>
-              <h3 className="text-text mb-3 text-sm font-medium">
+              <h3 className="mb-3 text-sm font-medium text-text">
                 Font Families
               </h3>
               <div className="space-y-3">
-                <div className="border-border flex items-baseline gap-4 border-b pb-3">
-                  <span className="text-text text-lg font-medium">Satoshi</span>
-                  <span className="text-text-muted font-mono text-xs">
+                <div className="flex items-baseline gap-4 border-b border-border pb-3">
+                  <span className="text-lg font-medium text-text">Satoshi</span>
+                  <span className="font-mono text-xs text-text-muted">
                     font-sans - body copy, labels, UI text
                   </span>
                 </div>
-                <div className="border-border flex items-baseline gap-4 border-b pb-3">
-                  <span className="text-text font-serif text-lg font-medium">
+                <div className="flex items-baseline gap-4 border-b border-border pb-3">
+                  <span className="font-serif text-lg font-medium text-text">
                     Instrument Serif
                   </span>
-                  <span className="text-text-muted font-mono text-xs">
+                  <span className="font-mono text-xs text-text-muted">
                     font-serif - titles, headings, display text
                   </span>
                 </div>
                 <div className="flex items-baseline gap-4">
-                  <span className="text-text font-mono text-lg font-medium">
+                  <span className="font-mono text-lg font-medium text-text">
                     JetBrains Mono
                   </span>
-                  <span className="text-text-muted font-mono text-xs">
+                  <span className="font-mono text-xs text-text-muted">
                     font-mono - timestamps, metadata, code
                   </span>
                 </div>
@@ -198,7 +198,7 @@ export default function DesignPage() {
       {/* ---- Radius ---- */}
       <section className="mb-16">
         <Reveal delay={0.4}>
-          <h2 className="text-text-muted mb-6 text-sm font-medium">Radius</h2>
+          <h2 className="mb-6 text-sm font-medium text-text-muted">Radius</h2>
         </Reveal>
         <Reveal delay={0.45}>
           <div className="flex flex-wrap gap-6">
@@ -206,14 +206,14 @@ export default function DesignPage() {
               <div key={r.token} className="flex flex-col items-center gap-1.5">
                 <div
                   className={cn(
-                    "border-border-strong size-16 border-2",
+                    "size-16 border-2 border-border-strong",
                     r.className,
                   )}
                 />
-                <span className="text-text-muted font-mono text-xs">
+                <span className="font-mono text-xs text-text-muted">
                   {r.token}
                 </span>
-                <span className="text-text-secondary font-mono text-xs">
+                <span className="font-mono text-xs text-text-secondary">
                   {r.value}
                 </span>
               </div>
@@ -225,16 +225,16 @@ export default function DesignPage() {
       {/* ---- Shadows ---- */}
       <section className="mb-16">
         <Reveal delay={0.5}>
-          <h2 className="text-text-muted mb-6 text-sm font-medium">Shadows</h2>
+          <h2 className="mb-6 text-sm font-medium text-text-muted">Shadows</h2>
         </Reveal>
         <Reveal delay={0.55}>
           <div className="flex flex-wrap gap-6">
             {SHADOWS.map((s) => (
               <div key={s.token} className="flex flex-col items-center gap-1.5">
                 <div
-                  className={cn("bg-surface size-20 rounded-md", s.className)}
+                  className={cn("size-20 rounded-md bg-surface", s.className)}
                 />
-                <span className="text-text-muted font-mono text-xs">
+                <span className="font-mono text-xs text-text-muted">
                   {s.token}
                 </span>
               </div>

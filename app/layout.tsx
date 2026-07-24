@@ -54,7 +54,7 @@ export default function RootLayout({
       >
         <MobileHaptics />
         <SiteHeader />
-        <main className="mx-auto max-w-4xl px-6 pb-16 pt-10 md:px-12 md:pb-20 md:pt-12">
+        <main className="mx-auto max-w-4xl px-6 pt-10 pb-16 md:px-12 md:pt-12 md:pb-20">
           {children}
         </main>
       </body>

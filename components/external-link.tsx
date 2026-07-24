@@ -11,12 +11,12 @@ export function ExternalLink({ href, children }: ExternalLinkProps) {
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className="text-text-secondary hover:text-text group inline-flex items-center gap-1 transition-colors"
+      className="group inline-flex items-center gap-1 text-text-secondary transition-colors hover:text-text"
     >
       <span>{children}</span>
       <ArrowUpRightIcon
         size={12}
-        className="text-border-strong translate-y-2 opacity-0 transition-[translate,opacity] group-hover:translate-y-0 group-hover:text-current group-hover:opacity-100"
+        className="translate-y-2 text-border-strong opacity-0 transition-[translate,opacity] group-hover:translate-y-0 group-hover:text-current group-hover:opacity-100"
       />
     </a>
   );

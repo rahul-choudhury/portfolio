@@ -169,7 +169,7 @@ export function VideoPlayer({
             transition: { duration: 0.25, ease: easeOutQuart },
           },
         }}
-        className="absolute bottom-0 left-0 right-0 p-2.5"
+        className="absolute right-0 bottom-0 left-0 p-2.5"
       >
         {/* Controls box */}
         <div className="flex items-center gap-3 rounded-lg border border-white/10 bg-black/40 px-3 py-2.5 shadow-lg backdrop-blur-md">
@@ -206,7 +206,7 @@ export function VideoPlayer({
           </button>
 
           {/* Time */}
-          <span className="shrink-0 select-none font-mono text-xs tabular-nums text-white/70">
+          <span className="shrink-0 font-mono text-xs text-white/70 tabular-nums select-none">
             {formatTime(currentTime)}&nbsp;/&nbsp;{formatTime(duration)}
           </span>
 
@@ -226,7 +226,7 @@ export function VideoPlayer({
             <Slider.Control className="flex h-5 w-full touch-none items-center">
               <Slider.Track className="relative h-1 w-full rounded-full bg-white/25 transition-[height] duration-150 group-hover/slider:h-1.5">
                 <Slider.Indicator className="rounded-full bg-white/80" />
-                <Slider.Thumb className="data-dragging:scale-125 data-dragging:opacity-100 block size-3 rounded-full bg-white opacity-0 shadow-sm transition-[opacity,transform] duration-150 focus:outline-none group-hover/slider:opacity-100" />
+                <Slider.Thumb className="block size-3 rounded-full bg-white opacity-0 shadow-sm transition-[opacity,transform] duration-150 group-hover/slider:opacity-100 focus:outline-none data-dragging:scale-125 data-dragging:opacity-100" />
               </Slider.Track>
             </Slider.Control>
           </Slider.Root>

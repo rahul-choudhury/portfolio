@@ -42,7 +42,7 @@ export function EmailLink() {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onClick={handleClick}
-      className="inline-flex items-center text-lg font-medium text-text underline decoration-border underline-offset-4 transition-colors hover:decoration-text cursor-pointer"
+      className="inline-flex cursor-pointer items-center text-lg font-medium text-text underline decoration-border underline-offset-4 transition-colors hover:decoration-text"
     >
       <motion.span
         aria-hidden

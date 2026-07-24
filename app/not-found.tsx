@@ -8,7 +8,7 @@ export default function NotFoundPage() {
         action={
           <Link
             href="/"
-            className="text-text decoration-border hover:decoration-text inline-flex items-center gap-2 text-sm font-medium underline underline-offset-4"
+            className="inline-flex items-center gap-2 text-sm font-medium text-text underline decoration-border underline-offset-4 hover:decoration-text"
           >
             Go home
           </Link>

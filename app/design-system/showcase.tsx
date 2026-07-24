@@ -54,7 +54,7 @@ function Section({
 }) {
   return (
     <section className="mb-16">
-      <h2 className="text-text-muted mb-6 text-sm font-medium">{title}</h2>
+      <h2 className="mb-6 text-sm font-medium text-text-muted">{title}</h2>
       {children}
     </section>
   );
@@ -68,8 +68,8 @@ function Row({
   children: React.ReactNode;
 }) {
   return (
-    <div className="border-border flex flex-col gap-3 border-b pb-6 last:border-0 last:pb-0">
-      <h3 className="text-text text-sm font-medium">{label}</h3>
+    <div className="flex flex-col gap-3 border-b border-border pb-6 last:border-0 last:pb-0">
+      <h3 className="text-sm font-medium text-text">{label}</h3>
       {children}
     </div>
   );
@@ -84,7 +84,7 @@ function StatePreview({
 }) {
   return (
     <div className="space-y-1.5">
-      <p className="text-text-muted font-mono text-xs uppercase tracking-[0.08em]">
+      <p className="font-mono text-xs tracking-[0.08em] text-text-muted uppercase">
         {label}
       </p>
       {children}
@@ -147,20 +147,20 @@ export function Showcase() {
       <Section title="Card">
         <div className="grid gap-4 sm:grid-cols-3">
           <Card className="p-4">
-            <p className="text-text text-sm font-medium">Default</p>
-            <p className="text-text-secondary mt-1 text-sm">
+            <p className="text-sm font-medium text-text">Default</p>
+            <p className="mt-1 text-sm text-text-secondary">
               Plain surface, no border.
             </p>
           </Card>
           <Card variant="bordered" className="p-4">
-            <p className="text-text text-sm font-medium">Bordered</p>
-            <p className="text-text-secondary mt-1 text-sm">
+            <p className="text-sm font-medium text-text">Bordered</p>
+            <p className="mt-1 text-sm text-text-secondary">
               Visual separation.
             </p>
           </Card>
           <Card variant="elevated" className="p-4">
-            <p className="text-text text-sm font-medium">Elevated</p>
-            <p className="text-text-secondary mt-1 text-sm">
+            <p className="text-sm font-medium text-text">Elevated</p>
+            <p className="mt-1 text-sm text-text-secondary">
               Subtle shadow lift.
             </p>
           </Card>
@@ -472,7 +472,7 @@ export function Showcase() {
             <InfoIcon size={16} />
           </PopoverTrigger>
           <PopoverContent>
-            <p className="text-text-secondary text-sm">
+            <p className="text-sm text-text-secondary">
               This is a popover with additional context. It anchors to the
               trigger and supports keyboard navigation.
             </p>
@@ -506,18 +506,18 @@ export function Showcase() {
             <Tab value="notifications">Notifications</Tab>
           </TabsList>
           <TabPanel value="overview">
-            <p className="text-text-secondary text-sm">
+            <p className="text-sm text-text-secondary">
               Overview content goes here. Tabs use Base UI for keyboard
               navigation and focus management.
             </p>
           </TabPanel>
           <TabPanel value="settings">
-            <p className="text-text-secondary text-sm">
+            <p className="text-sm text-text-secondary">
               Settings content goes here.
             </p>
           </TabPanel>
           <TabPanel value="notifications">
-            <p className="text-text-secondary text-sm">
+            <p className="text-sm text-text-secondary">
               Notifications content goes here.
             </p>
           </TabPanel>
