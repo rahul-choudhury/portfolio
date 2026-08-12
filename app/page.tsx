@@ -2,13 +2,14 @@ import Link from "next/link";
 import type { ComponentProps } from "react";
 import { Reveal } from "@/components/motion-reveal";
 import { EmailLink } from "./email-link";
+import { IntroScramble } from "./intro-scramble";
 
 export default function Home() {
   return (
     <article className="mx-auto max-w-xl pt-10 md:pt-20">
       <Reveal delay={0.05}>
         <h1 className="font-serif text-2xl font-medium tracking-tight text-text md:text-3xl">
-          Hi, I&apos;m Rahul.
+          <IntroScramble />
         </h1>
       </Reveal>
 
