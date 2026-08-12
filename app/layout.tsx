@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { Instrument_Serif, JetBrains_Mono } from "next/font/google";
 import localFont from "next/font/local";
 import { MobileHaptics } from "@/components/mobile-haptics";
-import { SiteHeader } from "@/components/site-header";
 import "./globals.css";
+import { AgentationWrapper } from "./agentation-wrapper";
 
 const satoshi = localFont({
   src: "./fonts/Satoshi-Variable.woff2",
@@ -53,11 +53,11 @@ export default function RootLayout({
         className={`${satoshi.className} ${satoshi.variable} ${instrumentSerif.variable} ${jetBrainsMono.variable} antialiased`}
       >
         <MobileHaptics />
-        <SiteHeader />
-        <main className="mx-auto max-w-4xl px-6 pt-10 pb-16 md:px-12 md:pt-12 md:pb-20">
+        <main className="mx-auto max-w-4xl px-6 py-10 md:px-12 md:py-12">
           {children}
         </main>
       </body>
+      {process.env.NODE_ENV === "development" && <AgentationWrapper />}
     </html>
   );
 }

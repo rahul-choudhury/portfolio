@@ -11,7 +11,7 @@ export function LabStage({ children, compact = false }: LabStageProps) {
     <div
       className={cn(
         "relative flex items-center justify-center overflow-hidden rounded-sm bg-surface-soft",
-        compact ? "aspect-4/3 p-5 sm:p-7" : "min-h-112 p-6 md:p-12",
+        compact ? "h-44 p-5 sm:h-52 sm:p-7" : "min-h-96 p-6 md:p-10",
       )}
     >
       <div

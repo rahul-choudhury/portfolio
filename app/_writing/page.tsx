@@ -1,10 +1,11 @@
+import { ArrowUDownLeftIcon } from "@phosphor-icons/react/ssr";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Reveal } from "@/components/motion-reveal";
 import { getAllBlogPosts } from "@/lib/blogs";
 
 export const metadata: Metadata = {
-  title: "Blogs",
+  title: "Writing",
   description: "Notes on engineering, design, and building software.",
 };
 
@@ -12,18 +13,21 @@ export default function BlogsPage() {
   const blogPosts = getAllBlogPosts();
 
   return (
-    <>
-      <header className="mb-12 md:mb-16">
+    <div className="mx-auto max-w-xl pt-10 md:pt-20">
+      <header className="mb-9">
         <Reveal>
-          <h1 className="font-serif text-4xl font-medium tracking-tight text-text md:text-5xl">
-            Blogs
-          </h1>
-        </Reveal>
-
-        <Reveal delay={0.1}>
-          <p className="mt-4 max-w-xl text-lg text-text-secondary">
-            Notes on engineering, design, and building software.
-          </p>
+          <div className="flex items-center justify-between gap-4">
+            <h1 className="font-serif text-2xl font-medium tracking-tight text-text md:text-3xl">
+              Writing
+            </h1>
+            <Link
+              href="/"
+              className="inline-flex shrink-0 items-center gap-1.5 text-sm text-text-muted transition-colors hover:text-text"
+            >
+              <ArrowUDownLeftIcon aria-hidden="true" size={14} />
+              Go back
+            </Link>
+          </div>
         </Reveal>
       </header>
 
@@ -31,8 +35,8 @@ export default function BlogsPage() {
         {blogPosts.map((post, index) => (
           <Reveal key={post.slug} delay={0.15 + index * 0.05} inView>
             <Link
-              href={`/blogs/${post.slug}`}
-              className="group flex items-start justify-between gap-6 border-b border-border py-5 transition-colors hover:border-border-strong"
+              href={`/writing/${post.slug}`}
+              className="group flex items-start justify-between gap-6 border-b border-border py-4 transition-colors hover:border-border-strong"
             >
               <div className="flex flex-col gap-1.5">
                 <h2 className="font-medium text-text transition-colors group-hover:text-text-secondary">
@@ -60,6 +64,6 @@ export default function BlogsPage() {
           </Reveal>
         ))}
       </div>
-    </>
+    </div>
   );
 }

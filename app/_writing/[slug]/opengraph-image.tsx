@@ -3,7 +3,7 @@ import path from "node:path";
 import { ImageResponse } from "next/og";
 import { getBlogMetadata } from "@/lib/blogs";
 
-export const alt = "Blog post";
+export const alt = "Writing post";
 export const size = {
   width: 1200,
   height: 630,

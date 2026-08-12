@@ -1,3 +1,4 @@
+import { ArrowUDownLeftIcon } from "@phosphor-icons/react/ssr";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -47,7 +48,7 @@ export async function generateMetadata({
         description: metadata.description,
         type: "article",
         publishedTime: metadata.date,
-        url: `/blogs/${slug}`,
+        url: `/writing/${slug}`,
       },
     };
   } catch {
@@ -69,22 +70,21 @@ export default async function BlogPostPage({ params }: { params: Params }) {
   const toc = getTableOfContents(content);
 
   return (
-    <article>
-      <header className="mb-12">
+    <article className="mx-auto max-w-xl pt-10 md:pt-20">
+      <header className="mb-10">
         <Reveal>
-          <Link
-            href="/blogs"
-            className="mb-8 inline-flex items-center gap-1.5 text-sm text-text-muted transition-colors hover:text-text"
-          >
-            <span aria-hidden="true">&larr;</span>
-            Back
-          </Link>
-        </Reveal>
-
-        <Reveal delay={0.1}>
-          <h1 className="font-serif text-3xl font-medium tracking-tight text-text md:text-4xl">
-            {metadata.title}
-          </h1>
+          <div className="flex items-center justify-between gap-4">
+            <h1 className="font-serif text-2xl font-medium tracking-tight text-text md:text-3xl">
+              {metadata.title}
+            </h1>
+            <Link
+              href="/writing"
+              className="inline-flex shrink-0 items-center gap-1.5 text-sm text-text-muted transition-colors hover:text-text"
+            >
+              <ArrowUDownLeftIcon aria-hidden="true" size={14} />
+              Go back
+            </Link>
+          </div>
         </Reveal>
 
         {metadata.date && (
@@ -96,14 +96,6 @@ export default async function BlogPostPage({ params }: { params: Params }) {
                 day: "numeric",
               })}
             </time>
-          </Reveal>
-        )}
-
-        {metadata.description && (
-          <Reveal delay={0.2}>
-            <p className="mt-4 text-lg text-text-secondary">
-              {metadata.description}
-            </p>
           </Reveal>
         )}
       </header>

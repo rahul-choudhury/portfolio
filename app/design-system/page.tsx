@@ -1,10 +1,12 @@
+import { ArrowUDownLeftIcon } from "@phosphor-icons/react/ssr";
 import { cn } from "@rahul-choudhury/ui";
 import type { Metadata } from "next";
+import Link from "next/link";
 import { Reveal } from "@/components/motion-reveal";
 import { Showcase } from "./showcase";
 
 export const metadata: Metadata = {
-  title: "Design System",
+  title: "Design system",
   description: "Token reference, typography, colors, and component showcase.",
 };
 
@@ -62,24 +64,28 @@ const SHADOWS = [
 
 export default function DesignPage() {
   return (
-    <>
-      <header className="mb-12 md:mb-16">
+    <div className="mx-auto max-w-xl pt-10 md:pt-20">
+      <header className="mb-12">
         <Reveal>
-          <h1 className="font-serif text-4xl font-medium tracking-tight text-text md:text-5xl">
-            Design System
-          </h1>
-        </Reveal>
-        <Reveal delay={0.1}>
-          <p className="mt-4 max-w-xl text-lg text-text-secondary">
-            Token reference, typography scale, and component showcase.
-          </p>
+          <div className="flex items-center justify-between gap-4">
+            <h1 className="font-serif text-2xl font-medium tracking-tight text-text md:text-3xl">
+              Design system
+            </h1>
+            <Link
+              href="/"
+              className="inline-flex shrink-0 items-center gap-1.5 text-sm text-text-muted transition-colors hover:text-text"
+            >
+              <ArrowUDownLeftIcon aria-hidden="true" size={14} />
+              Go back
+            </Link>
+          </div>
         </Reveal>
       </header>
 
       {/* ---- Colors ---- */}
-      <section className="mb-16">
+      <section className="mb-12">
         <Reveal delay={0.15}>
-          <h2 className="mb-6 text-sm font-medium text-text-muted">Colors</h2>
+          <h2 className="mb-4 text-sm font-medium text-text-muted">Colors</h2>
         </Reveal>
 
         <Reveal delay={0.2}>
@@ -152,9 +158,9 @@ export default function DesignPage() {
       </section>
 
       {/* ---- Typography ---- */}
-      <section className="mb-16">
+      <section className="mb-12">
         <Reveal delay={0.3}>
-          <h2 className="mb-6 text-sm font-medium text-text-muted">
+          <h2 className="mb-4 text-sm font-medium text-text-muted">
             Typography
           </h2>
         </Reveal>
@@ -196,9 +202,9 @@ export default function DesignPage() {
       </section>
 
       {/* ---- Radius ---- */}
-      <section className="mb-16">
+      <section className="mb-12">
         <Reveal delay={0.4}>
-          <h2 className="mb-6 text-sm font-medium text-text-muted">Radius</h2>
+          <h2 className="mb-4 text-sm font-medium text-text-muted">Radius</h2>
         </Reveal>
         <Reveal delay={0.45}>
           <div className="flex flex-wrap gap-6">
@@ -223,9 +229,9 @@ export default function DesignPage() {
       </section>
 
       {/* ---- Shadows ---- */}
-      <section className="mb-16">
+      <section className="mb-12">
         <Reveal delay={0.5}>
-          <h2 className="mb-6 text-sm font-medium text-text-muted">Shadows</h2>
+          <h2 className="mb-4 text-sm font-medium text-text-muted">Shadows</h2>
         </Reveal>
         <Reveal delay={0.55}>
           <div className="flex flex-wrap gap-6">
@@ -247,6 +253,6 @@ export default function DesignPage() {
       <Reveal delay={0.6}>
         <Showcase />
       </Reveal>
-    </>
+    </div>
   );
 }

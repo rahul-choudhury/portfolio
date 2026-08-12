@@ -7,7 +7,5 @@ export type LabComponentProps = {
 export type Lab = {
   slug: string;
   title: string;
-  description: string;
   Preview: ComponentType<LabComponentProps>;
-  Demo: ComponentType<LabComponentProps>;
 };

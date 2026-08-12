@@ -53,8 +53,8 @@ function Section({
   children: React.ReactNode;
 }) {
   return (
-    <section className="mb-16">
-      <h2 className="mb-6 text-sm font-medium text-text-muted">{title}</h2>
+    <section className="mb-12">
+      <h2 className="mb-4 text-sm font-medium text-text-muted">{title}</h2>
       {children}
     </section>
   );

@@ -12,7 +12,7 @@ export function TableOfContents({ toc }: { toc: TocEntry[] }) {
   if (toc.length === 0) return null;
 
   return (
-    <nav aria-label="Table of Contents" className="mb-12">
+    <nav aria-label="Table of Contents" className="mb-10">
       <Collapsible.Root open={isOpen} onOpenChange={setIsOpen}>
         <Collapsible.Trigger className="group flex w-full items-center justify-between rounded-sm border border-border bg-surface-soft px-4 py-2.5 transition-colors duration-200 hover:border-border-strong">
           <span className="text-sm font-medium text-text-muted">
