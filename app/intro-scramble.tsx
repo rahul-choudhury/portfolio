@@ -10,7 +10,6 @@ const SCRAMBLE_DURATION = 560;
 
 export function IntroScramble() {
   const [text, setText] = useState(INTRO);
-  const [isScrambling, setIsScrambling] = useState(false);
   const textRef = useRef(INTRO);
   const animationFrameRef = useRef<number | null>(null);
   const prefersReducedMotion = usePrefersReducedMotion();
@@ -24,13 +23,11 @@ export function IntroScramble() {
       if (prefersReducedMotion) {
         textRef.current = target;
         setText(target);
-        setIsScrambling(false);
         return;
       }
 
       const source = textRef.current;
       const startedAt = performance.now();
-      setIsScrambling(true);
 
       const scramble = (now: number) => {
         const progress = Math.min((now - startedAt) / SCRAMBLE_DURATION, 1);
@@ -61,7 +58,6 @@ export function IntroScramble() {
           animationFrameRef.current = null;
           textRef.current = target;
           setText(target);
-          setIsScrambling(false);
         }
       };
 
@@ -82,7 +78,6 @@ export function IntroScramble() {
     <button
       type="button"
       aria-label={`${INTRO} ${PUNCHLINE}`}
-      data-scrambling={isScrambling || undefined}
       onBlur={() => animateTo(INTRO)}
       onClick={() => animateTo(PUNCHLINE)}
       onFocus={() => animateTo(PUNCHLINE)}
@@ -95,7 +90,7 @@ export function IntroScramble() {
       </span>
       <span
         aria-hidden
-        className="intro-scramble-text col-start-1 row-start-1"
+        className="col-start-1 row-start-1"
       >
         {text}
       </span>
