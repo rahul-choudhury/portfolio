@@ -16,7 +16,7 @@ export function LabStage({ children, compact = false }: LabStageProps) {
     >
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 border-border/70 bg-[linear-gradient(to_right,currentColor_1px,transparent_1px),linear-gradient(to_bottom,currentColor_1px,transparent_1px)] bg-size-[24px_24px] text-black/2.5"
+        className="pointer-events-none absolute inset-0 border-border/70 bg-[linear-gradient(to_right,currentColor_1px,transparent_1px),linear-gradient(to_bottom,currentColor_1px,transparent_1px)] bg-size-[24px_24px] text-text/2.5"
       />
       <div className="relative flex size-full items-center justify-center">
         {children}
