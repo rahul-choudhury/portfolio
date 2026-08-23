@@ -3,7 +3,6 @@ import { Instrument_Serif, JetBrains_Mono } from "next/font/google";
 import localFont from "next/font/local";
 import { MobileHaptics } from "@/components/mobile-haptics";
 import "./globals.css";
-import { AgentationWrapper } from "./agentation-wrapper";
 
 const satoshi = localFont({
   src: "./fonts/Satoshi-Variable.woff2",
@@ -57,7 +56,6 @@ export default function RootLayout({
           {children}
         </main>
       </body>
-      {process.env.NODE_ENV === "development" && <AgentationWrapper />}
     </html>
   );
 }
