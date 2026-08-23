@@ -88,10 +88,7 @@ export function IntroScramble() {
       <span aria-hidden className="invisible col-start-1 row-start-1">
         {PUNCHLINE}
       </span>
-      <span
-        aria-hidden
-        className="col-start-1 row-start-1"
-      >
+      <span aria-hidden className="col-start-1 row-start-1">
         {text}
       </span>
     </button>
