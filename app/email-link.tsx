@@ -1,18 +1,14 @@
 "use client";
 
 import { CheckIcon, CopyIcon } from "@phosphor-icons/react";
-import { easeOutQuint } from "@rahul-choudhury/ui";
-import { motion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 
 const EMAIL = "rchoudhury63@gmail.com";
 const COPY_RESET_DELAY = 1200;
 
 export function EmailLink() {
-  const [isHovered, setIsHovered] = useState(false);
   const [isCopied, setIsCopied] = useState(false);
   const resetTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const showIcon = isHovered || isCopied;
 
   useEffect(() => {
     return () => {
@@ -36,31 +32,21 @@ export function EmailLink() {
   };
 
   return (
-    <button
-      type="button"
-      data-hovered={isHovered || undefined}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      onClick={handleClick}
-      className="inline-flex cursor-pointer items-center text-base font-medium text-text underline decoration-border underline-offset-4 transition-colors hover:decoration-text"
-    >
-      <motion.span
-        aria-hidden
-        animate={{
-          marginRight: showIcon ? 4 : 0,
-          width: showIcon ? 20 : 0,
-        }}
-        className="inline-flex overflow-hidden"
-        initial={false}
-        transition={{ duration: 0.2, ease: easeOutQuint }}
+    <span className="inline-flex items-center gap-1 text-base font-medium text-text">
+      <span>{EMAIL}</span>
+      <button
+        type="button"
+        onClick={handleClick}
+        aria-label={isCopied ? "Email copied" : "Copy email address"}
+        aria-live="polite"
+        className="inline-flex size-7 cursor-pointer items-center justify-center rounded-sm text-text-muted transition-colors hover:text-text focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-text"
       >
         {isCopied ? (
-          <CheckIcon className="shrink-0" size={18} />
+          <CheckIcon aria-hidden="true" size={18} />
         ) : (
-          <CopyIcon className="shrink-0" size={18} />
+          <CopyIcon aria-hidden="true" size={18} />
         )}
-      </motion.span>
-      {EMAIL}
-    </button>
+      </button>
+    </span>
   );
 }
