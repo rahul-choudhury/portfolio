@@ -7,11 +7,21 @@ const INTRO = "Hi! I'm Rahul.";
 const PUNCHLINE = "Naam toh suna hoga?";
 const SCRAMBLE_CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!?#";
 const SCRAMBLE_DURATION = 560;
+const TEASER_DELAY = 1500;
+const TEASER_FRAME_DURATION = 120;
+const TEASER_FRAMES = [
+  "Hi! I'm RahX7.",
+  "Hi! I'm Rah?#.",
+  "Hi! I'm Rah4!.",
+  INTRO,
+];
 
 export function IntroScramble() {
   const [text, setText] = useState(INTRO);
   const textRef = useRef(INTRO);
   const animationFrameRef = useRef<number | null>(null);
+  const teaserTimeoutsRef = useRef<ReturnType<typeof setTimeout>[]>([]);
+  const hasInteractedRef = useRef(false);
   const prefersReducedMotion = usePrefersReducedMotion();
 
   const animateTo = useCallback(
@@ -67,6 +77,27 @@ export function IntroScramble() {
   );
 
   useEffect(() => {
+    if (prefersReducedMotion) return;
+
+    teaserTimeoutsRef.current = TEASER_FRAMES.map((frame, index) =>
+      setTimeout(
+        () => {
+          if (hasInteractedRef.current) return;
+
+          textRef.current = frame;
+          setText(frame);
+        },
+        TEASER_DELAY + index * TEASER_FRAME_DURATION,
+      ),
+    );
+
+    return () => {
+      teaserTimeoutsRef.current.forEach(clearTimeout);
+      teaserTimeoutsRef.current = [];
+    };
+  }, [prefersReducedMotion]);
+
+  useEffect(() => {
     return () => {
       if (animationFrameRef.current !== null) {
         cancelAnimationFrame(animationFrameRef.current);
@@ -75,22 +106,26 @@ export function IntroScramble() {
   }, []);
 
   return (
-    <button
-      type="button"
-      aria-label={`${INTRO} ${PUNCHLINE}`}
-      onBlur={() => animateTo(INTRO)}
-      onClick={() => animateTo(PUNCHLINE)}
-      onFocus={() => animateTo(PUNCHLINE)}
-      onMouseEnter={() => animateTo(PUNCHLINE)}
+    <span
+      onMouseEnter={() => {
+        hasInteractedRef.current = true;
+        teaserTimeoutsRef.current.forEach(clearTimeout);
+        teaserTimeoutsRef.current = [];
+        animateTo(PUNCHLINE);
+      }}
       onMouseLeave={() => animateTo(INTRO)}
-      className="intro-scramble inline-grid appearance-none bg-transparent p-0 text-left [font:inherit]"
+      className="relative inline-grid"
     >
+      <span className="sr-only">{INTRO}</span>
       <span aria-hidden className="invisible col-start-1 row-start-1">
         {PUNCHLINE}
       </span>
-      <span aria-hidden className="col-start-1 row-start-1">
+      <span
+        aria-hidden
+        className="pointer-events-none absolute inset-y-0 left-0 whitespace-nowrap"
+      >
         {text}
       </span>
-    </button>
+    </span>
   );
 }

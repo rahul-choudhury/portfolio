@@ -32,12 +32,6 @@ body {
   color: var(--color-bg);
 }
 
-.intro-scramble:focus-visible {
-  border-radius: var(--radius-sm);
-  outline: 2px solid var(--color-text);
-  outline-offset: 4px;
-}
-
 /* Blog prose */
 .prose {
   line-height: 1.8;
