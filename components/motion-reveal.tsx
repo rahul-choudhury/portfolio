@@ -2,19 +2,14 @@
 
 import { motion, useAnimationControls } from "motion/react";
 import { type ReactNode, useEffect } from "react";
-import { easeOutQuint } from "@rahul-choudhury/ui";
 import { usePrefersReducedMotion } from "@rahul-choudhury/ui/hooks";
+import { BLUR_REVEAL_FILTER, BLUR_REVEAL_TRANSITION } from "@/lib/motion";
 
 type RevealProps = {
   children: ReactNode;
   className?: string;
   delay?: number;
   inView?: boolean;
-};
-
-const baseTransition = {
-  duration: 0.4,
-  ease: easeOutQuint,
 };
 
 // Module-level promise that resolves when the page is ready for animations.
@@ -60,7 +55,7 @@ export function Reveal({
     let cancelled = false;
     animationReady.then(() => {
       if (!cancelled) {
-        controls.start({ opacity: 1, filter: "blur(0px)" });
+        controls.start({ opacity: 1, filter: BLUR_REVEAL_FILTER.visible });
       }
     });
 
@@ -76,12 +71,15 @@ export function Reveal({
 
   return (
     <motion.div
-      initial={{ opacity: 0.01, filter: "blur(4px)" }}
-      transition={{ ...baseTransition, delay }}
+      initial={{ opacity: 0.01, filter: BLUR_REVEAL_FILTER.hidden }}
+      transition={{ ...BLUR_REVEAL_TRANSITION, delay }}
       className={className}
       {...(inView
         ? {
-            whileInView: { opacity: 1, filter: "blur(0px)" },
+            whileInView: {
+              opacity: 1,
+              filter: BLUR_REVEAL_FILTER.visible,
+            },
             viewport: { once: true, amount: 0.35 },
           }
         : { animate: controls })}
