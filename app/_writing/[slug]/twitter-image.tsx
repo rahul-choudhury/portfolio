@@ -136,7 +136,7 @@ export default async function Image({
           weight: 400 as const,
         })),
         readFile(
-          path.join(process.cwd(), "public/og-fonts/Satoshi-Regular.ttf"),
+          path.join(process.cwd(), "app/fonts/Satoshi-Regular.ttf"),
         ).then((data) => ({
           name: "Satoshi",
           data,
@@ -144,7 +144,7 @@ export default async function Image({
           weight: 400 as const,
         })),
         readFile(
-          path.join(process.cwd(), "public/og-fonts/JetBrainsMono-Regular.ttf"),
+          path.join(process.cwd(), "app/fonts/JetBrainsMono-Regular.ttf"),
         ).then((data) => ({
           name: "JetBrainsMono",
           data,
