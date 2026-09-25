@@ -47,7 +47,7 @@ export default async function Image() {
       <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
         <div
           style={{
-            fontFamily: "InstrumentSerif",
+            fontFamily: "ClashDisplay",
             fontSize: 96,
             fontWeight: 400,
             lineHeight: 1,
@@ -98,10 +98,10 @@ export default async function Image() {
         readFile(
           path.join(
             process.cwd(),
-            "public/og-fonts/InstrumentSerif-Regular.ttf",
+            "app/fonts/ClashDisplay-Regular.ttf",
           ),
         ).then((data) => ({
-          name: "InstrumentSerif",
+          name: "ClashDisplay",
           data,
           style: "normal" as const,
           weight: 400 as const,

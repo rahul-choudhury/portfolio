@@ -181,7 +181,7 @@ export default function DesignPage() {
                 </div>
                 <div className="flex items-baseline gap-4 border-b border-border pb-3">
                   <span className="font-serif text-lg font-medium text-text">
-                    Instrument Serif
+                    Clash Display
                   </span>
                   <span className="font-mono text-xs text-text-muted">
                     font-serif - titles, headings, display text

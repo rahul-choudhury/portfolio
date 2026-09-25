@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Instrument_Serif, JetBrains_Mono } from "next/font/google";
+import { JetBrains_Mono } from "next/font/google";
 import localFont from "next/font/local";
 import { MobileHaptics } from "@/components/mobile-haptics";
 import "./globals.css";
@@ -10,10 +10,8 @@ const satoshi = localFont({
   display: "swap",
 });
 
-const instrumentSerif = Instrument_Serif({
-  subsets: ["latin"],
-  weight: "400",
-  style: ["normal", "italic"],
+const clashDisplay = localFont({
+  src: "./fonts/ClashDisplay-Variable.woff2",
   variable: "--font-serif",
   display: "swap",
 });
@@ -49,7 +47,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${satoshi.className} ${satoshi.variable} ${instrumentSerif.variable} ${jetBrainsMono.variable} antialiased`}
+        className={`${satoshi.className} ${satoshi.variable} ${clashDisplay.variable} ${jetBrainsMono.variable} antialiased`}
       >
         <MobileHaptics />
         <main className="mx-auto max-w-4xl px-6 py-10 md:px-12 md:py-12">
