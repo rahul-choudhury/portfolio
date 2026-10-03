@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { JetBrains_Mono } from "next/font/google";
 import localFont from "next/font/local";
 import { MobileHaptics } from "@/components/mobile-haptics";
+import { ThemeProvider } from "@/components/theme-provider";
 import "./globals.css";
 
 const satoshi = localFont({
@@ -45,14 +46,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={`${satoshi.className} ${satoshi.variable} ${clashDisplay.variable} ${jetBrainsMono.variable} antialiased`}
       >
-        <MobileHaptics />
-        <main className="mx-auto max-w-4xl px-6 py-10 md:px-12 md:py-12">
-          {children}
-        </main>
+        <ThemeProvider>
+          <MobileHaptics />
+          <main className="mx-auto max-w-4xl px-6 py-10 md:px-12 md:py-12">
+            {children}
+          </main>
+        </ThemeProvider>
       </body>
     </html>
   );

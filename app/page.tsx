@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { ComponentProps } from "react";
 import { Reveal } from "@/components/motion-reveal";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { EmailLink } from "./email-link";
 
 export default function Home() {
@@ -35,7 +36,8 @@ export default function Home() {
             and interaction in the <InlineLink href="/lab">lab</InlineLink>, and
             document the components and decisions behind this site and my
             personal projects in its{" "}
-            <InlineLink href="/design-system">design system</InlineLink>.
+            <InlineLink href="/design-system">design system</InlineLink>. Oh,
+            and try pressing <ThemeToggle />
           </p>
         </Reveal>
 
