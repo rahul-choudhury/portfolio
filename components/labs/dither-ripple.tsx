@@ -11,18 +11,6 @@ import {
 import { LabStage } from "./lab-stage";
 import type { LabComponentProps } from "./lab-types";
 
-/** 8×8 Bayer matrix, normalized to 0–1. */
-const BAYER_8 = [
-  [0, 32, 8, 40, 2, 34, 10, 42],
-  [48, 16, 56, 24, 50, 18, 58, 26],
-  [12, 44, 4, 36, 14, 46, 6, 38],
-  [60, 28, 52, 20, 62, 30, 54, 22],
-  [3, 35, 11, 43, 1, 33, 9, 41],
-  [51, 19, 59, 27, 49, 17, 57, 25],
-  [15, 47, 7, 39, 13, 45, 5, 37],
-  [63, 31, 55, 23, 61, 29, 53, 21],
-].map((row) => row.map((value) => (value + 0.5) / 64));
-
 const CELL = 3;
 const DURATION_MS = 720;
 const RING_WIDTH = 0.38;
@@ -32,7 +20,17 @@ type Ripple = {
   x: number;
   y: number;
   start: number;
+  /** Per-ripple seed so the noise field is random but stable across frames. */
+  seed: number;
 };
+
+/** Deterministic 0–1 hash for a cell inside a ripple's noise field. */
+function cellNoise(cellX: number, cellY: number, seed: number) {
+  let n = seed ^ (cellX * 374761393) ^ (cellY * 668265263);
+  n = Math.imul(n ^ (n >>> 13), 1274126177);
+  n ^= n >>> 16;
+  return (n >>> 0) / 4294967296;
+}
 
 type Ink = {
   r: number;
@@ -169,10 +167,10 @@ export function DitherRipple({ compact = false }: LabComponentProps) {
             const intensity = sampleRipple(dist, radius, life);
             if (intensity <= 0) continue;
 
-            const threshold = BAYER_8[(y / CELL) % 8][(x / CELL) % 8];
+            const threshold = cellNoise(x / CELL, y / CELL, ripple.seed);
             if (intensity < threshold) continue;
 
-            // Ordered threshold already implies shade; alpha softens the exit.
+            // Stochastic threshold already implies shade; alpha softens the exit.
             const shade = 0.72 + intensity * 0.28;
             const alpha = Math.round(255 * shade);
 
@@ -215,6 +213,8 @@ export function DitherRipple({ compact = false }: LabComponentProps) {
     const y = event.clientY - rect.top;
     const now = performance.now();
 
+    const seed = (Math.random() * 0xffffffff) >>> 0;
+
     if (prefersReducedMotion) {
       ripplesRef.current = [
         {
@@ -222,12 +222,13 @@ export function DitherRipple({ compact = false }: LabComponentProps) {
           x,
           y,
           start: now - DURATION_MS * 0.55,
+          seed,
         },
       ];
     } else {
       ripplesRef.current = [
         ...ripplesRef.current.slice(-2),
-        { id: now, x, y, start: now },
+        { id: now, x, y, start: now, seed },
       ];
     }
 
