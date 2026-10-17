@@ -93,7 +93,8 @@ function resolveGreyPalette(element: Element): Ink[] {
  * in the same wave instead of one flat tone.
  */
 function pickGreyLevel(intensity: number, noise: number, shadeCount: number) {
-  const value = intensity * shadeCount;
+  // Lift mid intensities so the ripple body isn't stuck on the darkest stop.
+  const value = Math.pow(intensity, 0.72) * shadeCount;
   const base = Math.floor(value);
   const level = noise < value - base ? base + 1 : base;
   return Math.min(shadeCount, Math.max(0, level));
@@ -108,10 +109,11 @@ function sampleRipple(dist: number, radius: number, life: number): number {
 
   const normalized = dist / radius;
   const ring = 1 - Math.abs(normalized - (1 - RING_WIDTH * 0.55)) / RING_WIDTH;
-  const fill = (1 - normalized) ** 1.35 * 0.55;
+  // Keep fill strong enough that the wave body spans multiple grey stops.
+  const fill = (1 - normalized) ** 1.15 * 0.82;
   const wave = Math.max(ring, fill);
 
-  return Math.min(1, Math.max(0, wave * (1 - life * 0.72) * 1.15));
+  return Math.min(1, Math.max(0, wave * (1 - life * 0.68) * 1.2));
 }
 
 export function DitherRipple({ compact = false }: LabComponentProps) {
