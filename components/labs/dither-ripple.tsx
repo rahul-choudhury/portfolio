@@ -40,9 +40,9 @@ type Ink = {
 
 /**
  * Stops between accent (button) and accent-foreground.
- * Spaced so multiple greys read in one ripple; short of full punch.
+ * Wide gaps so several greys are obvious at button scale.
  */
-const GREY_STOPS = [0.34, 0.52, 0.7, 0.86] as const;
+const GREY_STOPS = [0.26, 0.48, 0.7, 0.9] as const;
 
 function parseCssRgb(value: string): Ink | null {
   const match = value.match(
