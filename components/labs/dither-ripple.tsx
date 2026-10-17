@@ -40,9 +40,9 @@ type Ink = {
 
 /**
  * Stops between accent (button) and accent-foreground.
- * Wide gaps so several greys are obvious at button scale.
+ * Three wide steps so neighbouring cells can read as different greys.
  */
-const GREY_STOPS = [0.26, 0.48, 0.7, 0.9] as const;
+const GREY_STOPS = [0.22, 0.55, 0.88] as const;
 
 function parseCssRgb(value: string): Ink | null {
   const match = value.match(
@@ -88,16 +88,20 @@ function resolveGreyPalette(element: Element): Ink[] {
 }
 
 /**
- * Multi-level stochastic dither: intensity picks a blend of neighbouring
- * greys (plus “skip” so the button shows through), so several shades appear
- * in the same wave instead of one flat tone.
+ * Multi-level stochastic dither:
+ * - `noise` decides whether the cell stays clear (button shows through)
+ * - a remixed noise picks which grey, with enough jitter that one local
+ *   patch can contain more than one stop
  */
 function pickGreyLevel(intensity: number, noise: number, shadeCount: number) {
-  // Lift mid intensities so the ripple body isn't stuck on the darkest stop.
-  const value = Math.pow(intensity, 0.72) * shadeCount;
-  const base = Math.floor(value);
-  const level = noise < value - base ? base + 1 : base;
-  return Math.min(shadeCount, Math.max(0, level));
+  if (intensity <= 0) return 0;
+  // Sparsity: clear cells carve the dither; keep some holes even at peak.
+  if (noise > Math.min(0.92, intensity * 0.95 + 0.12)) return 0;
+
+  const shadeNoise = (noise * 12.9898) % 1;
+  const expected = Math.pow(intensity, 0.65) * (shadeCount - 1);
+  const idx = Math.round(expected + (shadeNoise - 0.5) * 2.1);
+  return Math.min(shadeCount, Math.max(1, idx + 1));
 }
 
 function easeOutCubic(t: number) {
@@ -123,10 +127,9 @@ export function DitherRipple({ compact = false }: LabComponentProps) {
   const ripplesRef = useRef<Ripple[]>([]);
   const frameRef = useRef<number | null>(null);
   const paletteRef = useRef<Ink[]>([
-    { r: 90, g: 90, b: 90 },
-    { r: 130, g: 130, b: 130 },
-    { r: 170, g: 170, b: 170 },
-    { r: 210, g: 210, b: 210 },
+    { r: 70, g: 70, b: 70 },
+    { r: 140, g: 140, b: 140 },
+    { r: 220, g: 220, b: 220 },
   ]);
   const sizeRef = useRef({ width: 0, height: 0, maxRadius: 1 });
   const [rippleSeed, setRippleSeed] = useState(0);
