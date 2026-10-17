@@ -38,8 +38,11 @@ type Ink = {
   b: number;
 };
 
-/** Soft greys between accent and accent-foreground — never full white/black. */
-const GREY_MIXES = [28, 40, 52] as const;
+/**
+ * Greys between accent and accent-foreground.
+ * High enough to read clearly, short of full white/black punch.
+ */
+const GREY_MIXES = [55, 72, 88] as const;
 
 function parseCssRgb(value: string): Ink | null {
   const match = value.match(
@@ -97,9 +100,9 @@ export function DitherRipple({ compact = false }: LabComponentProps) {
   const ripplesRef = useRef<Ripple[]>([]);
   const frameRef = useRef<number | null>(null);
   const paletteRef = useRef<Ink[]>([
-    { r: 90, g: 90, b: 90 },
-    { r: 120, g: 120, b: 120 },
-    { r: 150, g: 150, b: 150 },
+    { r: 140, g: 140, b: 140 },
+    { r: 175, g: 175, b: 175 },
+    { r: 210, g: 210, b: 210 },
   ]);
   const sizeRef = useRef({ width: 0, height: 0, maxRadius: 1 });
   const [rippleSeed, setRippleSeed] = useState(0);
@@ -194,8 +197,7 @@ export function DitherRipple({ compact = false }: LabComponentProps) {
             if (level === 0) continue;
 
             const ink = palette[level - 1];
-            // Soften as the wave dies so greys don't sit too hard on the fill.
-            const alpha = Math.round((0.55 + intensity * 0.35) * (1 - life * 0.35) * 255);
+            const alpha = Math.round((0.7 + intensity * 0.25) * (1 - life * 0.25) * 255);
 
             for (let dy = 0; dy < CELL && y + dy < height; dy++) {
               for (let dx = 0; dx < CELL && x + dx < width; dx++) {
