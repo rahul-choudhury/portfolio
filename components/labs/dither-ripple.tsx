@@ -1,0 +1,308 @@
+"use client";
+
+import { Button } from "@rahul-choudhury/ui/components";
+import { usePrefersReducedMotion } from "@rahul-choudhury/ui/hooks";
+import {
+  useEffect,
+  useRef,
+  useState,
+  type PointerEvent as ReactPointerEvent,
+} from "react";
+import { LabStage } from "./lab-stage";
+import type { LabComponentProps } from "./lab-types";
+
+const CELL = 3;
+const DURATION_MS = 720;
+const RING_WIDTH = 0.38;
+
+type Ripple = {
+  id: number;
+  x: number;
+  y: number;
+  start: number;
+  /** Per-ripple seed so the noise field is random but stable across frames. */
+  seed: number;
+};
+
+/** Deterministic 0–1 hash for a cell inside a ripple's noise field. */
+function cellNoise(cellX: number, cellY: number, seed: number) {
+  let n = seed ^ (cellX * 374761393) ^ (cellY * 668265263);
+  n = Math.imul(n ^ (n >>> 13), 1274126177);
+  n ^= n >>> 16;
+  return (n >>> 0) / 4294967296;
+}
+
+type Ink = {
+  r: number;
+  g: number;
+  b: number;
+};
+
+/**
+ * Stops between accent (button) and accent-foreground.
+ * Three wide steps so neighbouring cells can read as different greys.
+ */
+const GREY_STOPS = [0.22, 0.55, 0.88] as const;
+
+function parseCssRgb(value: string): Ink | null {
+  const match = value.match(
+    /rgba?\((\d+)[,\s]+(\d+)[,\s]+(\d+)(?:[,\s/]+([\d.]+))?/,
+  );
+  if (!match) return null;
+  return {
+    r: Number(match[1]),
+    g: Number(match[2]),
+    b: Number(match[3]),
+  };
+}
+
+function resolveCssColor(element: Element, color: string): Ink {
+  const probe = document.createElement("span");
+  probe.style.color = color;
+  probe.style.position = "absolute";
+  probe.style.visibility = "hidden";
+  probe.style.pointerEvents = "none";
+  element.appendChild(probe);
+  const resolved =
+    parseCssRgb(getComputedStyle(probe).color) ?? {
+      r: 128,
+      g: 128,
+      b: 128,
+    };
+  probe.remove();
+  return resolved;
+}
+
+function mixInk(from: Ink, to: Ink, t: number): Ink {
+  return {
+    r: Math.round(from.r + (to.r - from.r) * t),
+    g: Math.round(from.g + (to.g - from.g) * t),
+    b: Math.round(from.b + (to.b - from.b) * t),
+  };
+}
+
+function resolveGreyPalette(element: Element): Ink[] {
+  const accent = resolveCssColor(element, "var(--color-accent)");
+  const foreground = resolveCssColor(element, "var(--color-accent-foreground)");
+  return GREY_STOPS.map((stop) => mixInk(accent, foreground, stop));
+}
+
+/**
+ * Multi-level stochastic dither:
+ * - `noise` decides whether the cell stays clear (button shows through)
+ * - a remixed noise picks which grey, with enough jitter that one local
+ *   patch can contain more than one stop
+ */
+function pickGreyLevel(intensity: number, noise: number, shadeCount: number) {
+  if (intensity <= 0) return 0;
+  // Sparsity: clear cells carve the dither; keep some holes even at peak.
+  if (noise > Math.min(0.92, intensity * 0.95 + 0.12)) return 0;
+
+  const shadeNoise = (noise * 12.9898) % 1;
+  const expected = Math.pow(intensity, 0.65) * (shadeCount - 1);
+  const idx = Math.round(expected + (shadeNoise - 0.5) * 2.1);
+  return Math.min(shadeCount, Math.max(1, idx + 1));
+}
+
+function easeOutCubic(t: number) {
+  return 1 - (1 - t) ** 3;
+}
+
+function sampleRipple(dist: number, radius: number, life: number): number {
+  if (radius <= 0 || dist > radius) return 0;
+
+  const normalized = dist / radius;
+  const ring = 1 - Math.abs(normalized - (1 - RING_WIDTH * 0.55)) / RING_WIDTH;
+  // Keep fill strong enough that the wave body spans multiple grey stops.
+  const fill = (1 - normalized) ** 1.15 * 0.82;
+  const wave = Math.max(ring, fill);
+
+  return Math.min(1, Math.max(0, wave * (1 - life * 0.68) * 1.2));
+}
+
+export function DitherRipple({ compact = false }: LabComponentProps) {
+  const prefersReducedMotion = usePrefersReducedMotion();
+  const stageRef = useRef<HTMLDivElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const ripplesRef = useRef<Ripple[]>([]);
+  const frameRef = useRef<number | null>(null);
+  const paletteRef = useRef<Ink[]>([
+    { r: 70, g: 70, b: 70 },
+    { r: 140, g: 140, b: 140 },
+    { r: 220, g: 220, b: 220 },
+  ]);
+  const sizeRef = useRef({ width: 0, height: 0, maxRadius: 1 });
+  const [rippleSeed, setRippleSeed] = useState(0);
+
+  useEffect(() => {
+    const stage = stageRef.current;
+    const canvas = canvasRef.current;
+    if (!stage || !canvas) return;
+
+    const syncMetrics = () => {
+      const rect = stage.getBoundingClientRect();
+      const width = Math.max(1, Math.round(rect.width));
+      const height = Math.max(1, Math.round(rect.height));
+
+      // CSS-pixel buffer keeps the dither cells chunky and crisp.
+      canvas.width = width;
+      canvas.height = height;
+      canvas.style.width = `${width}px`;
+      canvas.style.height = `${height}px`;
+
+      sizeRef.current = {
+        width,
+        height,
+        maxRadius: Math.hypot(width, height) * 1.05,
+      };
+      paletteRef.current = resolveGreyPalette(stage);
+    };
+
+    syncMetrics();
+
+    const observer = new ResizeObserver(syncMetrics);
+    observer.observe(stage);
+
+    const themeObserver = new MutationObserver(() => {
+      paletteRef.current = resolveGreyPalette(stage);
+    });
+    themeObserver.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class", "data-theme", "style"],
+    });
+
+    return () => {
+      observer.disconnect();
+      themeObserver.disconnect();
+    };
+  }, []);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const context = canvas.getContext("2d");
+    if (!context) return;
+
+    const draw = (now: number) => {
+      const { width, height, maxRadius } = sizeRef.current;
+      context.clearRect(0, 0, width, height);
+
+      const active = ripplesRef.current.filter(
+        (ripple) => now - ripple.start < DURATION_MS,
+      );
+      ripplesRef.current = active;
+
+      if (active.length === 0) {
+        frameRef.current = null;
+        return;
+      }
+
+      const palette = paletteRef.current;
+      const image = context.createImageData(width, height);
+      const { data } = image;
+
+      for (const ripple of active) {
+        const life = (now - ripple.start) / DURATION_MS;
+        const radius = easeOutCubic(Math.min(1, life)) * maxRadius;
+
+        for (let y = 0; y < height; y += CELL) {
+          for (let x = 0; x < width; x += CELL) {
+            const cx = x + CELL / 2;
+            const cy = y + CELL / 2;
+            const dist = Math.hypot(cx - ripple.x, cy - ripple.y);
+            // sampleRipple already fades with life; level pick thins via skip.
+            const intensity = sampleRipple(dist, radius, life);
+            if (intensity <= 0) continue;
+
+            const noise = cellNoise(x / CELL, y / CELL, ripple.seed);
+            const level = pickGreyLevel(intensity, noise, palette.length);
+            if (level === 0) continue;
+
+            const ink = palette[level - 1];
+
+            for (let dy = 0; dy < CELL && y + dy < height; dy++) {
+              for (let dx = 0; dx < CELL && x + dx < width; dx++) {
+                const index = ((y + dy) * width + (x + dx)) * 4;
+                if (data[index + 3] !== 0) continue;
+                data[index] = ink.r;
+                data[index + 1] = ink.g;
+                data[index + 2] = ink.b;
+                data[index + 3] = 255;
+              }
+            }
+          }
+        }
+      }
+
+      context.putImageData(image, 0, 0);
+      frameRef.current = window.requestAnimationFrame(draw);
+    };
+
+    if (ripplesRef.current.length > 0 && frameRef.current === null) {
+      frameRef.current = window.requestAnimationFrame(draw);
+    }
+
+    return () => {
+      if (frameRef.current !== null) {
+        window.cancelAnimationFrame(frameRef.current);
+        frameRef.current = null;
+      }
+    };
+  }, [rippleSeed]);
+
+  function spawnRipple(event: ReactPointerEvent<HTMLButtonElement>) {
+    const stage = stageRef.current;
+    if (!stage) return;
+
+    const rect = stage.getBoundingClientRect();
+    const x = event.clientX - rect.left;
+    const y = event.clientY - rect.top;
+    const now = performance.now();
+
+    const seed = (Math.random() * 0xffffffff) >>> 0;
+
+    if (prefersReducedMotion) {
+      ripplesRef.current = [
+        {
+          id: now,
+          x,
+          y,
+          start: now - DURATION_MS * 0.55,
+          seed,
+        },
+      ];
+    } else {
+      ripplesRef.current = [
+        ...ripplesRef.current.slice(-2),
+        { id: now, x, y, start: now, seed },
+      ];
+    }
+
+    setRippleSeed((value) => value + 1);
+  }
+
+  return (
+    <LabStage compact={compact}>
+      <div className="flex items-center justify-center">
+        <div
+          ref={stageRef}
+          className="relative inline-flex overflow-hidden rounded-sm"
+        >
+          <Button
+            size={compact ? "md" : "lg"}
+            className="rounded-sm px-5 shadow-sm"
+            onPointerDown={spawnRipple}
+          >
+            Press me
+          </Button>
+          <canvas
+            ref={canvasRef}
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 size-full rounded-[inherit]"
+          />
+        </div>
+      </div>
+    </LabStage>
+  );
+}
