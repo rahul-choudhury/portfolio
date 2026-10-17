@@ -38,28 +38,41 @@ type Ink = {
   b: number;
 };
 
-function resolveInk(element: Element): Ink {
-  const probe = document.createElement("span");
-  probe.style.color = "var(--color-accent-foreground)";
-  probe.style.position = "absolute";
-  probe.style.visibility = "hidden";
-  probe.style.pointerEvents = "none";
-  element.appendChild(probe);
-  const resolved = getComputedStyle(probe).color;
-  probe.remove();
+/** Soft greys between accent and accent-foreground — never full white/black. */
+const GREY_MIXES = [28, 40, 52] as const;
 
-  const match = resolved.match(
+function parseCssRgb(value: string): Ink | null {
+  const match = value.match(
     /rgba?\((\d+)[,\s]+(\d+)[,\s]+(\d+)(?:[,\s/]+([\d.]+))?/,
   );
-  if (!match) {
-    return { r: 255, g: 255, b: 255 };
-  }
-
+  if (!match) return null;
   return {
     r: Number(match[1]),
     g: Number(match[2]),
     b: Number(match[3]),
   };
+}
+
+function resolveGreyPalette(element: Element): Ink[] {
+  const probe = document.createElement("span");
+  probe.style.position = "absolute";
+  probe.style.visibility = "hidden";
+  probe.style.pointerEvents = "none";
+  element.appendChild(probe);
+
+  const palette = GREY_MIXES.map((amount) => {
+    probe.style.color = `color-mix(in srgb, var(--color-accent-foreground) ${amount}%, var(--color-accent))`;
+    return (
+      parseCssRgb(getComputedStyle(probe).color) ?? {
+        r: 128,
+        g: 128,
+        b: 128,
+      }
+    );
+  });
+
+  probe.remove();
+  return palette;
 }
 
 function easeOutCubic(t: number) {
@@ -83,7 +96,11 @@ export function DitherRipple({ compact = false }: LabComponentProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const ripplesRef = useRef<Ripple[]>([]);
   const frameRef = useRef<number | null>(null);
-  const inkRef = useRef<Ink>({ r: 255, g: 255, b: 255 });
+  const paletteRef = useRef<Ink[]>([
+    { r: 90, g: 90, b: 90 },
+    { r: 120, g: 120, b: 120 },
+    { r: 150, g: 150, b: 150 },
+  ]);
   const sizeRef = useRef({ width: 0, height: 0, maxRadius: 1 });
   const [rippleSeed, setRippleSeed] = useState(0);
 
@@ -108,7 +125,7 @@ export function DitherRipple({ compact = false }: LabComponentProps) {
         height,
         maxRadius: Math.hypot(width, height) * 1.05,
       };
-      inkRef.current = resolveInk(stage);
+      paletteRef.current = resolveGreyPalette(stage);
     };
 
     syncMetrics();
@@ -117,7 +134,7 @@ export function DitherRipple({ compact = false }: LabComponentProps) {
     observer.observe(stage);
 
     const themeObserver = new MutationObserver(() => {
-      inkRef.current = resolveInk(stage);
+      paletteRef.current = resolveGreyPalette(stage);
     });
     themeObserver.observe(document.documentElement, {
       attributes: true,
@@ -151,7 +168,8 @@ export function DitherRipple({ compact = false }: LabComponentProps) {
         return;
       }
 
-      const ink = inkRef.current;
+      const palette = paletteRef.current;
+      const levels = palette.length + 1;
       const image = context.createImageData(width, height);
       const { data } = image;
 
@@ -167,12 +185,17 @@ export function DitherRipple({ compact = false }: LabComponentProps) {
             const intensity = sampleRipple(dist, radius, life);
             if (intensity <= 0) continue;
 
-            const threshold = cellNoise(x / CELL, y / CELL, ripple.seed);
-            if (intensity < threshold) continue;
+            const noise = cellNoise(x / CELL, y / CELL, ripple.seed);
+            const quantized = intensity * levels + (noise - 0.5);
+            const level = Math.min(
+              palette.length,
+              Math.max(0, Math.floor(quantized)),
+            );
+            if (level === 0) continue;
 
-            // Stochastic threshold already implies shade; alpha softens the exit.
-            const shade = 0.72 + intensity * 0.28;
-            const alpha = Math.round(255 * shade);
+            const ink = palette[level - 1];
+            // Soften as the wave dies so greys don't sit too hard on the fill.
+            const alpha = Math.round((0.55 + intensity * 0.35) * (1 - life * 0.35) * 255);
 
             for (let dy = 0; dy < CELL && y + dy < height; dy++) {
               for (let dx = 0; dx < CELL && x + dx < width; dx++) {
