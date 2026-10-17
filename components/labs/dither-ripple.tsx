@@ -200,15 +200,14 @@ export function DitherRipple({ compact = false }: LabComponentProps) {
       for (const ripple of active) {
         const life = (now - ripple.start) / DURATION_MS;
         const radius = easeOutCubic(Math.min(1, life)) * maxRadius;
-        // Fade by thinning cells, not by washing every shade toward one alpha.
-        const lifeFade = 1 - life * 0.72;
 
         for (let y = 0; y < height; y += CELL) {
           for (let x = 0; x < width; x += CELL) {
             const cx = x + CELL / 2;
             const cy = y + CELL / 2;
             const dist = Math.hypot(cx - ripple.x, cy - ripple.y);
-            const intensity = sampleRipple(dist, radius, life) * lifeFade;
+            // sampleRipple already fades with life; level pick thins via skip.
+            const intensity = sampleRipple(dist, radius, life);
             if (intensity <= 0) continue;
 
             const noise = cellNoise(x / CELL, y / CELL, ripple.seed);
