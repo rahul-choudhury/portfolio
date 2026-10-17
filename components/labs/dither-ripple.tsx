@@ -39,10 +39,10 @@ type Ink = {
 };
 
 /**
- * Greys between accent and accent-foreground.
- * High enough to read clearly, short of full white/black punch.
+ * Stops between accent (button) and accent-foreground.
+ * Spaced so multiple greys read in one ripple; short of full punch.
  */
-const GREY_MIXES = [55, 72, 88] as const;
+const GREY_STOPS = [0.34, 0.52, 0.7, 0.86] as const;
 
 function parseCssRgb(value: string): Ink | null {
   const match = value.match(
@@ -56,26 +56,47 @@ function parseCssRgb(value: string): Ink | null {
   };
 }
 
-function resolveGreyPalette(element: Element): Ink[] {
+function resolveCssColor(element: Element, color: string): Ink {
   const probe = document.createElement("span");
+  probe.style.color = color;
   probe.style.position = "absolute";
   probe.style.visibility = "hidden";
   probe.style.pointerEvents = "none";
   element.appendChild(probe);
-
-  const palette = GREY_MIXES.map((amount) => {
-    probe.style.color = `color-mix(in srgb, var(--color-accent-foreground) ${amount}%, var(--color-accent))`;
-    return (
-      parseCssRgb(getComputedStyle(probe).color) ?? {
-        r: 128,
-        g: 128,
-        b: 128,
-      }
-    );
-  });
-
+  const resolved =
+    parseCssRgb(getComputedStyle(probe).color) ?? {
+      r: 128,
+      g: 128,
+      b: 128,
+    };
   probe.remove();
-  return palette;
+  return resolved;
+}
+
+function mixInk(from: Ink, to: Ink, t: number): Ink {
+  return {
+    r: Math.round(from.r + (to.r - from.r) * t),
+    g: Math.round(from.g + (to.g - from.g) * t),
+    b: Math.round(from.b + (to.b - from.b) * t),
+  };
+}
+
+function resolveGreyPalette(element: Element): Ink[] {
+  const accent = resolveCssColor(element, "var(--color-accent)");
+  const foreground = resolveCssColor(element, "var(--color-accent-foreground)");
+  return GREY_STOPS.map((stop) => mixInk(accent, foreground, stop));
+}
+
+/**
+ * Multi-level stochastic dither: intensity picks a blend of neighbouring
+ * greys (plus “skip” so the button shows through), so several shades appear
+ * in the same wave instead of one flat tone.
+ */
+function pickGreyLevel(intensity: number, noise: number, shadeCount: number) {
+  const value = intensity * shadeCount;
+  const base = Math.floor(value);
+  const level = noise < value - base ? base + 1 : base;
+  return Math.min(shadeCount, Math.max(0, level));
 }
 
 function easeOutCubic(t: number) {
@@ -100,8 +121,9 @@ export function DitherRipple({ compact = false }: LabComponentProps) {
   const ripplesRef = useRef<Ripple[]>([]);
   const frameRef = useRef<number | null>(null);
   const paletteRef = useRef<Ink[]>([
-    { r: 140, g: 140, b: 140 },
-    { r: 175, g: 175, b: 175 },
+    { r: 90, g: 90, b: 90 },
+    { r: 130, g: 130, b: 130 },
+    { r: 170, g: 170, b: 170 },
     { r: 210, g: 210, b: 210 },
   ]);
   const sizeRef = useRef({ width: 0, height: 0, maxRadius: 1 });
@@ -172,41 +194,37 @@ export function DitherRipple({ compact = false }: LabComponentProps) {
       }
 
       const palette = paletteRef.current;
-      const levels = palette.length + 1;
       const image = context.createImageData(width, height);
       const { data } = image;
 
       for (const ripple of active) {
         const life = (now - ripple.start) / DURATION_MS;
         const radius = easeOutCubic(Math.min(1, life)) * maxRadius;
+        // Fade by thinning cells, not by washing every shade toward one alpha.
+        const lifeFade = 1 - life * 0.72;
 
         for (let y = 0; y < height; y += CELL) {
           for (let x = 0; x < width; x += CELL) {
             const cx = x + CELL / 2;
             const cy = y + CELL / 2;
             const dist = Math.hypot(cx - ripple.x, cy - ripple.y);
-            const intensity = sampleRipple(dist, radius, life);
+            const intensity = sampleRipple(dist, radius, life) * lifeFade;
             if (intensity <= 0) continue;
 
             const noise = cellNoise(x / CELL, y / CELL, ripple.seed);
-            const quantized = intensity * levels + (noise - 0.5);
-            const level = Math.min(
-              palette.length,
-              Math.max(0, Math.floor(quantized)),
-            );
+            const level = pickGreyLevel(intensity, noise, palette.length);
             if (level === 0) continue;
 
             const ink = palette[level - 1];
-            const alpha = Math.round((0.7 + intensity * 0.25) * (1 - life * 0.25) * 255);
 
             for (let dy = 0; dy < CELL && y + dy < height; dy++) {
               for (let dx = 0; dx < CELL && x + dx < width; dx++) {
                 const index = ((y + dy) * width + (x + dx)) * 4;
-                if (data[index + 3] >= alpha) continue;
+                if (data[index + 3] !== 0) continue;
                 data[index] = ink.r;
                 data[index + 1] = ink.g;
                 data[index + 2] = ink.b;
-                data[index + 3] = alpha;
+                data[index + 3] = 255;
               }
             }
           }
