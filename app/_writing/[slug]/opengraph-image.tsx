@@ -125,10 +125,7 @@ export default async function Image({
       ...size,
       fonts: await Promise.all([
         readFile(
-          path.join(
-            process.cwd(),
-            "app/fonts/ClashDisplay-Regular.ttf",
-          ),
+          path.join(process.cwd(), "app/fonts/ClashDisplay-Regular.ttf"),
         ).then((data) => ({
           name: "ClashDisplay",
           data,
