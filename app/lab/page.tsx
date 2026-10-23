@@ -31,13 +31,13 @@ export default function LabPage() {
         </Reveal>
       </header>
 
-      <div className="grid grid-cols-1 gap-4">
-        {LABS.map((lab, index) => (
-          <Reveal key={lab.slug} delay={0.15 + index * 0.05} inView>
-            <LabCard lab={lab} />
-          </Reveal>
-        ))}
-      </div>
+      <Reveal delay={0.15}>
+        <div className="grid grid-cols-1 gap-4">
+          {LABS.map((lab) => (
+            <LabCard key={lab.slug} lab={lab} />
+          ))}
+        </div>
+      </Reveal>
     </div>
   );
 }
