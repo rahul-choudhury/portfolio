@@ -2,8 +2,15 @@ import { ActionFeedback } from "@/components/labs/action-feedback";
 import { GooeyInput } from "@/components/labs/gooey-input";
 import type { Lab } from "@/components/labs/lab-types";
 import { MagneticAction } from "@/components/labs/magnetic-action";
+import { ModelSlider } from "@/components/labs/model-slider";
 
 export const LABS: Lab[] = [
+  {
+    slug: "model-slider",
+    title: "Model Slider",
+    description: "ChatGPT desktop app's model slider/picker.",
+    Preview: ModelSlider,
+  },
   {
     slug: "gooey-input",
     title: "Gooey Input",
