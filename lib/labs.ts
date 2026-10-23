@@ -1,5 +1,5 @@
 import { ActionFeedback } from "@/components/labs/action-feedback";
-import { GooeyInput } from "@/components/labs/gooey-input";
+import { Composer } from "@/components/labs/composer";
 import type { Lab } from "@/components/labs/lab-types";
 import { MagneticAction } from "@/components/labs/magnetic-action";
 import { ModelSlider } from "@/components/labs/model-slider";
@@ -12,10 +12,11 @@ export const LABS: Lab[] = [
     Preview: ModelSlider,
   },
   {
-    slug: "gooey-input",
-    title: "Gooey Input",
-    description: "A search field whose icon dissolves into the text.",
-    Preview: GooeyInput,
+    slug: "composer",
+    title: "Composer",
+    description:
+      "ChatGPT's composer, whose add button pulls away from the field.",
+    Preview: Composer,
   },
   {
     slug: "magnetic-action",
