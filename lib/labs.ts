@@ -1,10 +1,17 @@
 import { ActionFeedback } from "@/components/labs/action-feedback";
+import { Bot } from "@/components/labs/bot";
 import { Composer } from "@/components/labs/composer";
 import type { Lab } from "@/components/labs/lab-types";
 import { MagneticAction } from "@/components/labs/magnetic-action";
 import { ModelSlider } from "@/components/labs/model-slider";
 
 export const LABS: Lab[] = [
+  {
+    slug: "bot",
+    title: "Bot",
+    description: "Grok Bot's default avatar, whose eyes follow the pointer.",
+    Preview: Bot,
+  },
   {
     slug: "model-slider",
     title: "Model Slider",

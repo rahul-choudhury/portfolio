@@ -5,12 +5,14 @@ type LabStageProps = {
   children: ReactNode;
   className?: string;
   compact?: boolean;
+  fill?: boolean;
 };
 
 export function LabStage({
   children,
   className,
   compact = false,
+  fill = false,
 }: LabStageProps) {
   return (
     <div
@@ -24,7 +26,12 @@ export function LabStage({
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 border-border/70 bg-[linear-gradient(to_right,currentColor_1px,transparent_1px),linear-gradient(to_bottom,currentColor_1px,transparent_1px)] bg-size-[24px_24px] text-text/2.5"
       />
-      <div className="relative flex w-full items-center justify-center">
+      <div
+        className={cn(
+          "flex w-full items-center justify-center",
+          fill ? "absolute inset-0" : "relative",
+        )}
+      >
         {children}
       </div>
     </div>
