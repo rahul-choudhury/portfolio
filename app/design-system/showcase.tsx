@@ -23,7 +23,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
   EmptyState,
-  Field,
+  FieldDescription,
+  FieldError,
+  FieldItem,
+  FieldLabel,
+  FieldRoot,
   Input,
   Popover,
   PopoverContent,
@@ -199,25 +203,25 @@ export function Showcase() {
           <Row label="States">
             <div className="space-y-3">
               <StatePreview label="Default">
-                <Field.Root>
-                  <Field.Label>Message</Field.Label>
+                <FieldRoot>
+                  <FieldLabel>Message</FieldLabel>
                   <Textarea placeholder="Write something..." rows={3} />
-                </Field.Root>
+                </FieldRoot>
               </StatePreview>
               <StatePreview label="Invalid">
-                <Field.Root invalid>
-                  <Field.Label>Error</Field.Label>
+                <FieldRoot invalid>
+                  <FieldLabel>Error</FieldLabel>
                   <Textarea defaultValue="Too short" rows={3} />
-                  <Field.Error>
+                  <FieldError>
                     Message must be at least 20 characters.
-                  </Field.Error>
-                </Field.Root>
+                  </FieldError>
+                </FieldRoot>
               </StatePreview>
               <StatePreview label="Disabled">
-                <Field.Root disabled>
-                  <Field.Label>Disabled</Field.Label>
+                <FieldRoot disabled>
+                  <FieldLabel>Disabled</FieldLabel>
                   <Textarea placeholder="Disabled" rows={3} />
-                </Field.Root>
+                </FieldRoot>
               </StatePreview>
             </div>
           </Row>
@@ -275,140 +279,138 @@ export function Showcase() {
       {/* ---- Checkbox ---- */}
       <Section title="Checkbox">
         <div className="flex flex-col gap-3">
-          <Field.Root>
-            <Field.Label className="inline-flex items-center gap-2">
+          <FieldRoot>
+            <FieldLabel className="inline-flex items-center gap-2">
               <Checkbox
                 checked={checkboxA}
                 name="design-system-checkbox-unchecked"
                 onCheckedChange={setCheckboxA}
               />
               <span>Unchecked by default</span>
-            </Field.Label>
-          </Field.Root>
-          <Field.Root>
-            <Field.Label className="inline-flex items-center gap-2">
+            </FieldLabel>
+          </FieldRoot>
+          <FieldRoot>
+            <FieldLabel className="inline-flex items-center gap-2">
               <Checkbox
                 checked={checkboxB}
                 name="design-system-checkbox-checked"
                 onCheckedChange={setCheckboxB}
               />
               <span>Checked by default</span>
-            </Field.Label>
-          </Field.Root>
-          <Field.Root disabled>
-            <Field.Label className="inline-flex items-center gap-2">
+            </FieldLabel>
+          </FieldRoot>
+          <FieldRoot disabled>
+            <FieldLabel className="inline-flex items-center gap-2">
               <Checkbox disabled name="design-system-checkbox-disabled" />
               <span>Disabled</span>
-            </Field.Label>
-          </Field.Root>
-          <Field.Root>
-            <Field.Label className="inline-flex items-center gap-2">
+            </FieldLabel>
+          </FieldRoot>
+          <FieldRoot>
+            <FieldLabel className="inline-flex items-center gap-2">
               <Checkbox
                 indeterminate
                 name="design-system-checkbox-indeterminate"
               />
               <span>Indeterminate</span>
-            </Field.Label>
-          </Field.Root>
+            </FieldLabel>
+          </FieldRoot>
         </div>
       </Section>
 
       {/* ---- Radio Group ---- */}
       <Section title="Radio Group">
-        <Field.Root>
-          <Field.Label>Options</Field.Label>
+        <FieldRoot>
+          <FieldLabel>Options</FieldLabel>
           <RadioGroup
             name="design-system-radio-options"
             value={radio}
             onValueChange={(v) => setRadio(v as string)}
           >
-            <Field.Item>
-              <Field.Label className="inline-flex items-center gap-2">
+            <FieldItem>
+              <FieldLabel className="inline-flex items-center gap-2">
                 <RadioItem value="option-1" />
                 <span>Option 1</span>
-              </Field.Label>
-            </Field.Item>
-            <Field.Item>
-              <Field.Label className="inline-flex items-center gap-2">
+              </FieldLabel>
+            </FieldItem>
+            <FieldItem>
+              <FieldLabel className="inline-flex items-center gap-2">
                 <RadioItem value="option-2" />
                 <span>Option 2</span>
-              </Field.Label>
-            </Field.Item>
-            <Field.Item disabled>
-              <Field.Label className="inline-flex items-center gap-2">
+              </FieldLabel>
+            </FieldItem>
+            <FieldItem disabled>
+              <FieldLabel className="inline-flex items-center gap-2">
                 <RadioItem value="option-3" disabled />
                 <span>Disabled</span>
-              </Field.Label>
-            </Field.Item>
+              </FieldLabel>
+            </FieldItem>
           </RadioGroup>
-        </Field.Root>
+        </FieldRoot>
       </Section>
 
       {/* ---- Switch ---- */}
       <Section title="Switch">
         <div className="flex flex-col gap-3">
-          <Field.Root>
-            <Field.Label className="inline-flex items-center gap-2">
+          <FieldRoot>
+            <FieldLabel className="inline-flex items-center gap-2">
               <Switch
                 checked={switchA}
                 name="design-system-switch-off"
                 onCheckedChange={setSwitchA}
               />
               <span>Off by default</span>
-            </Field.Label>
-          </Field.Root>
-          <Field.Root>
-            <Field.Label className="inline-flex items-center gap-2">
+            </FieldLabel>
+          </FieldRoot>
+          <FieldRoot>
+            <FieldLabel className="inline-flex items-center gap-2">
               <Switch
                 checked={switchB}
                 name="design-system-switch-on"
                 onCheckedChange={setSwitchB}
               />
               <span>On by default</span>
-            </Field.Label>
-          </Field.Root>
-          <Field.Root disabled>
-            <Field.Label className="inline-flex items-center gap-2">
+            </FieldLabel>
+          </FieldRoot>
+          <FieldRoot disabled>
+            <FieldLabel className="inline-flex items-center gap-2">
               <Switch disabled name="design-system-switch-disabled" />
               <span>Disabled</span>
-            </Field.Label>
-          </Field.Root>
+            </FieldLabel>
+          </FieldRoot>
         </div>
       </Section>
 
       {/* ---- Field Composition ---- */}
       <Section title="Field Composition">
         <div className="max-w-sm space-y-6">
-          <Field.Root>
-            <Field.Label>Email</Field.Label>
+          <FieldRoot>
+            <FieldLabel>Email</FieldLabel>
             <Input required type="email" placeholder="you@example.com" />
-            <Field.Description>
+            <FieldDescription>
               We&apos;ll never share your email.
-            </Field.Description>
-          </Field.Root>
+            </FieldDescription>
+          </FieldRoot>
 
-          <Field.Root invalid>
-            <Field.Label>Username</Field.Label>
+          <FieldRoot invalid>
+            <FieldLabel>Username</FieldLabel>
             <Input defaultValue="ab" />
-            <Field.Error>Username must be at least 3 characters.</Field.Error>
-          </Field.Root>
+            <FieldError>Username must be at least 3 characters.</FieldError>
+          </FieldRoot>
 
-          <Field.Root disabled>
-            <Field.Label>Organization</Field.Label>
+          <FieldRoot disabled>
+            <FieldLabel>Organization</FieldLabel>
             <Input defaultValue="Acme Corp" />
-            <Field.Description>
-              Contact support to change this.
-            </Field.Description>
-          </Field.Root>
+            <FieldDescription>Contact support to change this.</FieldDescription>
+          </FieldRoot>
 
-          <Field.Root>
-            <Field.Label>Bio</Field.Label>
+          <FieldRoot>
+            <FieldLabel>Bio</FieldLabel>
             <Textarea rows={3} placeholder="Tell us about yourself..." />
-            <Field.Description>Markdown supported.</Field.Description>
-          </Field.Root>
+            <FieldDescription>Markdown supported.</FieldDescription>
+          </FieldRoot>
 
-          <Field.Root>
-            <Field.Label>Favorite Font</Field.Label>
+          <FieldRoot>
+            <FieldLabel>Favorite Font</FieldLabel>
             <Select defaultValue="sans">
               <SelectTrigger>
                 <SelectValue placeholder="Choose a font..." />
@@ -419,24 +421,24 @@ export function Showcase() {
                 <SelectItem value="mono">Monospace</SelectItem>
               </SelectContent>
             </Select>
-            <Field.Description>
+            <FieldDescription>
               Used for future theme personalization.
-            </Field.Description>
-          </Field.Root>
+            </FieldDescription>
+          </FieldRoot>
 
-          <Field.Root>
-            <Field.Label className="inline-flex items-center gap-2">
+          <FieldRoot>
+            <FieldLabel className="inline-flex items-center gap-2">
               <Checkbox
                 checked={checkboxA}
                 name="design-system-checkbox-updates"
                 onCheckedChange={setCheckboxA}
               />
               <span>Accept updates</span>
-            </Field.Label>
-            <Field.Description>
+            </FieldLabel>
+            <FieldDescription>
               Occasional product and writing updates.
-            </Field.Description>
-          </Field.Root>
+            </FieldDescription>
+          </FieldRoot>
         </div>
       </Section>
 
