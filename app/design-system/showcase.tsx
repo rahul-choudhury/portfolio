@@ -4,6 +4,7 @@ import {
   DotsThreeIcon,
   FileTextIcon,
   InfoIcon,
+  MagnifyingGlassIcon,
   PaperPlaneTiltIcon,
 } from "@phosphor-icons/react";
 import {
@@ -151,15 +152,15 @@ export function Showcase() {
       <Section title="Card">
         <div className="grid gap-4 sm:grid-cols-3">
           <Card className="p-4">
-            <p className="text-sm font-medium text-text">Default</p>
-            <p className="mt-1 text-sm text-text-secondary">
-              Plain surface, no border.
-            </p>
-          </Card>
-          <Card variant="bordered" className="p-4">
             <p className="text-sm font-medium text-text">Bordered</p>
             <p className="mt-1 text-sm text-text-secondary">
-              Visual separation.
+              The default. Visual separation.
+            </p>
+          </Card>
+          <Card variant="plain" className="p-4">
+            <p className="text-sm font-medium text-text">Plain</p>
+            <p className="mt-1 text-sm text-text-secondary">
+              Surface only, no border.
             </p>
           </Card>
           <Card variant="elevated" className="p-4">
@@ -194,6 +195,17 @@ export function Showcase() {
               </StatePreview>
             </div>
           </Row>
+          <Row label="Bare">
+            <div className="flex items-center gap-2 rounded-md border border-border bg-surface pl-3 focus-within:border-border-strong">
+              <MagnifyingGlassIcon size={16} className="text-text-muted" />
+              <Input
+                variant="bare"
+                aria-label="Search"
+                placeholder="Search inside a custom container"
+                className="px-0"
+              />
+            </div>
+          </Row>
         </div>
       </Section>
 
@@ -223,6 +235,20 @@ export function Showcase() {
                   <Textarea placeholder="Disabled" rows={3} />
                 </FieldRoot>
               </StatePreview>
+            </div>
+          </Row>
+          <Row label="Bare">
+            <div className="flex items-end gap-2 rounded-lg border border-border bg-surface p-2 focus-within:border-border-strong">
+              <Textarea
+                variant="bare"
+                aria-label="Message"
+                rows={1}
+                placeholder="Bare textarea in a composer"
+                className="field-sizing-content max-h-32 resize-none"
+              />
+              <Button size="icon" aria-label="Send">
+                <PaperPlaneTiltIcon size={16} />
+              </Button>
             </div>
           </Row>
         </div>
@@ -271,6 +297,43 @@ export function Showcase() {
                   </SelectContent>
                 </Select>
               </StatePreview>
+
+              <StatePreview label="Disabled item">
+                <Select defaultValue="sans">
+                  <SelectTrigger>
+                    <SelectValue placeholder="Choose a font..." />
+                  </SelectTrigger>
+                  <SelectContent alignItemWithTrigger={false}>
+                    <SelectItem value="sans">Sans-serif</SelectItem>
+                    <SelectItem value="serif" disabled>
+                      Serif (unavailable)
+                    </SelectItem>
+                    <SelectItem value="mono">Monospace</SelectItem>
+                  </SelectContent>
+                </Select>
+              </StatePreview>
+            </div>
+          </Row>
+          <Row label="Ghost trigger, popup aligned to start">
+            <div>
+              <Select defaultValue="sans" size="sm">
+                <SelectTrigger
+                  variant="ghost"
+                  aria-label="Font"
+                  className="w-auto"
+                >
+                  <SelectValue placeholder="Choose a font..." />
+                </SelectTrigger>
+                <SelectContent
+                  align="start"
+                  alignItemWithTrigger={false}
+                  className="min-w-56"
+                >
+                  <SelectItem value="sans">Sans-serif</SelectItem>
+                  <SelectItem value="serif">Serif</SelectItem>
+                  <SelectItem value="mono">Monospace</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
           </Row>
         </div>
@@ -314,6 +377,12 @@ export function Showcase() {
               <span>Indeterminate</span>
             </FieldLabel>
           </FieldRoot>
+          <FieldRoot invalid>
+            <FieldLabel className="inline-flex items-center gap-2">
+              <Checkbox name="design-system-checkbox-invalid" />
+              <span>Invalid</span>
+            </FieldLabel>
+          </FieldRoot>
         </div>
       </Section>
 
@@ -345,6 +414,24 @@ export function Showcase() {
               </FieldLabel>
             </FieldItem>
           </RadioGroup>
+        </FieldRoot>
+        <FieldRoot invalid className="mt-6">
+          <FieldLabel>Invalid</FieldLabel>
+          <RadioGroup name="design-system-radio-invalid">
+            <FieldItem>
+              <FieldLabel className="inline-flex items-center gap-2">
+                <RadioItem value="option-1" />
+                <span>Option 1</span>
+              </FieldLabel>
+            </FieldItem>
+            <FieldItem>
+              <FieldLabel className="inline-flex items-center gap-2">
+                <RadioItem value="option-2" />
+                <span>Option 2</span>
+              </FieldLabel>
+            </FieldItem>
+          </RadioGroup>
+          <FieldError>Pick an option.</FieldError>
         </FieldRoot>
       </Section>
 
@@ -493,6 +580,7 @@ export function Showcase() {
           <DropdownMenuContent>
             <DropdownMenuItem>Edit</DropdownMenuItem>
             <DropdownMenuItem>Duplicate</DropdownMenuItem>
+            <DropdownMenuItem disabled>Archive (disabled)</DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem>Delete</DropdownMenuItem>
           </DropdownMenuContent>
@@ -506,6 +594,9 @@ export function Showcase() {
             <Tab value="overview">Overview</Tab>
             <Tab value="settings">Settings</Tab>
             <Tab value="notifications">Notifications</Tab>
+            <Tab value="billing" disabled>
+              Billing (disabled)
+            </Tab>
           </TabsList>
           <TabPanel value="overview">
             <p className="text-sm text-text-secondary">
@@ -544,7 +635,7 @@ export function Showcase() {
 
       {/* ---- Empty State ---- */}
       <Section title="Empty State">
-        <Card variant="bordered">
+        <Card>
           <EmptyState
             icon={<FileTextIcon size={32} />}
             title="No posts yet"

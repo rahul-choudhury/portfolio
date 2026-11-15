@@ -8,9 +8,9 @@ import {
   PlayIcon,
 } from "@phosphor-icons/react";
 import { easeOutQuart } from "@rahul-choudhury/ui";
+import { useMediaQuery } from "@rahul-choudhury/ui/hooks";
 import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
-import { useMediaQuery } from "@/hooks/use-media-query";
 import { triggerMobileHaptic } from "./mobile-haptics";
 
 function formatTime(seconds: number) {
