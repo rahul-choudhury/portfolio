@@ -7,3 +7,10 @@ This version has breaking changes — APIs, conventions, and file structure may 
 This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
 
 <!-- END:nextjs-agent-rules -->
+
+## Cursor Cloud specific instructions
+
+- Package manager is Bun (`bun.lock`). Install with `bun install --frozen-lockfile`.
+- Dev server: `bun run dev` (port 3000). Open `http://localhost:3000`.
+- Next.js blocks dev assets for a `127.0.0.1` browser origin because `allowedDevOrigins` is `*.onamp.dev`. Use `localhost`.
+- Checks: `bun run lint`, `bun run typecheck`, and `bun run build`. The app has no required environment secrets.

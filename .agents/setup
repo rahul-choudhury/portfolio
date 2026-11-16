@@ -7,18 +7,11 @@ cd "$repo_root"
 echo "[setup] Ensuring Bun is available"
 if ! command -v bun >/dev/null 2>&1; then
   curl -fsSL https://bun.sh/install | bash
-  export BUN_INSTALL="$HOME/.bun"
-  export PATH="$BUN_INSTALL/bin:$PATH"
+fi
 
-  profile_marker="# portfolio Bun installation"
-  if ! grep -Fqx "$profile_marker" "$HOME/.bash_profile" 2>/dev/null; then
-    cat >> "$HOME/.bash_profile" <<'EOF'
-
-# portfolio Bun installation
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
-EOF
-  fi
+# Login shells skip ~/.bashrc when non-interactive, so keep bun on the default PATH.
+if [ -x "$HOME/.bun/bin/bun" ]; then
+  sudo ln -sf "$HOME/.bun/bin/bun" /usr/local/bin/bun
 fi
 
 echo "[setup] Installing dependencies from bun.lock"
