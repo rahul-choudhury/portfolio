@@ -10,14 +10,7 @@ import {
   useTransform,
   type MotionValue,
 } from "motion/react";
-import {
-  useEffect,
-  useId,
-  useLayoutEffect,
-  useRef,
-  useState,
-  type RefObject,
-} from "react";
+import { useEffect, useId, useLayoutEffect, useRef, useState } from "react";
 import { LabStage } from "./lab-stage";
 import type { LabComponentProps } from "./lab-types";
 
@@ -78,7 +71,6 @@ export function Composer({ compact = false }: LabComponentProps) {
     return () => observer.disconnect();
   }, []);
   const filterId = `gooey${useId().replace(/[^a-zA-Z0-9]/g, "")}`;
-  const gooRef = useRef<HTMLDivElement>(null);
   const shift = useMotionValue(0);
   const sprung = useSpring(shift, SPRING);
   const progress = prefersReducedMotion ? shift : sprung;
@@ -91,19 +83,10 @@ export function Composer({ compact = false }: LabComponentProps) {
     progress,
     (value) => height * (REST_TEXT + value * (OPEN_INSET - REST_TEXT)),
   );
-  const circleLeft = useTransform(progress, () => 0);
   const plusLeft = useTransform(
     progress,
     (value) => height * PLUS_NUDGE * (1 - value),
   );
-
-  useLayoutEffect(() => {
-    const node = gooRef.current;
-    if (!node) return;
-    node.style.filter = prefersReducedMotion
-      ? ""
-      : `url(${window.location.href.split("#")[0]}#${filterId})`;
-  }, [filterId, prefersReducedMotion]);
 
   useEffect(() => {
     shift.set(open ? 1 : 0);
@@ -153,40 +136,11 @@ export function Composer({ compact = false }: LabComponentProps) {
         className="relative w-full max-w-80"
         style={{ height: spec.height }}
       >
-        <svg
-          aria-hidden="true"
-          focusable="false"
-          className="pointer-events-none absolute size-0"
-        >
-          <defs>
-            <filter
-              id={filterId}
-              x="-35%"
-              y="-60%"
-              width="170%"
-              height="220%"
-              colorInterpolationFilters="sRGB"
-            >
-              <feGaussianBlur
-                in="SourceGraphic"
-                stdDeviation={spec.blur}
-                result="blur"
-              />
-              <feColorMatrix
-                in="blur"
-                mode="matrix"
-                values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7"
-                result="goo"
-              />
-              <feComposite in="SourceGraphic" in2="goo" operator="atop" />
-            </filter>
-          </defs>
-        </svg>
-
         <GooLayer
-          ref={gooRef}
+          filterId={filterId}
+          filtered={!prefersReducedMotion}
+          blur={spec.blur}
           pillLeft={fieldLeft}
-          circleLeft={circleLeft}
           height={spec.height}
         />
 
@@ -237,45 +191,96 @@ export function Composer({ compact = false }: LabComponentProps) {
   );
 }
 
+// The shapes are SVG rather than HTML under a CSS `filter: url()`: Safari
+// only repaints the box of an HTML child that moved, which leaves stale goo
+// in the gap. Filters on SVG content are invalidated as a whole.
 function GooLayer({
-  ref,
+  filterId,
+  filtered,
+  blur,
   pillLeft,
-  circleLeft,
   height,
 }: {
-  ref: RefObject<HTMLDivElement | null>;
+  filterId: string;
+  filtered: boolean;
+  blur: number;
   pillLeft: MotionValue<number>;
-  circleLeft: MotionValue<number>;
   height: number;
 }) {
-  const left = useTransform(pillLeft, (value) => value + BLEED);
-  const circle = useTransform(circleLeft, (value) => value + BLEED);
+  const radius = height / 2;
+  // The pill is a round-capped line so its right end can sit at `100%` and
+  // follow the frame without a measured width; the shift pulls that end back
+  // inside the bleed.
+  const pillShift = BLEED + radius;
+  const pillStart = useTransform(
+    pillLeft,
+    (value) => value + BLEED + radius + pillShift,
+  );
+  const repaintNudge = useTransform(pillLeft, (value) => value / 10);
 
   return (
-    <div
+    <svg
       aria-hidden="true"
-      ref={ref}
+      focusable="false"
       className="pointer-events-none absolute"
-      style={{ inset: -BLEED }}
+      style={{
+        inset: -BLEED,
+        width: `calc(100% + ${BLEED * 2}px)`,
+        height: height + BLEED * 2,
+      }}
     >
-      <motion.div
-        className="absolute rounded-full bg-surface"
-        style={{
-          left,
-          right: BLEED,
-          top: BLEED,
-          bottom: BLEED,
-        }}
-      />
-      <motion.div
-        className="absolute rounded-full bg-surface"
-        style={{
-          width: height,
-          height,
-          left: circle,
-          top: BLEED,
-        }}
-      />
-    </div>
+      <defs>
+        <filter
+          id={filterId}
+          filterUnits="userSpaceOnUse"
+          x="0"
+          y="0"
+          width="100%"
+          height="100%"
+          colorInterpolationFilters="sRGB"
+        >
+          <feGaussianBlur
+            in="SourceGraphic"
+            stdDeviation={blur}
+            result="blur"
+          />
+          <feColorMatrix
+            in="blur"
+            mode="matrix"
+            values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7"
+            result="goo"
+          />
+          <feComposite in="SourceGraphic" in2="goo" operator="atop" />
+        </filter>
+      </defs>
+      <g filter={filtered ? `url(#${filterId})` : undefined}>
+        {/* Safari repaints only the box of the shape that moved, but the goo
+            reaches past it, so a moving pill leaves its old fringe behind.
+            This all-but-invisible rect spans the filter region and changes
+            with the pill, which makes every frame repaint all of it. */}
+        <motion.rect
+          width="100%"
+          height="100%"
+          rx={repaintNudge}
+          fillOpacity={0.001}
+        />
+        <motion.line
+          className="stroke-surface"
+          x1={pillStart}
+          x2="100%"
+          y1={BLEED + radius}
+          y2={BLEED + radius}
+          strokeWidth={height}
+          strokeLinecap="round"
+          transform={`translate(${-pillShift} 0)`}
+        />
+        <circle
+          className="fill-surface"
+          cx={BLEED + radius}
+          cy={BLEED + radius}
+          r={radius}
+        />
+      </g>
+    </svg>
   );
 }
