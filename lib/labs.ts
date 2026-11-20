@@ -22,7 +22,7 @@ export const LABS: Lab[] = [
     slug: "composer",
     title: "Composer",
     description:
-      "ChatGPT's composer, whose add button pulls away from the field.",
+      "Claude's in-chat composer, with its menus, attachments, dictation and voice mode.",
     Preview: Composer,
   },
   {
