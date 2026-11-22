@@ -2,6 +2,7 @@
 
 import { usePrefersReducedMotion } from "@rahul-choudhury/ui/hooks";
 import { useEffect, useId, useRef, useState } from "react";
+import styles from "./bot.module.css";
 import { LabStage } from "./lab-stage";
 import type { LabComponentProps } from "./lab-types";
 
@@ -266,16 +267,14 @@ export function Bot({ compact = false }: LabComponentProps) {
   const holeR = badgeR + BADGE_GAP * FACE_R;
 
   return (
-    <LabStage compact={compact} fill className="!p-0">
-      <div
-        ref={stageRef}
-        className="flex size-full items-center justify-center"
-      >
+    <LabStage compact={compact} fill>
+      <div ref={stageRef} className={styles.area}>
         <svg
           ref={markRef}
           viewBox="0 0 100 100"
           aria-hidden="true"
-          className={compact ? "size-36" : "size-64"}
+          className={styles.mark}
+          data-compact={compact}
         >
           <defs>
             <mask id={maskId}>
@@ -284,15 +283,20 @@ export function Bot({ compact = false }: LabComponentProps) {
             </mask>
           </defs>
           <g mask={`url(#${maskId})`}>
-            <circle cx={CENTER} cy={CENTER} r={FACE_R} className="fill-text" />
-            <path d={eyePath(-1, look)} className="fill-bg" />
-            <path d={eyePath(1, look)} className="fill-bg" />
+            <circle
+              cx={CENTER}
+              cy={CENTER}
+              r={FACE_R}
+              className={styles.face}
+            />
+            <path d={eyePath(-1, look)} className={styles.eye} />
+            <path d={eyePath(1, look)} className={styles.eye} />
           </g>
           <circle
             cx={badgeCx}
             cy={badgeCy}
             r={holeR}
-            className="fill-surface-soft"
+            className={styles.badgeGap}
           />
           <circle cx={badgeCx} cy={badgeCy} r={badgeR} fill={BADGE_COLOR} />
           <polygon

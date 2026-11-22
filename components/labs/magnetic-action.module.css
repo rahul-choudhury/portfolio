@@ -1,0 +1,13 @@
+.area {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.button {
+  padding-inline: var(--space-5);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-sm);
+}

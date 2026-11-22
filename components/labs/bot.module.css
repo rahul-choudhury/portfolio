@@ -1,0 +1,30 @@
+.area {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.mark {
+  width: 16rem;
+  height: 16rem;
+
+  &[data-compact="true"] {
+    width: 9rem;
+    height: 9rem;
+  }
+}
+
+.face {
+  fill: var(--color-text);
+}
+
+.eye {
+  fill: var(--color-bg);
+}
+
+/* Cuts the gap between the face and the badge out of the stage colour. */
+.badgeGap {
+  fill: var(--color-surface-soft);
+}

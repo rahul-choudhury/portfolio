@@ -5,6 +5,7 @@ import { usePrefersReducedMotion } from "@rahul-choudhury/ui/hooks";
 import { motion, useMotionValue, useSpring } from "motion/react";
 import type { PointerEvent } from "react";
 import { LabStage } from "./lab-stage";
+import styles from "./magnetic-action.module.css";
 import type { LabComponentProps } from "./lab-types";
 
 const spring = { stiffness: 260, damping: 20, mass: 0.7 };
@@ -33,17 +34,14 @@ export function MagneticAction({ compact = false }: LabComponentProps) {
   return (
     <LabStage compact={compact}>
       <div
-        className="flex size-full items-center justify-center"
+        className={styles.area}
         onPointerMove={handlePointerMove}
         onPointerLeave={resetPosition}
       >
         <motion.div
           style={prefersReducedMotion ? undefined : { x: springX, y: springY }}
         >
-          <Button
-            size={compact ? "md" : "lg"}
-            className="rounded-sm px-5 shadow-sm"
-          >
+          <Button size={compact ? "md" : "lg"} className={styles.button}>
             Start building
           </Button>
         </motion.div>

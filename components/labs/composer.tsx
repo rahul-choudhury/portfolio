@@ -41,32 +41,17 @@ import {
   useState,
   type ClipboardEvent,
   type ComponentProps,
-  type CSSProperties,
   type KeyboardEvent,
   type ReactElement,
   type ReactNode,
   type Ref,
 } from "react";
+import styles from "./composer.module.css";
 import { LabStage } from "./lab-stage";
 import type { LabComponentProps } from "./lab-types";
 
 // Measured from claude.ai's in-chat composer. Nothing here talks to a server:
 // menus, attachments, dictation and voice mode only change local state.
-
-// Claude's release curve for pressed buttons, copied verbatim.
-const SPRING =
-  "linear(0, 0.2459 7.14%, 0.6526 14.29%, 0.9468 21.43%, 1.0764 28.57%, 1.0915 35.71%, 1.0585 42.86%, 1.0219 50%, 0.9993 57.14%, 0.9914 64.29%, 0.9921 71.43%, 0.9957 78.57%, 0.9988 85.71%, 1.0004 92.86%, 1)";
-
-// Set on the composer and on every portalled positioner, so popups outside
-// the composer's DOM resolve the same values.
-const ROOT_VARS = {
-  "--cmp-spring": SPRING,
-  "--cmp-accent": "light-dark(#1f6fd1, #6aabf1)",
-  // One step above the stage in both themes: white on the light stage, a
-  // lift over surface-soft on the dark one.
-  "--cmp-card":
-    "light-dark(var(--color-surface), color-mix(in oklab, var(--color-surface-soft), white 6%))",
-} as CSSProperties;
 
 const MODELS = [
   {
@@ -383,16 +368,10 @@ export function Composer({ compact = false }: LabComponentProps) {
   return (
     <LabStage compact={compact} fill>
       <Tooltip.Provider delay={500}>
-        <div
-          style={ROOT_VARS}
-          className={clsx(
-            "flex h-full w-full flex-col justify-end",
-            compact ? "px-4 pb-3" : "px-4 pb-5 md:px-8",
-          )}
-        >
-          <div className="@container mx-auto w-full max-w-160">
+        <div className={styles.composer} data-compact={compact}>
+          <div className={styles.column}>
             <div
-              className="relative rounded-[14px] bg-(--cmp-card) p-2 shadow-[0_4px_20px_rgb(0_0_0/0.035)] ring-1 ring-text/8 ring-inset"
+              className={styles.card}
               onClick={(event) => {
                 if (event.target === event.currentTarget) focusField();
               }}
@@ -402,7 +381,7 @@ export function Composer({ compact = false }: LabComponentProps) {
               ) : (
                 <>
                   {attachments.length > 0 && (
-                    <div className="-mx-2 -mt-2 flex gap-3 overflow-x-auto px-3 pt-3 pb-2">
+                    <div className={styles.attachments}>
                       {attachments.map((attachment) => (
                         <AttachmentTile
                           key={attachment.id}
@@ -428,7 +407,7 @@ export function Composer({ compact = false }: LabComponentProps) {
                       onPick={pick}
                     />
                   )}
-                  <div className="relative pr-9">
+                  <div className={styles.field}>
                     {skill && (
                       <SkillToken
                         ref={tokenRef}
@@ -437,11 +416,9 @@ export function Composer({ compact = false }: LabComponentProps) {
                       />
                     )}
                     {draft === "/" && !skill && (
-                      <span
-                        aria-hidden="true"
-                        className="pointer-events-none absolute top-[3.5px] left-1.5 text-[15px] leading-5.25 text-text/40"
-                      >
-                        <span className="invisible">/</span>Type to filter
+                      <span aria-hidden="true" className={styles.filterHint}>
+                        <span className={styles.hiddenSlash}>/</span>Type to
+                        filter
                       </span>
                     )}
                     <textarea
@@ -466,21 +443,15 @@ export function Composer({ compact = false }: LabComponentProps) {
                       placeholder={skill ? undefined : "Reply"}
                       spellCheck={false}
                       style={{ textIndent: indent }}
-                      className={clsx(
-                        "block max-h-36.75 min-h-7 w-full resize-none bg-transparent py-[3.5px] pl-1.5",
-                        "text-[15px] leading-5.25 text-text outline-none placeholder:text-text/40",
-                        "[-webkit-tap-highlight-color:transparent]",
-                      )}
+                      className={styles.input}
                     />
                     <Tip label="Send message">
                       <GhostButton
                         big
                         aria-label="Send message"
                         onClick={send}
-                        className={clsx(
-                          "absolute right-0 bottom-0",
-                          hasContent ? "text-text" : "text-text/40",
-                        )}
+                        className={styles.send}
+                        data-ready={hasContent}
                       >
                         <ArrowElbowDownLeftIcon size={18} />
                       </GhostButton>
@@ -491,7 +462,7 @@ export function Composer({ compact = false }: LabComponentProps) {
             </div>
 
             <Chin hidden={voice}>
-              <div className="flex items-center gap-1">
+              <div className={styles.tools}>
                 <AttachMenu
                   research={research}
                   connectors={connectors}
@@ -507,10 +478,10 @@ export function Composer({ compact = false }: LabComponentProps) {
                       aria-label="Turn off research mode"
                       onClick={() => setResearch(false)}
                     >
-                      <span className="group-hover/btn:hidden">
+                      <span className={styles.restIcon}>
                         <FileMagnifyingGlassIcon size={16} />
                       </span>
-                      <span className="hidden group-hover/btn:block">
+                      <span className={styles.hoverIcon}>
                         <XIcon size={16} />
                       </span>
                     </GhostButton>
@@ -526,13 +497,13 @@ export function Composer({ compact = false }: LabComponentProps) {
                     {dictating ? (
                       <>
                         <motion.span
-                          className="group-hover/btn:hidden"
+                          className={styles.restIcon}
                           animate={{ opacity: [1, 0.45, 1] }}
                           transition={{ duration: 1.2, repeat: Infinity }}
                         >
                           <MicrophoneIcon size={16} weight="fill" />
                         </motion.span>
-                        <span className="hidden group-hover/btn:block">
+                        <span className={styles.hoverIcon}>
                           <StopIcon size={14} weight="fill" />
                         </span>
                       </>
@@ -552,11 +523,11 @@ export function Composer({ compact = false }: LabComponentProps) {
                 )}
               </div>
 
-              <p className="pointer-events-none absolute inset-x-0 hidden justify-center text-text/40 @[600px]:flex">
+              <p className={styles.disclaimer}>
                 Claude is AI and can make mistakes.
               </p>
 
-              <div className="flex items-center gap-1">
+              <div className={styles.tools}>
                 <ModelMenu
                   current={current}
                   effort={effort}
@@ -573,21 +544,16 @@ export function Composer({ compact = false }: LabComponentProps) {
   );
 }
 
-// The row under the card. It folds away (rows 1fr → 0fr) during voice mode.
 function Chin({ hidden, children }: { hidden: boolean; children: ReactNode }) {
   return (
     <div
       aria-hidden={hidden || undefined}
       inert={hidden}
-      className={clsx(
-        "grid transition-[grid-template-rows,opacity,translate] duration-280 ease-out-quart motion-reduce:transition-none",
-        hidden ? "-translate-y-1 grid-rows-[0fr] opacity-0" : "grid-rows-[1fr]",
-      )}
+      className={styles.chin}
+      data-hidden={hidden}
     >
-      <div className="min-h-0 overflow-hidden">
-        <div className="relative my-2 flex h-6 items-center justify-between px-1.75 text-[13px] leading-4.25 text-text/60">
-          {children}
-        </div>
+      <div className={styles.chinClip}>
+        <div className={styles.chinRow}>{children}</div>
       </div>
     </div>
   );
@@ -598,9 +564,6 @@ type GhostButtonProps = ComponentProps<"button"> & {
   active?: boolean;
 };
 
-// Three layers, as on claude.ai: a squish layer that scales on press and
-// springs back, a paint layer inside it for hover, and the icon, which never
-// moves.
 function GhostButton({
   big = false,
   active = false,
@@ -612,31 +575,12 @@ function GhostButton({
     <button
       type="button"
       data-active={active || undefined}
-      className={clsx(
-        "group/btn relative isolate inline-flex shrink-0 items-center justify-center gap-1 outline-none",
-        "text-text/60 transition-colors duration-60 hover:text-text data-popup-open:text-text",
-        "focus-visible:ring-2 focus-visible:ring-text/25",
-        "data-active:text-(--cmp-accent) data-active:hover:text-(--cmp-accent)",
-        big ? "size-7 rounded-lg" : "h-6 min-w-6 rounded-md",
-        className,
-      )}
+      data-size={big ? "lg" : undefined}
+      className={clsx(styles.ghost, className)}
       {...props}
     >
-      <span
-        aria-hidden="true"
-        className={clsx(
-          "absolute inset-0 -z-1 rounded-[inherit] transition-transform duration-450 ease-(--cmp-spring)",
-          "group-active/btn:scale-90 group-active/btn:duration-60 group-active/btn:ease-out",
-          "motion-reduce:transition-none motion-reduce:group-active/btn:scale-100",
-        )}
-      >
-        <span
-          className={clsx(
-            "absolute inset-0 rounded-[inherit] transition-colors duration-60",
-            "group-hover/btn:bg-text/7.5 group-data-popup-open/btn:bg-text/7.5",
-            "group-data-active/btn:bg-(--cmp-accent)/12",
-          )}
-        />
+      <span aria-hidden="true" className={styles.squish}>
+        <span className={styles.paint} />
       </span>
       {children}
     </button>
@@ -651,8 +595,7 @@ function Tip({ label, children }: { label: string; children: ReactElement }) {
         <Tooltip.Positioner
           side="top"
           sideOffset={4}
-          style={ROOT_VARS}
-          className="z-(--z-popover)"
+          className={styles.popoverLayer}
         >
           <Tooltip.Popup render={<TipSurface />}>{label}</Tooltip.Popup>
         </Tooltip.Positioner>
@@ -681,8 +624,7 @@ function MenuPopup({
         sideOffset={sub ? 10 : 4}
         alignOffset={sub ? -6 : 0}
         collisionPadding={8}
-        style={ROOT_VARS}
-        className="z-(--z-dropdown) outline-none"
+        className={styles.menuLayer}
       >
         <Menu.Popup render={<PopupSurface className={className} />}>
           {children}
@@ -692,50 +634,23 @@ function MenuPopup({
   );
 }
 
-// The floating surface shared by menus, the slash list and the token card.
 function PopupSurface({ className, ...props }: ComponentProps<"div">) {
-  return (
-    <div
-      className={clsx(
-        "rounded-[14px] bg-(--cmp-card) p-1.5 text-sm text-text shadow-[0_8px_24px_light-dark(rgb(0_0_0/0.1),rgb(0_0_0/0.32)),0_2px_6px_light-dark(rgb(0_0_0/0.05),rgb(0_0_0/0.2))] ring-1 ring-text/5 outline-none ring-inset",
-        className,
-      )}
-      {...props}
-    />
-  );
+  return <div className={clsx(styles.surface, className)} {...props} />;
 }
 
-// The small label surface shared by tooltips and the slash list's notes.
 function TipSurface({ className, ...props }: ComponentProps<"div">) {
-  return (
-    <div
-      className={clsx(
-        "rounded-md bg-(--cmp-card) px-2 py-0.75 text-[13px] text-text shadow-[0_2px_6px_light-dark(rgb(0_0_0/0.06),rgb(0_0_0/0.25))] ring-1 ring-text/5 ring-inset",
-        className,
-      )}
-      {...props}
-    />
-  );
+  return <div className={clsx(styles.tip, className)} {...props} />;
 }
 
-// One row in any list: menu items, submenu triggers and slash options.
 function ItemRow({ className, ...props }: ComponentProps<"div">) {
-  return (
-    <div
-      className={clsx(
-        "flex min-h-7 cursor-default items-center gap-2 rounded-lg px-2.5 py-1 outline-none select-none data-disabled:opacity-50 data-highlighted:bg-text/10 data-popup-open:bg-text/10",
-        className,
-      )}
-      {...props}
-    />
-  );
+  return <div className={clsx(styles.item, className)} {...props} />;
 }
 
 function ItemIcon({ icon: Glyph, color }: { icon: Icon; color?: string }) {
   return (
     <Glyph
       size={16}
-      className="shrink-0 text-text/80"
+      className={styles.itemIcon}
       style={color ? { color } : undefined}
     />
   );
@@ -770,7 +685,7 @@ function MenuRadioItem({
 }
 
 function Separator() {
-  return <Menu.Separator className="mx-2.5 my-1 h-px bg-text/10" />;
+  return <Menu.Separator className={styles.separator} />;
 }
 
 function SubmenuTrigger({
@@ -785,21 +700,15 @@ function SubmenuTrigger({
   return (
     <Menu.SubmenuTrigger render={<ItemRow />}>
       {icon}
-      <span className="flex-1">{label}</span>
-      {value && <span className="text-[13px] text-text/60">{value}</span>}
-      <CaretRightIcon size={12} className="text-text/60" />
+      <span className={styles.itemLabel}>{label}</span>
+      {value && <span className={styles.submenuValue}>{value}</span>}
+      <CaretRightIcon size={12} className={styles.caret} />
     </Menu.SubmenuTrigger>
   );
 }
 
 function Check() {
-  return (
-    <CheckIcon
-      size={16}
-      weight="bold"
-      className="ml-auto shrink-0 text-(--cmp-accent)"
-    />
-  );
+  return <CheckIcon size={16} weight="bold" className={styles.check} />;
 }
 
 function AttachMenu({
@@ -826,11 +735,11 @@ function AttachMenu({
           <PlusIcon size={16} />
         </Menu.Trigger>
       </Tip>
-      <MenuPopup className="w-58.5">
+      <MenuPopup className={styles.attachMenu}>
         <MenuItem onClick={onAddFile}>
           <ItemIcon icon={PaperclipIcon} />
-          <span className="flex-1">Upload or add files</span>
-          <kbd className="font-sans text-xs text-text/50">⌘U</kbd>
+          <span className={styles.itemLabel}>Upload or add files</span>
+          <kbd className={styles.shortcut}>⌘U</kbd>
         </MenuItem>
         <Separator />
 
@@ -839,7 +748,7 @@ function AttachMenu({
             icon={<ItemIcon icon={FileTextIcon} />}
             label="Skills"
           />
-          <MenuPopup side="inline-end" className="w-46">
+          <MenuPopup side="inline-end" className={styles.skillsMenu}>
             {SKILLS.map((skill) => (
               <MenuItem key={skill} onClick={() => onSkill(skill)}>
                 <ItemIcon icon={FileTextIcon} />
@@ -863,7 +772,7 @@ function AttachMenu({
             icon={<ItemIcon icon={SquaresFourIcon} />}
             label="Connectors"
           />
-          <MenuPopup side="inline-end" className="w-58">
+          <MenuPopup side="inline-end" className={styles.connectorsMenu}>
             <MenuItem>
               <ItemIcon icon={PlusIcon} />
               Add connector
@@ -898,7 +807,7 @@ function AttachMenu({
             icon={<ItemIcon icon={PaletteIcon} />}
             label="Design system"
           />
-          <MenuPopup side="inline-end" className="w-56">
+          <MenuPopup side="inline-end" className={styles.designSystemMenu}>
             <MenuItem>
               <ItemIcon icon={ArrowSquareOutIcon} />
               Manage design systems
@@ -921,7 +830,7 @@ function AttachMenu({
           closeOnClick
         >
           <ItemIcon icon={FileMagnifyingGlassIcon} />
-          <span className="flex-1">Research</span>
+          <span className={styles.itemLabel}>Research</span>
           <Menu.CheckboxItemIndicator>
             <Check />
           </Menu.CheckboxItemIndicator>
@@ -949,20 +858,9 @@ function SwitchItem({
       closeOnClick={false}
     >
       {icon}
-      <span className="flex-1">{label}</span>
-      <span
-        aria-hidden="true"
-        className={clsx(
-          "relative h-4.5 w-7.5 shrink-0 rounded-full transition-colors duration-200",
-          checked ? "bg-(--cmp-accent)" : "bg-text/20",
-        )}
-      >
-        <span
-          className={clsx(
-            "absolute top-0.5 left-0.5 size-3.5 rounded-full bg-white shadow-sm transition-transform duration-200 ease-out-quart",
-            checked && "translate-x-3",
-          )}
-        />
+      <span className={styles.itemLabel}>{label}</span>
+      <span aria-hidden="true" className={styles.switch} data-checked={checked}>
+        <span className={styles.switchThumb} />
       </span>
     </MenuCheckboxItem>
   );
@@ -1004,7 +902,7 @@ function VoiceSplit({
   onStart: () => void;
 }) {
   return (
-    <div role="group" aria-label="Use voice mode" className="flex items-center">
+    <div role="group" aria-label="Use voice mode" className={styles.tools}>
       <Tip label="Use voice mode">
         <GhostButton aria-label="Use voice mode" onClick={onStart}>
           <VoiceGlyph />
@@ -1016,19 +914,16 @@ function VoiceSplit({
             render={
               <GhostButton
                 aria-label="Microphone"
-                className="min-w-3.5 px-px"
+                className={styles.micTrigger}
               />
             }
           >
             <CaretDownIcon size={11} weight="bold" />
           </Menu.Trigger>
         </Tip>
-        <MenuPopup className="w-60">
-          <div
-            className="flex items-center gap-2 px-2.5 py-1.5"
-            aria-hidden="true"
-          >
-            <MicrophoneIcon size={14} className="text-text/60" />
+        <MenuPopup className={styles.micMenu}>
+          <div className={styles.micLevel} aria-hidden="true">
+            <MicrophoneIcon size={14} className={styles.micIcon} />
             <LevelMeter />
           </div>
           <Menu.RadioGroup
@@ -1037,7 +932,7 @@ function VoiceSplit({
           >
             {MICS.map((name) => (
               <MenuRadioItem key={name} value={name} closeOnClick>
-                <span className="flex-1 truncate">{name}</span>
+                <span className={styles.micName}>{name}</span>
                 <Menu.RadioItemIndicator>
                   <Check />
                 </Menu.RadioItemIndicator>
@@ -1046,19 +941,19 @@ function VoiceSplit({
           </Menu.RadioGroup>
           <Separator />
           <Menu.Group>
-            <Menu.GroupLabel className="px-2.5 pt-1 pb-0.5 text-xs text-text/50">
+            <Menu.GroupLabel className={styles.groupLabel}>
               Dictation settings
             </Menu.GroupLabel>
             <Menu.SubmenuRoot>
               <SubmenuTrigger label="Language" value={language} />
-              <MenuPopup side="inline-end" className="w-40">
+              <MenuPopup side="inline-end" className={styles.languageMenu}>
                 <Menu.RadioGroup
                   value={language}
                   onValueChange={(value) => onLanguage(value as string)}
                 >
                   {LANGUAGES.map((name) => (
                     <MenuRadioItem key={name} value={name} closeOnClick>
-                      <span className="flex-1">{name}</span>
+                      <span className={styles.itemLabel}>{name}</span>
                       <Menu.RadioItemIndicator>
                         <Check />
                       </Menu.RadioItemIndicator>
@@ -1078,9 +973,9 @@ function VoiceSplit({
 function LevelMeter() {
   const reduced = usePrefersReducedMotion();
   return (
-    <span className="relative h-1 flex-1 overflow-hidden rounded-full bg-text/10">
+    <span className={styles.meter}>
       <motion.span
-        className="absolute inset-y-0 left-0 w-full origin-left rounded-full bg-text/50"
+        className={styles.meterLevel}
         initial={{ scaleX: 0.15 }}
         animate={
           reduced
@@ -1110,28 +1005,28 @@ function ModelMenu({
         render={
           <GhostButton
             aria-label={`Model: ${current.name} ${effort}`}
-            className="gap-1 px-2 text-text"
+            className={styles.modelTrigger}
           />
         }
       >
-        <span className="font-medium">{current.name}</span>
-        <span className="hidden text-text/60 @[420px]:inline">{effort}</span>
+        <span className={styles.modelName}>{current.name}</span>
+        <span className={styles.modelEffort}>{effort}</span>
       </Menu.Trigger>
-      <MenuPopup align="end" className="w-80">
-        <MenuItem className="items-start py-1.5">
-          <span className="flex flex-1 flex-col">
+      <MenuPopup align="end" className={styles.modelMenu}>
+        <MenuItem className={styles.detailedItem}>
+          <span className={styles.itemText}>
             <span>{current.name}</span>
-            <span className="text-xs text-text/60">{current.note}</span>
+            <span className={styles.itemNote}>{current.note}</span>
           </span>
-          <span className="pt-0.5">
+          <span className={styles.topIndicator}>
             <Check />
           </span>
         </MenuItem>
         <Separator />
         <Menu.SubmenuRoot>
           <SubmenuTrigger label="Effort" value={effort} />
-          <MenuPopup side="inline-end" className="w-64">
-            <p className="px-2.5 pt-1 pb-1.5 text-xs leading-4 text-text/60">
+          <MenuPopup side="inline-end" className={styles.effortMenu}>
+            <p className={styles.effortNote}>
               Higher effort means more thorough responses, but takes longer and
               uses your limits faster.
             </p>
@@ -1143,11 +1038,9 @@ function ModelMenu({
                 <MenuRadioItem key={level} value={level} closeOnClick>
                   <span>{level}</span>
                   {level === "Medium" && (
-                    <span className="rounded-sm bg-text/10 px-1 py-px text-[10px] text-text/60">
-                      Recommended
-                    </span>
+                    <span className={styles.badge}>Recommended</span>
                   )}
-                  <Menu.RadioItemIndicator className="ml-auto">
+                  <Menu.RadioItemIndicator className={styles.endIndicator}>
                     <Check />
                   </Menu.RadioItemIndicator>
                 </MenuRadioItem>
@@ -1157,14 +1050,14 @@ function ModelMenu({
         </Menu.SubmenuRoot>
         <Menu.SubmenuRoot>
           <SubmenuTrigger label="More models" />
-          <MenuPopup side="inline-end" className="w-48">
+          <MenuPopup side="inline-end" className={styles.moreModelsMenu}>
             <Menu.RadioGroup
               value={current.id}
               onValueChange={(value) => onModel(value as string)}
             >
               {MODELS.map((entry) => (
                 <MenuRadioItem key={entry.id} value={entry.id} closeOnClick>
-                  <span className="flex-1">{entry.name}</span>
+                  <span className={styles.itemLabel}>{entry.name}</span>
                   <Menu.RadioItemIndicator>
                     <Check />
                   </Menu.RadioItemIndicator>
@@ -1205,15 +1098,15 @@ function ModeMenu({
         render={
           <GhostButton
             aria-label={`Permission mode: ${label}`}
-            className="hidden px-2 text-text @[340px]:inline-flex"
+            className={styles.modeTrigger}
           />
         }
       >
         {label}
       </Menu.Trigger>
-      <MenuPopup align="end" className="w-72">
+      <MenuPopup align="end" className={styles.modeMenu}>
         <Menu.Group>
-          <Menu.GroupLabel className="px-2.5 pt-1 pb-1 text-xs text-text/50">
+          <Menu.GroupLabel className={styles.groupLabel}>
             Permission mode
           </Menu.GroupLabel>
           <Menu.RadioGroup
@@ -1224,14 +1117,14 @@ function ModeMenu({
               <MenuRadioItem
                 key={entry.value}
                 value={entry.value}
-                className="items-start py-1.5"
+                className={styles.detailedItem}
                 closeOnClick
               >
-                <span className="flex flex-1 flex-col">
+                <span className={styles.itemText}>
                   <span>{entry.label}</span>
-                  <span className="text-xs text-text/60">{entry.note}</span>
+                  <span className={styles.itemNote}>{entry.note}</span>
                 </span>
-                <Menu.RadioItemIndicator className="pt-0.5">
+                <Menu.RadioItemIndicator className={styles.topIndicator}>
                   <Check />
                 </Menu.RadioItemIndicator>
               </MenuRadioItem>
@@ -1260,36 +1153,23 @@ function AttachmentTile({
       : (attachment.name.split(".").pop() ?? "File");
 
   return (
-    <div className="group/tile relative shrink-0 pt-1">
-      <div
-        role="img"
-        aria-label={label}
-        className={clsx(
-          "flex size-30 flex-col justify-between rounded-[10px] bg-surface-soft p-[11.5px]",
-          "shadow-[0_1px_2px_rgb(0_0_0/0.05)] ring-1 ring-text/8 ring-inset",
-        )}
-      >
+    <div className={styles.tile}>
+      <div role="img" aria-label={label} className={styles.tileCard}>
         {attachment.kind === "pasted" ? (
-          <p className="line-clamp-4 text-[11px] leading-[1.3] wrap-break-word text-text/60">
-            {attachment.preview}
-          </p>
+          <p className={styles.pastedText}>{attachment.preview}</p>
         ) : (
-          <div className="flex flex-col gap-0.5">
-            <p className="line-clamp-2 text-[13px] leading-4 break-all text-text">
-              {attachment.name}
-            </p>
-            <p className="text-[11px] text-text/60">{attachment.size}</p>
+          <div className={styles.fileInfo}>
+            <p className={styles.fileName}>{attachment.name}</p>
+            <p className={styles.fileSize}>{attachment.size}</p>
           </div>
         )}
-        <div className="flex items-center justify-between">
-          <span className="rounded-full px-1.5 py-0.5 text-[10px] font-medium tracking-wide text-text/60 uppercase ring-1 ring-text/10 ring-inset">
-            {badge}
-          </span>
+        <div className={styles.tileFooter}>
+          <span className={styles.tileBadge}>{badge}</span>
           {attachment.kind === "pasted" && (
             <Tip label="Edit">
               <GhostButton
                 aria-label={`Edit ${label}`}
-                className="size-5 min-w-5"
+                className={styles.editButton}
               >
                 <PencilSimpleIcon size={12} />
               </GhostButton>
@@ -1301,11 +1181,7 @@ function AttachmentTile({
         type="button"
         aria-label={`Remove ${label}`}
         onClick={onRemove}
-        className={clsx(
-          "absolute -top-1 -right-2 flex size-5 items-center justify-center rounded-full bg-(--cmp-card) text-text/70 ring-1 ring-text/10",
-          "opacity-0 transition-[opacity,color] duration-150 group-hover/tile:opacity-100 hover:text-text",
-          "focus-visible:opacity-100 [@media(hover:none)]:opacity-100",
-        )}
+        className={styles.remove}
       >
         <XIcon size={11} weight="bold" />
       </button>
@@ -1325,12 +1201,12 @@ function VoiceSession({ onEnd }: { onEnd: () => void }) {
   }, []);
 
   return (
-    <div className="flex h-7 items-center gap-3 pl-2" role="status">
-      <span className="flex h-4 items-center gap-0.75" aria-hidden="true">
+    <div className={styles.voice} role="status">
+      <span className={styles.bars} aria-hidden="true">
         {BARS.map((peak, index) => (
           <motion.span
             key={index}
-            className="h-full w-0.75 origin-center rounded-full bg-(--cmp-accent)"
+            className={styles.bar}
             initial={{ scaleY: 0.25 }}
             animate={
               reduced
@@ -1346,13 +1222,8 @@ function VoiceSession({ onEnd }: { onEnd: () => void }) {
           />
         ))}
       </span>
-      <span className="flex-1 text-[15px] text-text/60">Listening…</span>
-      <button
-        ref={endRef}
-        type="button"
-        onClick={onEnd}
-        className="h-7 rounded-lg bg-text px-3 text-[13px] font-medium text-bg transition-opacity hover:opacity-90 focus-visible:ring-2 focus-visible:ring-text/30 focus-visible:outline-none"
-      >
+      <span className={styles.listening}>Listening…</span>
+      <button ref={endRef} type="button" onClick={onEnd} className={styles.end}>
         End
       </button>
     </div>
@@ -1397,14 +1268,14 @@ function SlashMenu({
   });
 
   return (
-    <div className="absolute bottom-[calc(100%-2px)] -left-0.5 z-10 w-60">
+    <div className={styles.slash}>
       <PopupSurface
         ref={listRef}
         id={id}
         role="listbox"
         aria-label="Commands and skills"
         onScroll={placeTip}
-        className="relative max-h-64 scrollbar-none overflow-y-auto overscroll-contain"
+        className={styles.slashList}
       >
         {items.map((command, index) => {
           return (
@@ -1434,7 +1305,7 @@ function SlashMenu({
         <TipSurface
           aria-hidden="true"
           style={{ top: tipTop }}
-          className="pointer-events-none absolute left-full ml-1 w-max max-w-44 leading-4.5"
+          className={styles.slashNote}
         >
           <MatchedLabel text={active.note} query={query} wrap />
         </TipSurface>
@@ -1453,13 +1324,13 @@ function MatchedLabel({
   query: string;
   wrap?: boolean;
 }) {
-  const className = wrap ? undefined : "min-w-0 truncate";
+  const className = wrap ? undefined : styles.matchLabel;
   const at = query ? text.toLowerCase().indexOf(query.toLowerCase()) : -1;
   if (at < 0) return <span className={className}>{text}</span>;
   return (
     <span className={className}>
       {text.slice(0, at)}
-      <span className="font-semibold">{text.slice(at, at + query.length)}</span>
+      <span className={styles.match}>{text.slice(at, at + query.length)}</span>
       {text.slice(at + query.length)}
     </span>
   );
@@ -1481,16 +1352,14 @@ function SkillToken({
       <Popover.Trigger
         aria-label={`${command.label} ${command.kind === "skill" ? "skill" : "command"}`}
         ref={ref}
-        className="absolute top-[3.5px] left-1.5 z-1 cursor-pointer text-[15px] leading-5.25 text-(--cmp-accent) outline-none"
+        className={styles.token}
       >
         <span
           aria-hidden="true"
-          className={clsx(
-            "absolute -inset-y-0.5 -right-1 -left-0.5 rounded-md transition-colors duration-100",
-            selected && "bg-(--cmp-accent)/12",
-          )}
+          className={styles.tokenHighlight}
+          data-selected={selected}
         />
-        <span className="relative">
+        <span className={styles.tokenText}>
           <span aria-hidden="true">/</span>
           {command.id}
         </span>
@@ -1500,16 +1369,11 @@ function SkillToken({
           side="top"
           align="start"
           sideOffset={8}
-          style={ROOT_VARS}
-          className="z-(--z-popover)"
+          className={styles.popoverLayer}
         >
-          <Popover.Popup
-            render={<PopupSurface className="w-44.5 rounded-xl p-2 text-xs" />}
-          >
-            <p className="line-clamp-5 rounded-lg bg-surface-soft px-2 py-1.5 leading-4.5 text-text/60">
-              {command.note ?? command.label}
-            </p>
-            <p className="px-0.5 pt-2 text-text/60">
+          <Popover.Popup render={<PopupSurface className={styles.skillCard} />}>
+            <p className={styles.skillNote}>{command.note ?? command.label}</p>
+            <p className={styles.skillKind}>
               {command.kind === "skill" ? "Skill" : "Command"}
             </p>
           </Popover.Popup>

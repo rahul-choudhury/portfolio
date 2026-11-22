@@ -16,6 +16,7 @@ import {
 } from "react";
 import { LabStage } from "./lab-stage";
 import type { LabComponentProps } from "./lab-types";
+import styles from "./model-slider.module.css";
 
 const BLUE = "#339cff";
 const PURPLE = "#ad7bf9";
@@ -340,31 +341,21 @@ export function ModelSlider({ compact = false }: LabComponentProps) {
 
   return (
     <LabStage compact={compact}>
-      <div
-        className="relative w-[300px] max-w-full font-medium text-white"
-        style={{
-          fontFamily:
-            '-apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif',
-        }}
-      >
+      <div className={styles.picker}>
         {fastTip ? (
-          <div className="pointer-events-none absolute bottom-[calc(100%+6px)] left-2 z-20 rounded-[10px] bg-[#3a3a3c] px-3 py-2 text-left shadow-lg">
-            <p className="text-[13px] leading-4 font-semibold text-white">
-              1.5x speed
-            </p>
-            <p className="text-[13px] leading-4 font-medium text-white/65">
-              More usage
-            </p>
+          <div className={styles.tooltip} data-tip="fast">
+            <p className={styles.tooltipTitle}>1.5x speed</p>
+            <p className={styles.tooltipNote}>More usage</p>
           </div>
         ) : null}
         {resetTip && explicit ? (
-          <div className="pointer-events-none absolute right-2 bottom-[calc(100%+6px)] z-20 rounded-[10px] bg-[#3a3a3c] px-2.5 py-1.5 text-[12px] font-medium whitespace-nowrap text-white shadow-lg">
+          <div className={styles.tooltip} data-tip="reset">
             Reset to default
           </div>
         ) : null}
-        <div className="overflow-hidden rounded-2xl border border-white/10 bg-[#2c2c2e] shadow-[0_16px_50px_rgba(0,0,0,0.45)]">
+        <div className={styles.panel}>
           <motion.div
-            className="overflow-hidden"
+            className={styles.sizer}
             initial={false}
             animate={{ height: panelHeight }}
             transition={
@@ -373,7 +364,7 @@ export function ModelSlider({ compact = false }: LabComponentProps) {
                 : { type: "spring", stiffness: 320, damping: 34, mass: 0.85 }
             }
           >
-            <div ref={panelRef} className="p-2">
+            <div ref={panelRef} className={styles.content}>
               <AnimatePresence mode="popLayout" initial={false}>
                 {menuOpen ? (
                   <motion.div
@@ -396,13 +387,13 @@ export function ModelSlider({ compact = false }: LabComponentProps) {
                     exit={{ opacity: 0 }}
                     transition={{ duration: reduced ? 0 : 0.16 }}
                   >
-                    <div className="relative flex min-h-9 items-center justify-center px-8">
+                    <div className={styles.header}>
                       <IconButton
                         label={
                           fast ? "Enable standard mode" : "Enable fast mode"
                         }
                         pressed={fast}
-                        className="absolute left-0"
+                        className={styles.fastToggle}
                         style={{ color: boltColor }}
                         onClick={() => setFast((on) => !on)}
                         onHover={setFastTip}
@@ -412,7 +403,7 @@ export function ModelSlider({ compact = false }: LabComponentProps) {
 
                       <button
                         type="button"
-                        className="max-w-full rounded-md px-1.5 py-0.5 text-center transition-colors hover:bg-white/8"
+                        className={styles.modelButton}
                         aria-label="Select model"
                         aria-haspopup="listbox"
                         onClick={() => {
@@ -422,14 +413,14 @@ export function ModelSlider({ compact = false }: LabComponentProps) {
                         }}
                       >
                         {explicit ? (
-                          <span className="flex flex-col items-center leading-tight">
+                          <span className={styles.explicitLabel}>
                             <span
-                              className="text-base leading-5 font-medium"
+                              className={styles.effort}
                               style={{ color: maximum ? PURPLE : BLUE }}
                             >
                               {effortMeta.label}
                             </span>
-                            <span className="flex items-center text-xs font-normal text-white/70">
+                            <span className={styles.modelLine}>
                               {ultraWarning ? (
                                 "Consumes usage limits faster"
                               ) : (
@@ -441,12 +432,9 @@ export function ModelSlider({ compact = false }: LabComponentProps) {
                             </span>
                           </span>
                         ) : (
-                          <span
-                            id={labelId}
-                            className="flex items-center text-[15px] leading-5 font-medium text-white"
-                          >
+                          <span id={labelId} className={styles.defaultLabel}>
                             {model.name}
-                            <span className="ms-1 text-white/55">
+                            <span className={styles.defaultEffort}>
                               {effortMeta.label}
                             </span>
                             <Chevron />
@@ -457,7 +445,7 @@ export function ModelSlider({ compact = false }: LabComponentProps) {
                       {explicit ? (
                         <IconButton
                           label="Reset to default"
-                          className="absolute right-0"
+                          className={styles.resetButton}
                           onClick={() => selectModel(null)}
                           onHover={setResetTip}
                         >
@@ -481,14 +469,12 @@ export function ModelSlider({ compact = false }: LabComponentProps) {
                       onPointerUp={stopDragging}
                       onPointerCancel={stopDragging}
                       onLostPointerCapture={stopDragging}
-                      className={clsx(
-                        "relative mx-1.5 my-0.5 h-8 touch-none select-none",
-                        dragging ? "cursor-grabbing" : "cursor-grab",
-                      )}
+                      className={styles.slider}
+                      data-dragging={dragging}
                     >
-                      <div className="absolute inset-x-0 top-1/2 h-6 -translate-y-1/2 overflow-hidden rounded-full bg-white/10 shadow-[inset_0_0_0_0.5px_rgba(255,255,255,0.16)]">
+                      <div className={styles.rail}>
                         <div
-                          className="absolute inset-y-0 left-0 w-full overflow-hidden rounded-l-full"
+                          className={styles.fill}
                           style={{
                             background: BLUE,
                             transform: fillTransform(percent, stops.length - 1),
@@ -510,7 +496,7 @@ export function ModelSlider({ compact = false }: LabComponentProps) {
                             <span
                               key={`${item.model}-${item.effort}`}
                               aria-hidden="true"
-                              className="absolute top-1/2 size-1 rounded-full"
+                              className={styles.tick}
                               style={{
                                 left: centerOf(
                                   percentFor(tickIndex, stops.length),
@@ -530,7 +516,7 @@ export function ModelSlider({ compact = false }: LabComponentProps) {
                       </div>
                       <span
                         aria-hidden="true"
-                        className="absolute top-1/2 z-10 size-7 -translate-x-1/2 -translate-y-1/2"
+                        className={styles.thumb}
                         style={{
                           left: centerOf(percent),
                           transition: `left ${motionMs}ms cubic-bezier(.23,1,.32,1)`,
@@ -539,7 +525,7 @@ export function ModelSlider({ compact = false }: LabComponentProps) {
                         onPointerLeave={() => setThumbHot(false)}
                       >
                         <motion.span
-                          className="absolute inset-0 rounded-full border-[0.5px] border-black/25 bg-white shadow-[0_0_2px_#0000001a]"
+                          className={styles.knob}
                           animate={{
                             scale: thumbHot || dragging ? 32 / 28 : 1,
                           }}
@@ -605,14 +591,9 @@ function IconButton({
       onFocus={() => onHover(true)}
       onBlur={() => onHover(false)}
       style={style}
-      className={clsx(
-        "flex size-8 items-center justify-center rounded-lg text-white/55",
-        className,
-      )}
+      className={clsx(styles.iconButton, className)}
     >
-      <span className="flex size-[26px] items-center justify-center rounded-[7px] hover:bg-white/10">
-        {children}
-      </span>
+      <span className={styles.iconSurface}>{children}</span>
     </button>
   );
 }
@@ -640,7 +621,7 @@ function Chevron() {
       height="12"
       viewBox="0 0 12 12"
       aria-hidden="true"
-      className="shrink-0 text-white/45"
+      className={styles.chevron}
     >
       <path d={CHEVRON_PATH} fill="currentColor" />
     </svg>
@@ -657,10 +638,8 @@ function ModelMenu({
   const [hover, setHover] = useState<string | null>(null);
 
   return (
-    <div className="px-1 py-1" role="listbox" aria-label="Select model">
-      <p className="px-2.5 pt-1 pb-1.5 text-[12px] font-medium text-white/45">
-        Select model
-      </p>
+    <div className={styles.menu} role="listbox" aria-label="Select model">
+      <p className={styles.menuTitle}>Select model</p>
       <MenuRow
         label="Default"
         detail="Recommended set of models"
@@ -706,26 +685,15 @@ function MenuRow({
       onClick={onSelect}
       onPointerEnter={() => onHover(true)}
       onPointerLeave={() => onHover(false)}
-      className={clsx(
-        "flex w-full items-center gap-3 rounded-[10px] px-2.5 py-1.5 text-left",
-        hovered && "bg-white/10",
-      )}
+      className={styles.option}
+      data-hovered={hovered}
     >
-      <span className="min-w-0 flex-1">
-        <span className="block text-[14px] leading-5 font-medium text-white">
-          {label}
-        </span>
-        {detail ? (
-          <span className="block text-[12px] leading-4 font-medium text-white/45">
-            {detail}
-          </span>
-        ) : null}
+      <span className={styles.optionText}>
+        <span className={styles.optionLabel}>{label}</span>
+        {detail ? <span className={styles.optionDetail}>{detail}</span> : null}
       </span>
       {selected ? (
-        <CheckIcon
-          aria-hidden="true"
-          className="size-4 shrink-0 text-white/80"
-        />
+        <CheckIcon aria-hidden="true" className={styles.optionCheck} />
       ) : null}
     </button>
   );
@@ -738,17 +706,14 @@ function hash(index: number, salt: number) {
 
 function FastParticles() {
   return (
-    <span
-      aria-hidden="true"
-      className="pointer-events-none absolute inset-0 overflow-hidden"
-    >
+    <span aria-hidden="true" className={styles.fastParticles}>
       {Array.from({ length: 14 }, (_, index) => {
         const pace = 1 + (hash(index, 21) - 0.5) * 0.4;
         const duration = 1.9 / pace;
         return (
           <span
             key={index}
-            className="model-slider-fast-path absolute inset-x-0 h-0"
+            className={styles.fastPath}
             style={{
               top: `${12 + hash(index, 23) * 76}%`,
               animationDelay: `${index * (1.9 / 14) - duration}s`,
@@ -756,7 +721,7 @@ function FastParticles() {
             }}
           >
             <span
-              className="absolute top-0 left-0 size-[3px] rounded-full bg-[#ffffffb8] shadow-[0_0_5px_#ffffff57]"
+              className={styles.speck}
               style={{
                 opacity: 0.4 + hash(index, 11) * 0.6,
                 transform: `translate(-50%, -50%) scale(${0.5 + hash(index, 12) * 0.45})`,
@@ -765,29 +730,13 @@ function FastParticles() {
           </span>
         );
       })}
-      <style>{`
-        .model-slider-fast-path {
-          animation-name: model-slider-fast-travel;
-          animation-timing-function: linear;
-          animation-iteration-count: infinite;
-        }
-        @keyframes model-slider-fast-travel {
-          0% { opacity: 0; transform: translate(100%); }
-          8% { opacity: 1; transform: translate(92%); }
-          92% { opacity: 1; transform: translate(8%); }
-          100% { opacity: 0; transform: translate(0); }
-        }
-      `}</style>
     </span>
   );
 }
 
 function DriftParticles() {
   return (
-    <span
-      aria-hidden="true"
-      className="pointer-events-none absolute inset-x-0 top-1/2 h-6 -translate-y-1/2 overflow-hidden"
-    >
+    <span aria-hidden="true" className={styles.drift}>
       {Array.from({ length: 14 }, (_, index) => (
         <DriftSpeck key={index} index={index} />
       ))}
@@ -816,7 +765,7 @@ function DriftSpeck({ index }: { index: number }) {
 
   return (
     <span
-      className="absolute size-[3px] rounded-full bg-[#ffffffb8] shadow-[0_0_5px_#ffffff57]"
+      className={styles.speck}
       style={{
         left: `calc(${4 + hash(index, 14) * 92}% + ${spot.horizontalOffset}px)`,
         top: spot.y,
@@ -843,14 +792,11 @@ function driftSpot(index: number, salt: number) {
 
 function Burst() {
   return (
-    <span
-      aria-hidden="true"
-      className="pointer-events-none absolute top-1/2 left-1/2 size-[76px] -translate-1/2"
-    >
+    <span aria-hidden="true" className={styles.burst}>
       {BURST.map(([x, y], index) => (
         <span
           key={`${x}-${y}`}
-          className="model-slider-burst absolute top-1/2 left-1/2 size-[5px] rounded-full"
+          className={styles.burstParticle}
           style={{
             background: burstColor(index),
             ["--particle-x" as string]: `${x}px`,
@@ -859,16 +805,6 @@ function Burst() {
           }}
         />
       ))}
-      <style>{`
-        .model-slider-burst {
-          animation: model-slider-burst 620ms cubic-bezier(.25,1,.5,1) both;
-        }
-        @keyframes model-slider-burst {
-          0% { opacity: 0; transform: translate(-50%, -50%) scale(.25); }
-          22% { opacity: 1; transform: translate(-50%, -50%) scale(1.28); }
-          100% { opacity: 0; transform: translate(calc(-50% + var(--particle-x)), calc(-50% + var(--particle-y))) scale(.55); }
-        }
-      `}</style>
     </span>
   );
 }
@@ -1053,16 +989,9 @@ function UltraFill({
   }, [reduced]);
 
   return (
-    <span
-      aria-hidden="true"
-      key={burstKey}
-      className="pointer-events-none absolute -inset-px overflow-hidden"
-    >
-      <span className="absolute inset-0 bg-[linear-gradient(90deg,color-mix(in_srgb,#339cff_60%,#ad7bf9),#ad7bf9_55%,color-mix(in_srgb,#ad7bf9_72%,#339cff))]" />
-      <canvas
-        ref={canvasRef}
-        className="absolute inset-0 size-full mix-blend-luminosity"
-      />
+    <span aria-hidden="true" key={burstKey} className={styles.ultra}>
+      <span className={styles.ultraGradient} />
+      <canvas ref={canvasRef} className={styles.ultraCanvas} />
     </span>
   );
 }

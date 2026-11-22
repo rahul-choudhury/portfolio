@@ -1,5 +1,5 @@
-import clsx from "clsx";
 import Link from "next/link";
+import styles from "./lab-card.module.css";
 import type { Lab } from "./lab-types";
 
 type LabCardProps = {
@@ -10,25 +10,19 @@ export function LabCard({ lab }: LabCardProps) {
   const { Preview } = lab;
 
   return (
-    <div className="group relative">
-      <article
-        aria-hidden="true"
-        className={clsx(
-          "overflow-hidden rounded-sm border border-border bg-surface transition-colors",
-          "group-focus-within:border-text group-hover:border-border-strong",
-        )}
-      >
-        <div inert className="pointer-events-none">
+    <div className={styles.card}>
+      <article aria-hidden="true" className={styles.preview}>
+        <div inert className={styles.thumbnail}>
           <Preview compact />
         </div>
-        <footer className="border-t border-border p-4">
-          <h2 className="font-medium text-text">{lab.title}</h2>
+        <footer className={styles.footer}>
+          <h2 className={styles.title}>{lab.title}</h2>
         </footer>
       </article>
       <Link
         href={`/lab/${lab.slug}`}
         aria-label={lab.title}
-        className="absolute inset-0 rounded-sm outline-none"
+        className={styles.link}
       />
     </div>
   );

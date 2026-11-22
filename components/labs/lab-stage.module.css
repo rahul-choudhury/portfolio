@@ -1,0 +1,50 @@
+.stage {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 24rem;
+  padding: var(--space-6);
+  overflow: hidden;
+  border-radius: var(--radius-sm);
+  background: var(--color-surface-soft);
+
+  @media (width >= 48rem) {
+    padding: var(--space-10);
+  }
+
+  &[data-compact="true"] {
+    height: auto;
+    min-height: 11rem;
+    padding: var(--space-5);
+
+    @media (width >= 40rem) {
+      min-height: 13rem;
+      padding: var(--space-7);
+    }
+  }
+}
+
+.grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, currentColor 1px, transparent 1px),
+    linear-gradient(to bottom, currentColor 1px, transparent 1px);
+  background-size: 24px 24px;
+  color: color-mix(in oklab, var(--color-text) 2.5%, transparent);
+  pointer-events: none;
+}
+
+.content {
+  position: relative;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+
+  &[data-fill="true"] {
+    position: absolute;
+    inset: 0;
+  }
+}

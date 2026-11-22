@@ -5,6 +5,7 @@ import { usePrefersReducedMotion } from "@rahul-choudhury/ui/hooks";
 import { CheckIcon, CircleNotchIcon } from "@phosphor-icons/react";
 import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
+import styles from "./action-feedback.module.css";
 import { LabStage } from "./lab-stage";
 import type { LabComponentProps } from "./lab-types";
 
@@ -32,25 +33,25 @@ export function ActionFeedback({ compact = false }: LabComponentProps) {
   const content = {
     idle: { icon: null, label: "Publish changes" },
     loading: {
-      icon: (
-        <CircleNotchIcon aria-hidden="true" className="size-4 animate-spin" />
-      ),
+      icon: <CircleNotchIcon aria-hidden="true" className={styles.spinner} />,
       label: "Publishing",
     },
     success: {
-      icon: <CheckIcon aria-hidden="true" className="size-4" weight="bold" />,
+      icon: (
+        <CheckIcon aria-hidden="true" className={styles.icon} weight="bold" />
+      ),
       label: "Published",
     },
   }[status];
 
   return (
     <LabStage compact={compact}>
-      <div className="flex items-center justify-center">
+      <div className={styles.center}>
         <Button
           onClick={handleClick}
           disabled={status !== "idle"}
           aria-live="polite"
-          className="min-w-40 rounded-sm"
+          className={styles.button}
           size={compact ? "md" : "lg"}
         >
           <AnimatePresence mode="wait" initial={false}>
@@ -64,7 +65,7 @@ export function ActionFeedback({ compact = false }: LabComponentProps) {
                 prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: -4 }
               }
               transition={{ duration: prefersReducedMotion ? 0.01 : 0.15 }}
-              className="inline-flex items-center gap-2"
+              className={styles.label}
             >
               {content.icon}
               {content.label}

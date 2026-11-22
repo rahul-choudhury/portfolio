@@ -1,0 +1,42 @@
+.card {
+  position: relative;
+}
+
+.preview {
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  transition: border-color var(--transition-default);
+
+  .card:focus-within & {
+    border-color: var(--color-text);
+  }
+
+  @media (hover: hover) {
+    .card:hover & {
+      border-color: var(--color-border-strong);
+    }
+  }
+}
+
+.thumbnail {
+  pointer-events: none;
+}
+
+.footer {
+  padding: var(--space-4);
+  border-top: 1px solid var(--color-border);
+}
+
+.title {
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text);
+}
+
+.link {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-sm);
+  outline: none;
+}
