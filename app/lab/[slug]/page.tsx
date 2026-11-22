@@ -1,8 +1,9 @@
-import { ArrowUDownLeftIcon } from "@phosphor-icons/react/ssr";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { Page, PageTitle, TitleRow } from "@/components/page";
 import { getLab, LABS } from "@/lib/labs";
+import styles from "./page.module.css";
 
 type Params = Promise<{ slug: string }>;
 
@@ -35,36 +36,24 @@ export default async function LabDetailPage({ params }: { params: Params }) {
   const { Preview } = lab;
 
   return (
-    <div className="mx-auto max-w-xl pt-10 md:pt-20">
-      <header className="mb-9">
-        <div className="flex items-center justify-between gap-4">
-          <h1 className="flex min-w-0 items-baseline gap-2 font-serif text-2xl font-medium tracking-tight md:text-3xl">
-            <Link
-              href="/lab"
-              className="shrink-0 text-text-muted transition-colors hover:text-text"
-            >
+    <Page>
+      <header className={styles.header}>
+        <TitleRow backHref="/lab">
+          <PageTitle className={styles.breadcrumb}>
+            <Link href="/lab" className={styles.parent}>
               Lab
             </Link>
-            <span aria-hidden="true" className="text-text-muted">
+            <span aria-hidden="true" className={styles.separator}>
               /
             </span>
-            <span className="truncate text-text">{lab.title}</span>
-          </h1>
-          <Link
-            href="/lab"
-            className="inline-flex shrink-0 items-center gap-1.5 text-sm text-text-muted transition-colors hover:text-text"
-          >
-            <ArrowUDownLeftIcon aria-hidden="true" size={14} />
-            Go back
-          </Link>
-        </div>
+            <span className={styles.current}>{lab.title}</span>
+          </PageTitle>
+        </TitleRow>
       </header>
-      <article className="overflow-hidden rounded-sm border border-border bg-surface">
+      <article className={styles.preview}>
         <Preview />
       </article>
-      <p className="mt-4 max-w-md text-sm leading-relaxed text-text-muted">
-        {lab.description}
-      </p>
-    </div>
+      <p className={styles.description}>{lab.description}</p>
+    </Page>
   );
 }

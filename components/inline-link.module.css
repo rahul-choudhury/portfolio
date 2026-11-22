@@ -1,0 +1,14 @@
+.link {
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text);
+  text-decoration: underline;
+  text-decoration-color: var(--color-border);
+  text-underline-offset: 4px;
+  transition: text-decoration-color var(--transition-default);
+
+  @media (hover: hover) {
+    &:hover {
+      text-decoration-color: var(--color-text);
+    }
+  }
+}

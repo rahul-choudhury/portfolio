@@ -40,6 +40,7 @@ import {
   Textarea,
 } from "@rahul-choudhury/ui/components";
 import { useState } from "react";
+import styles from "./design-system.module.css";
 
 function Section({
   title,
@@ -49,8 +50,8 @@ function Section({
   children: React.ReactNode;
 }) {
   return (
-    <section className="mb-12">
-      <h2 className="mb-4 text-sm font-medium text-text-muted">{title}</h2>
+    <section className={styles.section}>
+      <h2 className={styles.sectionTitle}>{title}</h2>
       {children}
     </section>
   );
@@ -64,8 +65,8 @@ function Row({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex flex-col gap-3 border-b border-border pb-6 last:border-0 last:pb-0">
-      <h3 className="text-sm font-medium text-text">{label}</h3>
+    <div className={styles.row}>
+      <h3 className={styles.rowTitle}>{label}</h3>
       {children}
     </div>
   );
@@ -79,10 +80,8 @@ function StatePreview({
   children: React.ReactNode;
 }) {
   return (
-    <div className="space-y-1.5">
-      <p className="font-mono text-xs tracking-[0.08em] text-text-muted uppercase">
-        {label}
-      </p>
+    <div className={styles.state}>
+      <p className={styles.stateLabel}>{label}</p>
       {children}
     </div>
   );
@@ -96,9 +95,9 @@ export function Showcase() {
     <>
       {/* ---- Button ---- */}
       <Section title="Button">
-        <div className="space-y-6">
+        <div className={styles.rows}>
           <Row label="Variants">
-            <div className="flex flex-wrap items-center gap-3">
+            <div className={styles.inline}>
               <Button variant="primary">Primary</Button>
               <Button variant="secondary">Secondary</Button>
               <Button variant="ghost">Ghost</Button>
@@ -107,7 +106,7 @@ export function Showcase() {
           </Row>
 
           <Row label="Sizes">
-            <div className="flex flex-wrap items-center gap-3">
+            <div className={styles.inline}>
               <Button size="sm">Small</Button>
               <Button size="md">Medium</Button>
               <Button size="lg">Large</Button>
@@ -118,7 +117,7 @@ export function Showcase() {
           </Row>
 
           <Row label="States">
-            <div className="flex flex-wrap items-center gap-3">
+            <div className={styles.inline}>
               <Button>Default</Button>
               <Button disabled>Disabled</Button>
             </div>
@@ -128,40 +127,34 @@ export function Showcase() {
 
       {/* ---- Card ---- */}
       <Section title="Card">
-        <div className="grid gap-4 sm:grid-cols-3">
-          <Card className="p-4">
-            <p className="text-sm font-medium text-text">Bordered</p>
-            <p className="mt-1 text-sm text-text-secondary">
-              The default. Visual separation.
-            </p>
+        <div className={styles.cards}>
+          <Card className={styles.card}>
+            <p className={styles.cardTitle}>Bordered</p>
+            <p className={styles.cardText}>The default. Visual separation.</p>
           </Card>
-          <Card variant="plain" className="p-4">
-            <p className="text-sm font-medium text-text">Plain</p>
-            <p className="mt-1 text-sm text-text-secondary">
-              Surface only, no border.
-            </p>
+          <Card variant="plain" className={styles.card}>
+            <p className={styles.cardTitle}>Plain</p>
+            <p className={styles.cardText}>Surface only, no border.</p>
           </Card>
-          <Card variant="elevated" className="p-4">
-            <p className="text-sm font-medium text-text">Elevated</p>
-            <p className="mt-1 text-sm text-text-secondary">
-              Subtle shadow lift.
-            </p>
+          <Card variant="elevated" className={styles.card}>
+            <p className={styles.cardTitle}>Elevated</p>
+            <p className={styles.cardText}>Subtle shadow lift.</p>
           </Card>
         </div>
       </Section>
 
       {/* ---- Input ---- */}
       <Section title="Input">
-        <div className="max-w-sm space-y-6">
+        <div className={styles.fields}>
           <Row label="Sizes">
-            <div className="space-y-3">
+            <div className={styles.stack}>
               <Input size="sm" placeholder="Small" />
               <Input size="md" placeholder="Medium (default)" />
               <Input size="lg" placeholder="Large" />
             </div>
           </Row>
           <Row label="States">
-            <div className="space-y-3">
+            <div className={styles.stack}>
               <StatePreview label="Default">
                 <Input placeholder="Default" />
               </StatePreview>
@@ -174,13 +167,13 @@ export function Showcase() {
             </div>
           </Row>
           <Row label="Bare">
-            <div className="flex items-center gap-2 rounded-md border border-border bg-surface pl-3 focus-within:border-border-strong">
-              <MagnifyingGlassIcon size={16} className="text-text-muted" />
+            <div className={styles.search}>
+              <MagnifyingGlassIcon size={16} className={styles.searchIcon} />
               <Input
                 variant="bare"
                 aria-label="Search"
                 placeholder="Search inside a custom container"
-                className="px-0"
+                className={styles.searchInput}
               />
             </div>
           </Row>
@@ -189,9 +182,9 @@ export function Showcase() {
 
       {/* ---- Textarea ---- */}
       <Section title="Textarea">
-        <div className="max-w-sm space-y-6">
+        <div className={styles.fields}>
           <Row label="States">
-            <div className="space-y-3">
+            <div className={styles.stack}>
               <StatePreview label="Default">
                 <FieldRoot>
                   <FieldLabel>Message</FieldLabel>
@@ -216,13 +209,13 @@ export function Showcase() {
             </div>
           </Row>
           <Row label="Bare">
-            <div className="flex items-end gap-2 rounded-lg border border-border bg-surface p-2 focus-within:border-border-strong">
+            <div className={styles.composer}>
               <Textarea
                 variant="bare"
                 aria-label="Message"
                 rows={1}
                 placeholder="Bare textarea in a composer"
-                className="field-sizing-content max-h-32 resize-none"
+                className={styles.composerInput}
               />
               <Button size="icon" aria-label="Send">
                 <PaperPlaneTiltIcon size={16} />
@@ -234,9 +227,9 @@ export function Showcase() {
 
       {/* ---- Select ---- */}
       <Section title="Select">
-        <div className="max-w-sm space-y-6">
+        <div className={styles.fields}>
           <Row label="States">
-            <div className="space-y-3">
+            <div className={styles.stack}>
               <StatePreview label="Default">
                 <Select defaultValue="serif">
                   <SelectTrigger>
@@ -298,14 +291,14 @@ export function Showcase() {
                 <SelectTrigger
                   variant="ghost"
                   aria-label="Font"
-                  className="w-auto"
+                  className={styles.ghostTrigger}
                 >
                   <SelectValue placeholder="Choose a font..." />
                 </SelectTrigger>
                 <SelectContent
                   align="start"
                   alignItemWithTrigger={false}
-                  className="min-w-56"
+                  className={styles.startMenu}
                 >
                   <SelectItem value="sans">Sans-serif</SelectItem>
                   <SelectItem value="serif">Serif</SelectItem>
@@ -319,9 +312,9 @@ export function Showcase() {
 
       {/* ---- Checkbox ---- */}
       <Section title="Checkbox">
-        <div className="flex flex-col gap-3">
+        <div className={styles.stack}>
           <FieldRoot>
-            <FieldLabel className="inline-flex items-center gap-2">
+            <FieldLabel className={styles.checkLabel}>
               <Checkbox
                 checked={checkboxA}
                 name="design-system-checkbox-unchecked"
@@ -331,7 +324,7 @@ export function Showcase() {
             </FieldLabel>
           </FieldRoot>
           <FieldRoot>
-            <FieldLabel className="inline-flex items-center gap-2">
+            <FieldLabel className={styles.checkLabel}>
               <Checkbox
                 checked={checkboxB}
                 name="design-system-checkbox-checked"
@@ -341,13 +334,13 @@ export function Showcase() {
             </FieldLabel>
           </FieldRoot>
           <FieldRoot disabled>
-            <FieldLabel className="inline-flex items-center gap-2">
+            <FieldLabel className={styles.checkLabel}>
               <Checkbox disabled name="design-system-checkbox-disabled" />
               <span>Disabled</span>
             </FieldLabel>
           </FieldRoot>
           <FieldRoot>
-            <FieldLabel className="inline-flex items-center gap-2">
+            <FieldLabel className={styles.checkLabel}>
               <Checkbox
                 indeterminate
                 name="design-system-checkbox-indeterminate"
@@ -356,7 +349,7 @@ export function Showcase() {
             </FieldLabel>
           </FieldRoot>
           <FieldRoot invalid>
-            <FieldLabel className="inline-flex items-center gap-2">
+            <FieldLabel className={styles.checkLabel}>
               <Checkbox name="design-system-checkbox-invalid" />
               <span>Invalid</span>
             </FieldLabel>
@@ -366,7 +359,7 @@ export function Showcase() {
 
       {/* ---- Field Composition ---- */}
       <Section title="Field Composition">
-        <div className="max-w-sm space-y-6">
+        <div className={styles.fields}>
           <FieldRoot>
             <FieldLabel>Email</FieldLabel>
             <Input required type="email" placeholder="you@example.com" />
@@ -411,7 +404,7 @@ export function Showcase() {
           </FieldRoot>
 
           <FieldRoot>
-            <FieldLabel className="inline-flex items-center gap-2">
+            <FieldLabel className={styles.checkLabel}>
               <Checkbox
                 checked={checkboxA}
                 name="design-system-checkbox-updates"
@@ -437,7 +430,7 @@ export function Showcase() {
             <DialogDescription>
               This action cannot be undone. Are you sure you want to continue?
             </DialogDescription>
-            <div className="mt-4 flex justify-end gap-2">
+            <div className={styles.actions}>
               <DialogClose render={<Button variant="ghost" />}>
                 Cancel
               </DialogClose>
@@ -461,7 +454,7 @@ export function Showcase() {
               The post and its comments will be permanently deleted. This
               can&apos;t be undone.
             </AlertDialogDescription>
-            <div className="mt-4 flex justify-end gap-2">
+            <div className={styles.actions}>
               <AlertDialogClose render={<Button variant="ghost" />}>
                 Cancel
               </AlertDialogClose>
@@ -482,7 +475,7 @@ export function Showcase() {
             <InfoIcon size={16} />
           </PopoverTrigger>
           <PopoverContent>
-            <p className="text-sm text-text-secondary">
+            <p className={styles.popoverText}>
               This is a popover with additional context. It anchors to the
               trigger and supports keyboard navigation.
             </p>
@@ -492,15 +485,15 @@ export function Showcase() {
 
       {/* ---- Skeleton ---- */}
       <Section title="Skeleton">
-        <div className="max-w-sm space-y-3">
-          <Skeleton className="h-4 w-3/4" />
-          <Skeleton className="h-4 w-1/2" />
-          <Skeleton className="h-10 w-full rounded-md" />
-          <div className="flex items-center gap-3">
-            <Skeleton className="size-10 rounded-full" />
-            <div className="flex-1 space-y-2">
-              <Skeleton className="h-4 w-2/3" />
-              <Skeleton className="h-3 w-1/3" />
+        <div className={styles.skeletons}>
+          <Skeleton className={styles.titleLine} />
+          <Skeleton className={styles.subtitleLine} />
+          <Skeleton className={styles.block} />
+          <div className={styles.profile}>
+            <Skeleton className={styles.avatar} />
+            <div className={styles.profileLines}>
+              <Skeleton className={styles.nameLine} />
+              <Skeleton className={styles.metaLine} />
             </div>
           </div>
         </div>

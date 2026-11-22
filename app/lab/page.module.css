@@ -1,0 +1,8 @@
+.header {
+  margin-bottom: var(--space-9);
+}
+
+.labs {
+  display: grid;
+  gap: var(--space-4);
+}

@@ -1,0 +1,21 @@
+.status {
+  font-size: var(--text-sm);
+  line-height: var(--text-sm-line-height);
+  color: var(--color-text-muted);
+}
+
+.title {
+  margin-top: var(--space-3);
+}
+
+.message {
+  margin-top: var(--space-3);
+  font-size: var(--text-base);
+  line-height: 1.75rem;
+  color: var(--color-text-secondary);
+}
+
+.homeLink {
+  font-size: var(--text-sm);
+  line-height: var(--text-sm-line-height);
+}

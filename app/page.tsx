@@ -1,19 +1,18 @@
-import Link from "next/link";
-import type { ComponentProps } from "react";
+import { InlineLink } from "@/components/inline-link";
 import { Reveal } from "@/components/motion-reveal";
+import { Page, PageTitle } from "@/components/page";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { EmailLink } from "./email-link";
+import styles from "./page.module.css";
 
 export default function Home() {
   return (
-    <article className="mx-auto max-w-xl pt-10 md:pt-20">
+    <Page as="article">
       <Reveal delay={0.05}>
-        <h1 className="font-serif text-2xl font-medium tracking-tight text-text md:text-3xl">
-          Hi! I&apos;m Rahul.
-        </h1>
+        <PageTitle>Hi! I&apos;m Rahul.</PageTitle>
       </Reveal>
 
-      <div className="mt-8 space-y-6 text-base leading-7 text-text-secondary md:mt-9">
+      <div className={styles.intro}>
         <Reveal delay={0.1}>
           <p>I&apos;m a Frontend Developer at Growth Panda.</p>
         </Reveal>
@@ -73,22 +72,11 @@ export default function Home() {
       </div>
 
       <Reveal delay={0.3}>
-        <div className="mt-9 border-t border-border pt-6 md:mt-10">
-          <p className="mb-3 text-sm text-text-muted">
-            Have something in mind?
-          </p>
+        <div className={styles.contact}>
+          <p className={styles.prompt}>Have something in mind?</p>
           <EmailLink />
         </div>
       </Reveal>
-    </article>
-  );
-}
-
-function InlineLink(props: Omit<ComponentProps<typeof Link>, "className">) {
-  return (
-    <Link
-      {...props}
-      className="font-medium text-text underline decoration-border underline-offset-4 transition-colors hover:decoration-text"
-    />
+    </Page>
   );
 }

@@ -4,6 +4,7 @@ import localFont from "next/font/local";
 import { MobileHaptics } from "@/components/mobile-haptics";
 import { ThemeProvider } from "@/components/theme-provider";
 import "./globals.css";
+import styles from "./layout.module.css";
 
 const satoshi = localFont({
   src: "./fonts/Satoshi-Variable.woff2",
@@ -48,13 +49,11 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${satoshi.className} ${satoshi.variable} ${clashDisplay.variable} ${jetBrainsMono.variable} antialiased`}
+        className={`${satoshi.className} ${satoshi.variable} ${clashDisplay.variable} ${jetBrainsMono.variable}`}
       >
         <ThemeProvider>
           <MobileHaptics />
-          <main className="mx-auto max-w-4xl px-6 py-10 md:px-12 md:py-12">
-            {children}
-          </main>
+          <main className={styles.main}>{children}</main>
         </ThemeProvider>
       </body>
     </html>

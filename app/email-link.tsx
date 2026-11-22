@@ -5,6 +5,7 @@ import { motion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import { usePrefersReducedMotion } from "@rahul-choudhury/ui/hooks";
 import { BLUR_REVEAL_FILTER, BLUR_REVEAL_TRANSITION } from "@/lib/motion";
+import styles from "./email-link.module.css";
 
 const EMAIL = "rchoudhury63@gmail.com";
 const COPY_RESET_DELAY = 1200;
@@ -40,14 +41,14 @@ export function EmailLink() {
   };
 
   return (
-    <span className="inline-flex items-center gap-1 text-base font-medium text-text">
+    <span className={styles.email}>
       <span>{EMAIL}</span>
       <button
         type="button"
         onClick={handleClick}
         aria-label={isCopied ? "Email copied" : "Copy email address"}
         aria-live="polite"
-        className="inline-grid size-7 cursor-pointer place-items-center rounded-sm text-text-muted transition-colors hover:text-text focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-text"
+        className={styles.copy}
       >
         <motion.span
           aria-hidden
@@ -59,7 +60,7 @@ export function EmailLink() {
               : BLUR_REVEAL_FILTER.visible,
           }}
           transition={transition}
-          className="col-start-1 row-start-1 inline-flex"
+          className={styles.icon}
         >
           <CopyIcon aria-hidden="true" size={18} />
         </motion.span>
@@ -73,7 +74,7 @@ export function EmailLink() {
               : BLUR_REVEAL_FILTER.hidden,
           }}
           transition={transition}
-          className="col-start-1 row-start-1 inline-flex"
+          className={styles.icon}
         >
           <CheckIcon aria-hidden="true" size={18} />
         </motion.span>

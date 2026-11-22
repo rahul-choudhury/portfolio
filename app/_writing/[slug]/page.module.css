@@ -1,0 +1,12 @@
+.header {
+  margin-bottom: var(--space-10);
+}
+
+.date {
+  display: block;
+  margin-top: var(--space-3);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  line-height: var(--text-sm-line-height);
+  color: var(--color-text-muted);
+}

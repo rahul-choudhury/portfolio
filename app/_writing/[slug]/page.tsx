@@ -1,6 +1,4 @@
-import { ArrowUDownLeftIcon } from "@phosphor-icons/react/ssr";
 import type { Metadata } from "next";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import type { Build } from "rehype-autolink-headings";
@@ -8,6 +6,7 @@ import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypePrettyCode from "rehype-pretty-code";
 import rehypeSlug from "rehype-slug";
 import { Reveal } from "@/components/motion-reveal";
+import { Page, PageTitle, TitleRow } from "@/components/page";
 import { TableOfContents } from "@/components/table-of-contents";
 import { VideoPlayer } from "@/components/video-player";
 import {
@@ -16,6 +15,7 @@ import {
   getBlogSlugs,
   getTableOfContents,
 } from "@/lib/blogs";
+import styles from "./page.module.css";
 
 type Params = Promise<{ slug: string }>;
 const buildHeadingAnchorContent: Build = (element) => {
@@ -70,26 +70,17 @@ export default async function BlogPostPage({ params }: { params: Params }) {
   const toc = getTableOfContents(content);
 
   return (
-    <article className="mx-auto max-w-xl pt-10 md:pt-20">
-      <header className="mb-10">
+    <Page as="article">
+      <header className={styles.header}>
         <Reveal>
-          <div className="flex items-center justify-between gap-4">
-            <h1 className="font-serif text-2xl font-medium tracking-tight text-text md:text-3xl">
-              {metadata.title}
-            </h1>
-            <Link
-              href="/writing"
-              className="inline-flex shrink-0 items-center gap-1.5 text-sm text-text-muted transition-colors hover:text-text"
-            >
-              <ArrowUDownLeftIcon aria-hidden="true" size={14} />
-              Go back
-            </Link>
-          </div>
+          <TitleRow backHref="/writing">
+            <PageTitle>{metadata.title}</PageTitle>
+          </TitleRow>
         </Reveal>
 
         {metadata.date && (
           <Reveal delay={0.15}>
-            <time className="mt-3 block font-mono text-sm text-text-muted">
+            <time className={styles.date}>
               {new Date(metadata.date).toLocaleDateString("en-US", {
                 year: "numeric",
                 month: "long",
@@ -134,6 +125,6 @@ export default async function BlogPostPage({ params }: { params: Params }) {
           />
         </div>
       </Reveal>
-    </article>
+    </Page>
   );
 }
