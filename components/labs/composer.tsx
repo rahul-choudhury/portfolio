@@ -902,7 +902,7 @@ function VoiceSplit({
   onStart: () => void;
 }) {
   return (
-    <div role="group" aria-label="Use voice mode" className={styles.tools}>
+    <div role="group" aria-label="Use voice mode" className={styles.voiceSplit}>
       <Tip label="Use voice mode">
         <GhostButton aria-label="Use voice mode" onClick={onStart}>
           <VoiceGlyph />

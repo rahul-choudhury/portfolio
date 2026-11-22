@@ -156,6 +156,11 @@
   gap: var(--space-1);
 }
 
+.voiceSplit {
+  display: flex;
+  align-items: center;
+}
+
 .disclaimer {
   position: absolute;
   inset-inline: 0;
