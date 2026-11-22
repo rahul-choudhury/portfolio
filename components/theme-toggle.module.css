@@ -1,0 +1,67 @@
+.toggle {
+  position: relative;
+  display: inline-flex;
+  border-radius: var(--radius-sm);
+  vertical-align: baseline;
+  cursor: pointer;
+
+  /* A 44px hit area around the small keycap. */
+  &::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: var(--space-11);
+    height: var(--space-11);
+    translate: -50% -50%;
+  }
+
+  &:focus-visible {
+    outline: none;
+  }
+}
+
+.keycap {
+  /* Also read by the press animation in theme-toggle.tsx. */
+  --keycap-raised-shadow:
+    0 3px 0 var(--color-border-strong), 0 4px 2px rgb(0 0 0 / 0.15),
+    inset 0 1px 0 var(--color-surface);
+  --keycap-pressed-shadow:
+    0 0 0 var(--color-border-strong), 0 1px 1px rgb(0 0 0 / 0.12),
+    inset 0 1px 0 var(--color-surface);
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.5625rem;
+  height: var(--space-6);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-sm);
+  background: linear-gradient(
+    to bottom in oklab,
+    var(--color-surface),
+    var(--color-surface-soft)
+  );
+  box-shadow: var(--keycap-raised-shadow);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  line-height: 1;
+  color: var(--color-text-secondary);
+  transition: translate var(--duration-fast) var(--ease-out-quint);
+
+  @media (hover: hover) {
+    .toggle:hover & {
+      color: var(--color-text);
+    }
+  }
+
+  .toggle:focus-visible & {
+    color: var(--color-text);
+    text-decoration: underline;
+  }
+
+  .toggle:active & {
+    translate: 0 0.1875rem;
+    box-shadow: var(--keycap-pressed-shadow);
+  }
+}

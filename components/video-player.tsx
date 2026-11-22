@@ -12,6 +12,7 @@ import { useMediaQuery } from "@rahul-choudhury/ui/hooks";
 import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import { triggerMobileHaptic } from "./mobile-haptics";
+import styles from "./video-player.module.css";
 
 function formatTime(seconds: number) {
   const mins = Math.floor(seconds / 60);
@@ -118,7 +119,7 @@ export function VideoPlayer({
     <section
       ref={containerRef}
       aria-label="Video player"
-      className="relative my-6 overflow-hidden bg-black"
+      className={styles.player}
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
     >
@@ -131,7 +132,7 @@ export function VideoPlayer({
         loop
         playsInline
         preload="auto"
-        className="mx-auto block"
+        className={styles.video}
         onPlay={() => setIsPlaying(true)}
         onPause={() => setIsPlaying(false)}
         onTimeUpdate={(e) => {
@@ -143,7 +144,7 @@ export function VideoPlayer({
       <button
         type="button"
         aria-label={isPlaying ? "Pause Video" : "Play Video"}
-        className="absolute inset-0 cursor-pointer focus:outline-none"
+        className={styles.overlay}
         onClick={handlePlayback}
         onKeyDown={(e) => {
           if (e.key === " " || e.key === "Enter") {
@@ -169,15 +170,16 @@ export function VideoPlayer({
             transition: { duration: 0.25, ease: easeOutQuart },
           },
         }}
-        className="absolute right-0 bottom-0 left-0 p-2.5"
+        className={styles.bar}
       >
         {/* Controls box */}
-        <div className="flex items-center gap-3 rounded-lg border border-white/10 bg-black/40 px-3 py-2.5 shadow-lg backdrop-blur-md">
+        <div className={styles.controls}>
           {/* Play/Pause */}
           <button
             type="button"
             aria-label={isPlaying ? "Pause" : "Play"}
-            className="flex shrink-0 cursor-pointer items-center justify-center text-white/90 transition-colors hover:text-white"
+            className={styles.control}
+            data-control="play"
             onClick={handlePlayback}
           >
             <AnimatePresence mode="wait" initial={false}>
@@ -206,7 +208,7 @@ export function VideoPlayer({
           </button>
 
           {/* Time */}
-          <span className="shrink-0 font-mono text-xs text-white/70 tabular-nums select-none">
+          <span className={styles.time}>
             {formatTime(currentTime)}&nbsp;/&nbsp;{formatTime(duration)}
           </span>
 
@@ -221,12 +223,12 @@ export function VideoPlayer({
               setIsSeeking(false);
               triggerMobileHaptic();
             }}
-            className="group/slider flex grow items-center"
+            className={styles.seek}
           >
-            <Slider.Control className="flex h-5 w-full touch-none items-center">
-              <Slider.Track className="relative h-1 w-full rounded-full bg-white/25 transition-[height] duration-150 group-hover/slider:h-1.5">
-                <Slider.Indicator className="rounded-full bg-white/80" />
-                <Slider.Thumb className="block size-3 rounded-full bg-white opacity-0 shadow-sm transition-[opacity,transform] duration-150 group-hover/slider:opacity-100 focus:outline-none data-dragging:scale-125 data-dragging:opacity-100" />
+            <Slider.Control className={styles.seekControl}>
+              <Slider.Track className={styles.track}>
+                <Slider.Indicator className={styles.progress} />
+                <Slider.Thumb className={styles.thumb} />
               </Slider.Track>
             </Slider.Control>
           </Slider.Root>
@@ -235,7 +237,7 @@ export function VideoPlayer({
           <button
             type="button"
             aria-label={isFullscreen ? "Exit Fullscreen" : "Enter Fullscreen"}
-            className="flex shrink-0 cursor-pointer items-center justify-center text-white/70 transition-colors hover:text-white"
+            className={styles.control}
             onClick={toggleFullscreen}
           >
             {isFullscreen ? (

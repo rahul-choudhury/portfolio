@@ -1,0 +1,134 @@
+.player {
+  position: relative;
+  margin-block: var(--space-6);
+  overflow: hidden;
+  background: black;
+}
+
+.video {
+  display: block;
+  height: auto;
+  margin-inline: auto;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  cursor: pointer;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.bar {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: var(--space-2-5);
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2-5) var(--space-3);
+  border: 1px solid rgb(255 255 255 / 0.1);
+  border-radius: var(--radius-lg);
+  background: rgb(0 0 0 / 0.4);
+  box-shadow: var(--shadow-lg);
+  backdrop-filter: blur(12px);
+}
+
+.control {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  color: rgb(255 255 255 / 0.7);
+  cursor: pointer;
+  transition: color var(--transition-default);
+
+  &[data-control="play"] {
+    color: rgb(255 255 255 / 0.9);
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      color: white;
+    }
+  }
+}
+
+.time {
+  flex-shrink: 0;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  line-height: var(--text-xs-line-height);
+  font-variant-numeric: tabular-nums;
+  color: rgb(255 255 255 / 0.7);
+  user-select: none;
+}
+
+.seek {
+  display: flex;
+  flex-grow: 1;
+  align-items: center;
+}
+
+.seekControl {
+  display: flex;
+  width: 100%;
+  height: var(--space-5);
+  align-items: center;
+  touch-action: none;
+}
+
+.track {
+  position: relative;
+  width: 100%;
+  height: var(--space-1);
+  border-radius: 9999px;
+  background: rgb(255 255 255 / 0.25);
+  transition: height 150ms var(--ease-default);
+
+  @media (hover: hover) {
+    .seek:hover & {
+      height: var(--space-1-5);
+    }
+  }
+}
+
+.progress {
+  border-radius: 9999px;
+  background: rgb(255 255 255 / 0.8);
+}
+
+.thumb {
+  display: block;
+  width: var(--space-3);
+  height: var(--space-3);
+  border-radius: 9999px;
+  background: white;
+  box-shadow: var(--shadow-sm);
+  opacity: 0;
+  transition:
+    opacity 150ms var(--ease-default),
+    transform 150ms var(--ease-default);
+
+  &:focus {
+    outline: none;
+  }
+
+  @media (hover: hover) {
+    .seek:hover & {
+      opacity: 1;
+    }
+  }
+
+  &[data-dragging] {
+    scale: 1.25;
+    opacity: 1;
+  }
+}

@@ -5,6 +5,7 @@ import { CaretDownIcon } from "@phosphor-icons/react";
 import { motion } from "motion/react";
 import { useState } from "react";
 import type { TocEntry } from "@/lib/blogs";
+import styles from "./table-of-contents.module.css";
 
 export function TableOfContents({ toc }: { toc: TocEntry[] }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -12,25 +13,20 @@ export function TableOfContents({ toc }: { toc: TocEntry[] }) {
   if (toc.length === 0) return null;
 
   return (
-    <nav aria-label="Table of Contents" className="mb-10">
+    <nav aria-label="Table of Contents" className={styles.toc}>
       <Collapsible.Root open={isOpen} onOpenChange={setIsOpen}>
-        <Collapsible.Trigger className="group flex w-full items-center justify-between rounded-sm border border-border bg-surface-soft px-4 py-2.5 transition-colors duration-200 hover:border-border-strong">
-          <span className="text-sm font-medium text-text-muted">
-            Table of Contents
-          </span>
+        <Collapsible.Trigger className={styles.trigger}>
+          <span className={styles.label}>Table of Contents</span>
           <motion.span
             animate={{ rotate: isOpen ? 180 : 0 }}
             transition={{ duration: 0.2, ease: "easeOut" }}
           >
-            <CaretDownIcon size={16} className="text-text-muted" />
+            <CaretDownIcon size={16} className={styles.caret} />
           </motion.span>
         </Collapsible.Trigger>
 
-        <Collapsible.Panel
-          keepMounted
-          className="h-(--collapsible-panel-height) overflow-hidden transition-[height,opacity] duration-250 ease-in-out data-ending-style:h-0 data-ending-style:opacity-0 data-starting-style:h-0 data-starting-style:opacity-0"
-        >
-          <div className="mt-2 rounded-sm border border-border bg-surface-soft p-2">
+        <Collapsible.Panel keepMounted className={styles.panel}>
+          <div className={styles.entries}>
             {toc.map((entry, index) => (
               <motion.a
                 key={entry.id}
@@ -42,7 +38,7 @@ export function TableOfContents({ toc }: { toc: TocEntry[] }) {
                   delay: isOpen ? index * 0.05 : 0,
                   ease: "easeOut",
                 }}
-                className="block px-3 py-1.5 text-sm text-text-muted transition-colors duration-200 hover:bg-surface-soft hover:text-text"
+                className={styles.entry}
                 style={{
                   paddingLeft: `${entry.level === 3 ? 1.75 : 0.75}rem`,
                 }}
