@@ -3,9 +3,8 @@
 @import "@rahul-choudhury/ui/styles.css";
 
 /*
- * The site was designed on Tailwind's Preflight, which resets more than Josh's
- * reset does. These rules restore the parts the pages rely on. They live in
- * the library's reset layer so library components and app styles both still
+ * Resets the pages rely on beyond the library's reset. They live in the
+ * library's reset layer so library components and app styles both still
  * override them.
  */
 @layer reset {
@@ -52,7 +51,6 @@
 }
 
 :root {
-  /* Tailwind's default transition timing, which the hover states were tuned with. */
   --ease-default: cubic-bezier(0.4, 0, 0.2, 1);
   --transition-default: 150ms var(--ease-default);
 }
