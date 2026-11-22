@@ -51,7 +51,9 @@ function Section({
 }) {
   return (
     <section className={styles.section}>
-      <h2 className={styles.sectionTitle}>{title}</h2>
+      <h2 className={styles.label} data-tone="muted">
+        {title}
+      </h2>
       {children}
     </section>
   );
@@ -66,7 +68,7 @@ function Row({
 }) {
   return (
     <div className={styles.row}>
-      <h3 className={styles.rowTitle}>{label}</h3>
+      <h3 className={styles.label}>{label}</h3>
       {children}
     </div>
   );
@@ -80,8 +82,10 @@ function StatePreview({
   children: React.ReactNode;
 }) {
   return (
-    <div className={styles.state}>
-      <p className={styles.stateLabel}>{label}</p>
+    <div className={styles.stack} data-gap="sm">
+      <p className={styles.caption} data-variant="eyebrow">
+        {label}
+      </p>
       {children}
     </div>
   );
@@ -95,7 +99,7 @@ export function Showcase() {
     <>
       {/* ---- Button ---- */}
       <Section title="Button">
-        <div className={styles.rows}>
+        <div className={styles.stack} data-gap="lg">
           <Row label="Variants">
             <div className={styles.inline}>
               <Button variant="primary">Primary</Button>
@@ -129,15 +133,15 @@ export function Showcase() {
       <Section title="Card">
         <div className={styles.cards}>
           <Card className={styles.card}>
-            <p className={styles.cardTitle}>Bordered</p>
+            <p className={styles.label}>Bordered</p>
             <p className={styles.cardText}>The default. Visual separation.</p>
           </Card>
           <Card variant="plain" className={styles.card}>
-            <p className={styles.cardTitle}>Plain</p>
+            <p className={styles.label}>Plain</p>
             <p className={styles.cardText}>Surface only, no border.</p>
           </Card>
           <Card variant="elevated" className={styles.card}>
-            <p className={styles.cardTitle}>Elevated</p>
+            <p className={styles.label}>Elevated</p>
             <p className={styles.cardText}>Subtle shadow lift.</p>
           </Card>
         </div>

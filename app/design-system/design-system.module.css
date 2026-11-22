@@ -3,29 +3,43 @@
 }
 
 .section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
   margin-bottom: var(--space-12);
 }
 
-.sectionTitle {
-  margin-bottom: var(--space-4);
-  font-size: var(--text-sm);
-  line-height: var(--text-sm-line-height);
-  font-weight: var(--font-weight-medium);
-  color: var(--color-text-muted);
-}
-
-.groups {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-8);
-}
-
-.groupTitle {
-  margin-bottom: var(--space-3);
+.label {
   font-size: var(--text-sm);
   line-height: var(--text-sm-line-height);
   font-weight: var(--font-weight-medium);
   color: var(--color-text);
+
+  &[data-tone="muted"] {
+    color: var(--color-text-muted);
+  }
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+
+  &[data-gap="xs"] {
+    gap: var(--space-1);
+  }
+
+  &[data-gap="sm"] {
+    gap: var(--space-1-5);
+  }
+
+  &[data-gap="lg"] {
+    gap: var(--space-6);
+  }
+
+  &[data-gap="xl"] {
+    gap: var(--space-8);
+  }
 }
 
 .caption {
@@ -33,6 +47,15 @@
   font-size: var(--text-xs);
   line-height: var(--text-xs-line-height);
   color: var(--color-text-muted);
+
+  &[data-tone="secondary"] {
+    color: var(--color-text-secondary);
+  }
+
+  &[data-variant="eyebrow"] {
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
 }
 
 /* Tokens */
@@ -47,12 +70,6 @@
   }
 }
 
-.swatch {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-1-5);
-}
-
 .swatchColor {
   height: var(--space-16);
   border: 1px solid var(--color-border);
@@ -63,12 +80,6 @@
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-6);
-}
-
-.textToken {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-1);
 }
 
 .textSample {
@@ -97,12 +108,6 @@
   height: var(--space-12);
   border: 2px solid;
   border-radius: var(--radius-md);
-}
-
-.fonts {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-3);
 }
 
 .font {
@@ -144,13 +149,6 @@
   border: 2px solid var(--color-border-strong);
 }
 
-.radiusValue {
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  line-height: var(--text-xs-line-height);
-  color: var(--color-text-secondary);
-}
-
 .shadowSample {
   width: 5rem;
   height: 5rem;
@@ -159,12 +157,6 @@
 }
 
 /* Component showcase */
-
-.rows {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-6);
-}
 
 .row {
   display: flex;
@@ -179,39 +171,11 @@
   }
 }
 
-.rowTitle {
-  font-size: var(--text-sm);
-  line-height: var(--text-sm-line-height);
-  font-weight: var(--font-weight-medium);
-  color: var(--color-text);
-}
-
 .fields {
   display: flex;
   flex-direction: column;
   gap: var(--space-6);
   max-width: 24rem;
-}
-
-.stack {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-3);
-}
-
-.state {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-1-5);
-}
-
-.stateLabel {
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  line-height: var(--text-xs-line-height);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--color-text-muted);
 }
 
 .inline {
@@ -232,13 +196,6 @@
 
 .card {
   padding: var(--space-4);
-}
-
-.cardTitle {
-  font-size: var(--text-sm);
-  line-height: var(--text-sm-line-height);
-  font-weight: var(--font-weight-medium);
-  color: var(--color-text);
 }
 
 .cardText {

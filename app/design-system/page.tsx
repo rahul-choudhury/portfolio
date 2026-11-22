@@ -54,17 +54,19 @@ export default function DesignPage() {
       {/* ---- Colors ---- */}
       <section className={styles.section}>
         <Reveal delay={0.15}>
-          <h2 className={styles.sectionTitle}>Colors</h2>
+          <h2 className={styles.label} data-tone="muted">
+            Colors
+          </h2>
         </Reveal>
 
         <Reveal delay={0.2}>
-          <div className={styles.groups}>
+          <div className={styles.stack} data-gap="xl">
             {/* Background / surface colors */}
-            <div>
-              <h3 className={styles.groupTitle}>Backgrounds &amp; Surfaces</h3>
+            <div className={styles.stack}>
+              <h3 className={styles.label}>Backgrounds &amp; Surfaces</h3>
               <div className={styles.swatches}>
                 {COLORS.map((c) => (
-                  <div key={c.token} className={styles.swatch}>
+                  <div key={c.token} className={styles.stack} data-gap="sm">
                     <div
                       className={styles.swatchColor}
                       style={{ background: `var(--color-${c.token})` }}
@@ -76,11 +78,11 @@ export default function DesignPage() {
             </div>
 
             {/* Text colors */}
-            <div>
-              <h3 className={styles.groupTitle}>Text</h3>
+            <div className={styles.stack}>
+              <h3 className={styles.label}>Text</h3>
               <div className={styles.samples}>
                 {TEXT_COLORS.map((c) => (
-                  <div key={c.token} className={styles.textToken}>
+                  <div key={c.token} className={styles.stack} data-gap="xs">
                     <span
                       className={styles.textSample}
                       data-on-accent={c.onAccent ?? false}
@@ -95,11 +97,11 @@ export default function DesignPage() {
             </div>
 
             {/* Border colors */}
-            <div>
-              <h3 className={styles.groupTitle}>Borders</h3>
+            <div className={styles.stack}>
+              <h3 className={styles.label}>Borders</h3>
               <div className={styles.borderSamples}>
                 {BORDER_COLORS.map((c) => (
-                  <div key={c.token} className={styles.swatch}>
+                  <div key={c.token} className={styles.stack} data-gap="sm">
                     <div
                       className={styles.borderSample}
                       style={{ borderColor: `var(--color-${c.token})` }}
@@ -116,15 +118,17 @@ export default function DesignPage() {
       {/* ---- Typography ---- */}
       <section className={styles.section}>
         <Reveal delay={0.3}>
-          <h2 className={styles.sectionTitle}>Typography</h2>
+          <h2 className={styles.label} data-tone="muted">
+            Typography
+          </h2>
         </Reveal>
 
         <Reveal delay={0.35}>
-          <div className={styles.groups}>
+          <div className={styles.stack} data-gap="xl">
             {/* Font families */}
-            <div>
-              <h3 className={styles.groupTitle}>Font Families</h3>
-              <div className={styles.fonts}>
+            <div className={styles.stack}>
+              <h3 className={styles.label}>Font Families</h3>
+              <div className={styles.stack}>
                 <div className={styles.font}>
                   <span className={styles.fontName}>Satoshi</span>
                   <span className={styles.caption}>
@@ -156,7 +160,9 @@ export default function DesignPage() {
       {/* ---- Radius ---- */}
       <section className={styles.section}>
         <Reveal delay={0.4}>
-          <h2 className={styles.sectionTitle}>Radius</h2>
+          <h2 className={styles.label} data-tone="muted">
+            Radius
+          </h2>
         </Reveal>
         <Reveal delay={0.45}>
           <div className={styles.samples}>
@@ -167,7 +173,9 @@ export default function DesignPage() {
                   style={{ borderRadius: r.radius }}
                 />
                 <span className={styles.caption}>{r.token}</span>
-                <span className={styles.radiusValue}>{r.value}</span>
+                <span className={styles.caption} data-tone="secondary">
+                  {r.value}
+                </span>
               </div>
             ))}
           </div>
@@ -177,7 +185,9 @@ export default function DesignPage() {
       {/* ---- Shadows ---- */}
       <section className={styles.section}>
         <Reveal delay={0.5}>
-          <h2 className={styles.sectionTitle}>Shadows</h2>
+          <h2 className={styles.label} data-tone="muted">
+            Shadows
+          </h2>
         </Reveal>
         <Reveal delay={0.55}>
           <div className={styles.samples}>
