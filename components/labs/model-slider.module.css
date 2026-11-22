@@ -108,7 +108,7 @@
   padding: var(--space-0-5) var(--space-1-5);
   border-radius: var(--radius-md);
   text-align: center;
-  transition: background-color var(--transition-default);
+  transition: background-color var(--duration-fast) var(--ease-out-quad);
 
   @media (hover: hover) {
     &:hover {

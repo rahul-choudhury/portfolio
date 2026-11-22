@@ -11,7 +11,7 @@
   border: 1px solid var(--color-border);
   border-radius: var(--radius-sm);
   background: var(--color-surface-soft);
-  transition: border-color var(--duration-normal) var(--ease-default);
+  transition: border-color var(--duration-normal) var(--ease-out-quad);
 
   @media (hover: hover) {
     &:hover {
@@ -35,8 +35,8 @@
   height: var(--collapsible-panel-height);
   overflow: hidden;
   transition:
-    height 250ms var(--ease-default),
-    opacity 250ms var(--ease-default);
+    height var(--duration-normal) var(--ease-in-out-quad),
+    opacity var(--duration-normal) var(--ease-in-out-quad);
 
   &[data-starting-style],
   &[data-ending-style] {
@@ -60,8 +60,8 @@
   line-height: var(--text-sm-line-height);
   color: var(--color-text-muted);
   transition:
-    color var(--duration-normal) var(--ease-default),
-    background-color var(--duration-normal) var(--ease-default);
+    color var(--duration-normal) var(--ease-out-quad),
+    background-color var(--duration-normal) var(--ease-out-quad);
 
   @media (hover: hover) {
     &:hover {

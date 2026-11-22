@@ -3,7 +3,7 @@
   align-items: center;
   gap: var(--space-1);
   color: var(--color-text-secondary);
-  transition: color var(--transition-default);
+  transition: color var(--duration-fast) var(--ease-out-quad);
 
   @media (hover: hover) {
     &:hover {
@@ -17,8 +17,8 @@
   color: var(--color-border-strong);
   opacity: 0;
   transition:
-    translate var(--transition-default),
-    opacity var(--transition-default);
+    translate var(--duration-fast) var(--ease-out-quad),
+    opacity var(--duration-fast) var(--ease-out-quad);
 
   @media (hover: hover) {
     .link:hover & {

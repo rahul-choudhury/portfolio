@@ -4,7 +4,7 @@
   text-decoration: underline;
   text-decoration-color: var(--color-border);
   text-underline-offset: 4px;
-  transition: text-decoration-color var(--transition-default);
+  transition: text-decoration-color var(--duration-fast) var(--ease-out-quad);
 
   @media (hover: hover) {
     &:hover {

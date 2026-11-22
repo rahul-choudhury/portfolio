@@ -16,7 +16,7 @@
   border-radius: var(--radius-sm);
   color: var(--color-text-muted);
   cursor: pointer;
-  transition: color var(--transition-default);
+  transition: color var(--duration-fast) var(--ease-out-quad);
 
   @media (hover: hover) {
     &:hover {

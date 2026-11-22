@@ -37,7 +37,7 @@
   font-size: var(--text-sm);
   line-height: var(--text-sm-line-height);
   color: var(--color-text-muted);
-  transition: color var(--transition-default);
+  transition: color var(--duration-fast) var(--ease-out-quad);
 
   @media (hover: hover) {
     &:hover {
