@@ -2,54 +2,6 @@
 @import "@rahul-choudhury/ui/tokens.css";
 @import "@rahul-choudhury/ui/styles.css";
 
-/*
- * Resets the pages rely on beyond the library's reset. They live in the
- * library's reset layer so library components and app styles both still
- * override them.
- */
-@layer reset {
-  html {
-    -webkit-tap-highlight-color: transparent;
-  }
-
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    font-size: inherit;
-    font-weight: inherit;
-  }
-
-  a {
-    color: inherit;
-    text-decoration: inherit;
-  }
-
-  ol,
-  ul {
-    padding: 0;
-    list-style: none;
-  }
-
-  button,
-  input,
-  select,
-  textarea {
-    padding: 0;
-    border: 0;
-    border-radius: 0;
-    background: transparent;
-    color: inherit;
-    letter-spacing: inherit;
-  }
-
-  ::placeholder {
-    opacity: 1;
-  }
-}
-
 html {
   scroll-padding-top: 32px;
 }
