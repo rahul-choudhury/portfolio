@@ -38,7 +38,7 @@ export function VideoPlayer({
 
   const videoRef = useRef<HTMLVideoElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const isMobile = useMediaQuery("(max-width: 1023px)");
+  const isMobile = useMediaQuery("(width < 64rem)");
 
   const controlsVisible = !isPlaying || isMobile || isHovering;
 
