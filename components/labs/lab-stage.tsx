@@ -1,4 +1,4 @@
-import { cn } from "@rahul-choudhury/ui";
+import clsx from "clsx";
 import type { ReactNode } from "react";
 
 type LabStageProps = {
@@ -16,7 +16,7 @@ export function LabStage({
 }: LabStageProps) {
   return (
     <div
-      className={cn(
+      className={clsx(
         "relative flex items-center justify-center overflow-hidden rounded-sm bg-surface-soft",
         compact ? "min-h-44 p-5 sm:min-h-52 sm:p-7" : "h-96 p-6 md:p-10",
         className,
@@ -27,7 +27,7 @@ export function LabStage({
         className="pointer-events-none absolute inset-0 border-border/70 bg-[linear-gradient(to_right,currentColor_1px,transparent_1px),linear-gradient(to_bottom,currentColor_1px,transparent_1px)] bg-size-[24px_24px] text-text/2.5"
       />
       <div
-        className={cn(
+        className={clsx(
           "flex w-full items-center justify-center",
           fill ? "absolute inset-0" : "relative",
         )}

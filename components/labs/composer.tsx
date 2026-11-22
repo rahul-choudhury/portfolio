@@ -30,7 +30,7 @@ import {
   XIcon,
   type Icon,
 } from "@phosphor-icons/react";
-import { cn } from "@rahul-choudhury/ui";
+import clsx from "clsx";
 import { usePrefersReducedMotion } from "@rahul-choudhury/ui/hooks";
 import { motion } from "motion/react";
 import {
@@ -385,7 +385,7 @@ export function Composer({ compact = false }: LabComponentProps) {
       <Tooltip.Provider delay={500}>
         <div
           style={ROOT_VARS}
-          className={cn(
+          className={clsx(
             "flex h-full w-full flex-col justify-end",
             compact ? "px-4 pb-3" : "px-4 pb-5 md:px-8",
           )}
@@ -466,7 +466,7 @@ export function Composer({ compact = false }: LabComponentProps) {
                       placeholder={skill ? undefined : "Reply"}
                       spellCheck={false}
                       style={{ textIndent: indent }}
-                      className={cn(
+                      className={clsx(
                         "block max-h-36.75 min-h-7 w-full resize-none bg-transparent py-[3.5px] pl-1.5",
                         "text-[15px] leading-5.25 text-text outline-none placeholder:text-text/40",
                         "[-webkit-tap-highlight-color:transparent]",
@@ -477,7 +477,7 @@ export function Composer({ compact = false }: LabComponentProps) {
                         big
                         aria-label="Send message"
                         onClick={send}
-                        className={cn(
+                        className={clsx(
                           "absolute right-0 bottom-0",
                           hasContent ? "text-text" : "text-text/40",
                         )}
@@ -579,7 +579,7 @@ function Chin({ hidden, children }: { hidden: boolean; children: ReactNode }) {
     <div
       aria-hidden={hidden || undefined}
       inert={hidden}
-      className={cn(
+      className={clsx(
         "grid transition-[grid-template-rows,opacity,translate] duration-280 ease-out-quart motion-reduce:transition-none",
         hidden ? "-translate-y-1 grid-rows-[0fr] opacity-0" : "grid-rows-[1fr]",
       )}
@@ -612,7 +612,7 @@ function GhostButton({
     <button
       type="button"
       data-active={active || undefined}
-      className={cn(
+      className={clsx(
         "group/btn relative isolate inline-flex shrink-0 items-center justify-center gap-1 outline-none",
         "text-text/60 transition-colors duration-60 hover:text-text data-popup-open:text-text",
         "focus-visible:ring-2 focus-visible:ring-text/25",
@@ -624,14 +624,14 @@ function GhostButton({
     >
       <span
         aria-hidden="true"
-        className={cn(
+        className={clsx(
           "absolute inset-0 -z-1 rounded-[inherit] transition-transform duration-450 ease-(--cmp-spring)",
           "group-active/btn:scale-90 group-active/btn:duration-60 group-active/btn:ease-out",
           "motion-reduce:transition-none motion-reduce:group-active/btn:scale-100",
         )}
       >
         <span
-          className={cn(
+          className={clsx(
             "absolute inset-0 rounded-[inherit] transition-colors duration-60",
             "group-hover/btn:bg-text/7.5 group-data-popup-open/btn:bg-text/7.5",
             "group-data-active/btn:bg-(--cmp-accent)/12",
@@ -696,7 +696,7 @@ function MenuPopup({
 function PopupSurface({ className, ...props }: ComponentProps<"div">) {
   return (
     <div
-      className={cn(
+      className={clsx(
         "rounded-[14px] bg-(--cmp-card) p-1.5 text-sm text-text shadow-[0_8px_24px_light-dark(rgb(0_0_0/0.1),rgb(0_0_0/0.32)),0_2px_6px_light-dark(rgb(0_0_0/0.05),rgb(0_0_0/0.2))] ring-1 ring-text/5 outline-none ring-inset",
         className,
       )}
@@ -709,7 +709,7 @@ function PopupSurface({ className, ...props }: ComponentProps<"div">) {
 function TipSurface({ className, ...props }: ComponentProps<"div">) {
   return (
     <div
-      className={cn(
+      className={clsx(
         "rounded-md bg-(--cmp-card) px-2 py-0.75 text-[13px] text-text shadow-[0_2px_6px_light-dark(rgb(0_0_0/0.06),rgb(0_0_0/0.25))] ring-1 ring-text/5 ring-inset",
         className,
       )}
@@ -722,7 +722,7 @@ function TipSurface({ className, ...props }: ComponentProps<"div">) {
 function ItemRow({ className, ...props }: ComponentProps<"div">) {
   return (
     <div
-      className={cn(
+      className={clsx(
         "flex min-h-7 cursor-default items-center gap-2 rounded-lg px-2.5 py-1 outline-none select-none data-disabled:opacity-50 data-highlighted:bg-text/10 data-popup-open:bg-text/10",
         className,
       )}
@@ -952,13 +952,13 @@ function SwitchItem({
       <span className="flex-1">{label}</span>
       <span
         aria-hidden="true"
-        className={cn(
+        className={clsx(
           "relative h-4.5 w-7.5 shrink-0 rounded-full transition-colors duration-200",
           checked ? "bg-(--cmp-accent)" : "bg-text/20",
         )}
       >
         <span
-          className={cn(
+          className={clsx(
             "absolute top-0.5 left-0.5 size-3.5 rounded-full bg-white shadow-sm transition-transform duration-200 ease-out-quart",
             checked && "translate-x-3",
           )}
@@ -1264,7 +1264,7 @@ function AttachmentTile({
       <div
         role="img"
         aria-label={label}
-        className={cn(
+        className={clsx(
           "flex size-30 flex-col justify-between rounded-[10px] bg-surface-soft p-[11.5px]",
           "shadow-[0_1px_2px_rgb(0_0_0/0.05)] ring-1 ring-text/8 ring-inset",
         )}
@@ -1301,7 +1301,7 @@ function AttachmentTile({
         type="button"
         aria-label={`Remove ${label}`}
         onClick={onRemove}
-        className={cn(
+        className={clsx(
           "absolute -top-1 -right-2 flex size-5 items-center justify-center rounded-full bg-(--cmp-card) text-text/70 ring-1 ring-text/10",
           "opacity-0 transition-[opacity,color] duration-150 group-hover/tile:opacity-100 hover:text-text",
           "focus-visible:opacity-100 [@media(hover:none)]:opacity-100",
@@ -1485,7 +1485,7 @@ function SkillToken({
       >
         <span
           aria-hidden="true"
-          className={cn(
+          className={clsx(
             "absolute -inset-y-0.5 -right-1 -left-0.5 rounded-md transition-colors duration-100",
             selected && "bg-(--cmp-accent)/12",
           )}

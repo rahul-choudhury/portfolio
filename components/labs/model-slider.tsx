@@ -1,6 +1,6 @@
 "use client";
 
-import { cn } from "@rahul-choudhury/ui";
+import clsx from "clsx";
 import { usePrefersReducedMotion } from "@rahul-choudhury/ui/hooks";
 import { CheckIcon } from "@phosphor-icons/react";
 import { AnimatePresence, motion } from "motion/react";
@@ -481,7 +481,7 @@ export function ModelSlider({ compact = false }: LabComponentProps) {
                       onPointerUp={stopDragging}
                       onPointerCancel={stopDragging}
                       onLostPointerCapture={stopDragging}
-                      className={cn(
+                      className={clsx(
                         "relative mx-1.5 my-0.5 h-8 touch-none select-none",
                         dragging ? "cursor-grabbing" : "cursor-grab",
                       )}
@@ -605,7 +605,7 @@ function IconButton({
       onFocus={() => onHover(true)}
       onBlur={() => onHover(false)}
       style={style}
-      className={cn(
+      className={clsx(
         "flex size-8 items-center justify-center rounded-lg text-white/55",
         className,
       )}
@@ -706,7 +706,7 @@ function MenuRow({
       onClick={onSelect}
       onPointerEnter={() => onHover(true)}
       onPointerLeave={() => onHover(false)}
-      className={cn(
+      className={clsx(
         "flex w-full items-center gap-3 rounded-[10px] px-2.5 py-1.5 text-left",
         hovered && "bg-white/10",
       )}

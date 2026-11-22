@@ -1,4 +1,4 @@
-import { cn } from "@rahul-choudhury/ui";
+import clsx from "clsx";
 import Link from "next/link";
 import type { Lab } from "./lab-types";
 
@@ -13,7 +13,7 @@ export function LabCard({ lab }: LabCardProps) {
     <div className="group relative">
       <article
         aria-hidden="true"
-        className={cn(
+        className={clsx(
           "overflow-hidden rounded-sm border border-border bg-surface transition-colors",
           "group-focus-within:border-text group-hover:border-border-strong",
         )}

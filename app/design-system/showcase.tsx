@@ -1,14 +1,18 @@
 "use client";
 
 import {
-  DotsThreeIcon,
   FileTextIcon,
   InfoIcon,
   MagnifyingGlassIcon,
   PaperPlaneTiltIcon,
 } from "@phosphor-icons/react";
 import {
-  Badge,
+  AlertDialog,
+  AlertDialogClose,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogTitle,
+  AlertDialogTrigger,
   Button,
   Card,
   Checkbox,
@@ -18,34 +22,21 @@ import {
   DialogDescription,
   DialogTitle,
   DialogTrigger,
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
   EmptyState,
   FieldDescription,
   FieldError,
-  FieldItem,
   FieldLabel,
   FieldRoot,
   Input,
   Popover,
   PopoverContent,
   PopoverTrigger,
-  RadioGroup,
-  RadioItem,
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
   Skeleton,
-  Switch,
-  Tab,
-  TabPanel,
-  Tabs,
-  TabsList,
   Textarea,
 } from "@rahul-choudhury/ui/components";
 import { useState } from "react";
@@ -100,9 +91,6 @@ function StatePreview({
 export function Showcase() {
   const [checkboxA, setCheckboxA] = useState(false);
   const [checkboxB, setCheckboxB] = useState(true);
-  const [radio, setRadio] = useState("option-1");
-  const [switchA, setSwitchA] = useState(false);
-  const [switchB, setSwitchB] = useState(true);
 
   return (
     <>
@@ -135,16 +123,6 @@ export function Showcase() {
               <Button disabled>Disabled</Button>
             </div>
           </Row>
-        </div>
-      </Section>
-
-      {/* ---- Badge ---- */}
-      <Section title="Badge">
-        <div className="flex flex-wrap items-center gap-3">
-          <Badge>Neutral</Badge>
-          <Badge variant="success">Active</Badge>
-          <Badge variant="warning">Pending</Badge>
-          <Badge variant="danger">Error</Badge>
         </div>
       </Section>
 
@@ -386,87 +364,6 @@ export function Showcase() {
         </div>
       </Section>
 
-      {/* ---- Radio Group ---- */}
-      <Section title="Radio Group">
-        <FieldRoot>
-          <FieldLabel>Options</FieldLabel>
-          <RadioGroup
-            name="design-system-radio-options"
-            value={radio}
-            onValueChange={(v) => setRadio(v as string)}
-          >
-            <FieldItem>
-              <FieldLabel className="inline-flex items-center gap-2">
-                <RadioItem value="option-1" />
-                <span>Option 1</span>
-              </FieldLabel>
-            </FieldItem>
-            <FieldItem>
-              <FieldLabel className="inline-flex items-center gap-2">
-                <RadioItem value="option-2" />
-                <span>Option 2</span>
-              </FieldLabel>
-            </FieldItem>
-            <FieldItem disabled>
-              <FieldLabel className="inline-flex items-center gap-2">
-                <RadioItem value="option-3" disabled />
-                <span>Disabled</span>
-              </FieldLabel>
-            </FieldItem>
-          </RadioGroup>
-        </FieldRoot>
-        <FieldRoot invalid className="mt-6">
-          <FieldLabel>Invalid</FieldLabel>
-          <RadioGroup name="design-system-radio-invalid">
-            <FieldItem>
-              <FieldLabel className="inline-flex items-center gap-2">
-                <RadioItem value="option-1" />
-                <span>Option 1</span>
-              </FieldLabel>
-            </FieldItem>
-            <FieldItem>
-              <FieldLabel className="inline-flex items-center gap-2">
-                <RadioItem value="option-2" />
-                <span>Option 2</span>
-              </FieldLabel>
-            </FieldItem>
-          </RadioGroup>
-          <FieldError>Pick an option.</FieldError>
-        </FieldRoot>
-      </Section>
-
-      {/* ---- Switch ---- */}
-      <Section title="Switch">
-        <div className="flex flex-col gap-3">
-          <FieldRoot>
-            <FieldLabel className="inline-flex items-center gap-2">
-              <Switch
-                checked={switchA}
-                name="design-system-switch-off"
-                onCheckedChange={setSwitchA}
-              />
-              <span>Off by default</span>
-            </FieldLabel>
-          </FieldRoot>
-          <FieldRoot>
-            <FieldLabel className="inline-flex items-center gap-2">
-              <Switch
-                checked={switchB}
-                name="design-system-switch-on"
-                onCheckedChange={setSwitchB}
-              />
-              <span>On by default</span>
-            </FieldLabel>
-          </FieldRoot>
-          <FieldRoot disabled>
-            <FieldLabel className="inline-flex items-center gap-2">
-              <Switch disabled name="design-system-switch-disabled" />
-              <span>Disabled</span>
-            </FieldLabel>
-          </FieldRoot>
-        </div>
-      </Section>
-
       {/* ---- Field Composition ---- */}
       <Section title="Field Composition">
         <div className="max-w-sm space-y-6">
@@ -552,6 +449,30 @@ export function Showcase() {
         </Dialog>
       </Section>
 
+      {/* ---- Alert Dialog ---- */}
+      <Section title="Alert Dialog">
+        <AlertDialog>
+          <AlertDialogTrigger render={<Button variant="destructive" />}>
+            Delete post
+          </AlertDialogTrigger>
+          <AlertDialogContent>
+            <AlertDialogTitle>Delete this post?</AlertDialogTitle>
+            <AlertDialogDescription>
+              The post and its comments will be permanently deleted. This
+              can&apos;t be undone.
+            </AlertDialogDescription>
+            <div className="mt-4 flex justify-end gap-2">
+              <AlertDialogClose render={<Button variant="ghost" />}>
+                Cancel
+              </AlertDialogClose>
+              <AlertDialogClose render={<Button variant="destructive" />}>
+                Delete
+              </AlertDialogClose>
+            </div>
+          </AlertDialogContent>
+        </AlertDialog>
+      </Section>
+
       {/* ---- Popover ---- */}
       <Section title="Popover">
         <Popover>
@@ -567,54 +488,6 @@ export function Showcase() {
             </p>
           </PopoverContent>
         </Popover>
-      </Section>
-
-      {/* ---- Dropdown Menu ---- */}
-      <Section title="Dropdown Menu">
-        <DropdownMenu>
-          <DropdownMenuTrigger
-            render={<Button variant="ghost" size="icon" aria-label="Actions" />}
-          >
-            <DotsThreeIcon size={16} weight="bold" />
-          </DropdownMenuTrigger>
-          <DropdownMenuContent>
-            <DropdownMenuItem>Edit</DropdownMenuItem>
-            <DropdownMenuItem>Duplicate</DropdownMenuItem>
-            <DropdownMenuItem disabled>Archive (disabled)</DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>Delete</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      </Section>
-
-      {/* ---- Tabs ---- */}
-      <Section title="Tabs">
-        <Tabs defaultValue="overview">
-          <TabsList>
-            <Tab value="overview">Overview</Tab>
-            <Tab value="settings">Settings</Tab>
-            <Tab value="notifications">Notifications</Tab>
-            <Tab value="billing" disabled>
-              Billing (disabled)
-            </Tab>
-          </TabsList>
-          <TabPanel value="overview">
-            <p className="text-sm text-text-secondary">
-              Overview content goes here. Tabs use Base UI for keyboard
-              navigation and focus management.
-            </p>
-          </TabPanel>
-          <TabPanel value="settings">
-            <p className="text-sm text-text-secondary">
-              Settings content goes here.
-            </p>
-          </TabPanel>
-          <TabPanel value="notifications">
-            <p className="text-sm text-text-secondary">
-              Notifications content goes here.
-            </p>
-          </TabPanel>
-        </Tabs>
       </Section>
 
       {/* ---- Skeleton ---- */}

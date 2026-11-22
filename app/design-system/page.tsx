@@ -1,5 +1,5 @@
 import { ArrowUDownLeftIcon } from "@phosphor-icons/react/ssr";
-import { cn } from "@rahul-choudhury/ui";
+import clsx from "clsx";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Reveal } from "@/components/motion-reveal";
@@ -99,7 +99,7 @@ export default function DesignPage() {
                 {COLORS.map((c) => (
                   <div key={c.token} className="flex flex-col gap-1.5">
                     <div
-                      className={cn(
+                      className={clsx(
                         "h-16 rounded-md border border-border",
                         c.className,
                       )}
@@ -119,7 +119,7 @@ export default function DesignPage() {
                 {TEXT_COLORS.map((c) => (
                   <div key={c.token} className="flex flex-col gap-1">
                     <span
-                      className={cn(
+                      className={clsx(
                         "flex h-10 items-center text-base font-medium",
                         c.className,
                       )}
@@ -141,7 +141,7 @@ export default function DesignPage() {
                 {BORDER_COLORS.map((c) => (
                   <div key={c.token} className="flex flex-col gap-1.5">
                     <div
-                      className={cn(
+                      className={clsx(
                         "h-12 w-24 rounded-md border-2",
                         c.className,
                       )}
@@ -211,7 +211,7 @@ export default function DesignPage() {
             {RADII.map((r) => (
               <div key={r.token} className="flex flex-col items-center gap-1.5">
                 <div
-                  className={cn(
+                  className={clsx(
                     "size-16 border-2 border-border-strong",
                     r.className,
                   )}
@@ -238,7 +238,7 @@ export default function DesignPage() {
             {SHADOWS.map((s) => (
               <div key={s.token} className="flex flex-col items-center gap-1.5">
                 <div
-                  className={cn("size-20 rounded-md bg-surface", s.className)}
+                  className={clsx("size-20 rounded-md bg-surface", s.className)}
                 />
                 <span className="font-mono text-xs text-text-muted">
                   {s.token}

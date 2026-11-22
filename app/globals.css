@@ -1,5 +1,7 @@
 @import "tailwindcss";
+@import "@rahul-choudhury/ui/reset.css";
 @import "@rahul-choudhury/ui/tokens.css";
+@import "@rahul-choudhury/ui/styles.css";
 
 html {
   scroll-padding-top: 32px;
