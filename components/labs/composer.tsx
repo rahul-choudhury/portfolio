@@ -30,7 +30,7 @@ import {
   XIcon,
   type Icon,
 } from "@phosphor-icons/react";
-import clsx from "clsx";
+import { mergeClassName } from "@rahul-choudhury/ui";
 import { usePrefersReducedMotion } from "@rahul-choudhury/ui/hooks";
 import { motion } from "motion/react";
 import {
@@ -576,7 +576,7 @@ function GhostButton({
       type="button"
       data-active={active || undefined}
       data-size={big ? "lg" : undefined}
-      className={clsx(styles.ghost, className)}
+      className={mergeClassName(styles.ghost, className)}
       {...props}
     >
       <span aria-hidden="true" className={styles.squish}>
@@ -635,15 +635,17 @@ function MenuPopup({
 }
 
 function PopupSurface({ className, ...props }: ComponentProps<"div">) {
-  return <div className={clsx(styles.surface, className)} {...props} />;
+  return (
+    <div className={mergeClassName(styles.surface, className)} {...props} />
+  );
 }
 
 function TipSurface({ className, ...props }: ComponentProps<"div">) {
-  return <div className={clsx(styles.tip, className)} {...props} />;
+  return <div className={mergeClassName(styles.tip, className)} {...props} />;
 }
 
 function ItemRow({ className, ...props }: ComponentProps<"div">) {
-  return <div className={clsx(styles.item, className)} {...props} />;
+  return <div className={mergeClassName(styles.item, className)} {...props} />;
 }
 
 function ItemIcon({ icon: Glyph, color }: { icon: Icon; color?: string }) {

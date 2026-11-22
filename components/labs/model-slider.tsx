@@ -1,6 +1,6 @@
 "use client";
 
-import clsx from "clsx";
+import { mergeClassName } from "@rahul-choudhury/ui";
 import { usePrefersReducedMotion } from "@rahul-choudhury/ui/hooks";
 import { CheckIcon } from "@phosphor-icons/react";
 import { AnimatePresence, motion } from "motion/react";
@@ -591,7 +591,7 @@ function IconButton({
       onFocus={() => onHover(true)}
       onBlur={() => onHover(false)}
       style={style}
-      className={clsx(styles.iconButton, className)}
+      className={mergeClassName(styles.iconButton, className)}
     >
       <span className={styles.iconSurface}>{children}</span>
     </button>

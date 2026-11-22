@@ -1,5 +1,5 @@
 import { ArrowUDownLeftIcon } from "@phosphor-icons/react/ssr";
-import clsx from "clsx";
+import { mergeClassName } from "@rahul-choudhury/ui";
 import Link from "next/link";
 import type { ComponentProps, ReactNode } from "react";
 import styles from "./page.module.css";
@@ -14,7 +14,7 @@ export function Page({ as: Element = "div", children }: PageProps) {
 }
 
 export function PageTitle({ className, ...props }: ComponentProps<"h1">) {
-  return <h1 className={clsx(styles.title, className)} {...props} />;
+  return <h1 className={mergeClassName(styles.title, className)} {...props} />;
 }
 
 type TitleRowProps = {
